@@ -2,12 +2,13 @@
 
 # SETUP
 # create a new repo on gitlab and github
+# git remote add origin git@gitlab.com:cirad-apps/mangoviz.git
 # git remote set-url --add --push origin git@github.com:anna-doizy/mangoviz.git
-# git remote set-url --add --push origin git@gitlab.com:doana-r/mangoviz.git
+# git remote set-url --add --push origin git@gitlab.com:cirad-apps/mangoviz.git
 # git remote -v
-# origin  git@gitlab.com:doana-r/mangoviz.git (fetch)
+# origin  git@gitlab.com:cirad-apps/mangoviz.git (fetch)
 # origin  git@github.com:anna-doizy/mangoviz.git (push)
-# origin  git@gitlab.com:doana-r/mangoviz.git (push)
+# origin  git@gitlab.com:cirad-apps/mangoviz.git (push)
 # git push -u origin master/main
 
 # EACH TIME before deployment
@@ -23,6 +24,26 @@
 # nécessaire car comme l'application charge le package pour démarrer (récupère le jeu suivi), il a besoin d'être installé proprement dans le serveur distant. Pour l'instant RStudio (shinyapps) ne permet de faire cela qu'avec des packages classiques (CRAN) ou github, mais pas gitlab...
 
 
+
+# A FAIRE ####
+
+# - travailler les couleurs et les échelles (à harmoniser entre les différentes espèces)
+# - ratio des graphes
+# - textui
+# - format des nombres à checker en fonction de la langue
+# - vérifier que le emmeans fait bien ce qu'il faut quand on mets plusieurs années ensemble
+
+# limite supérieure des légendes à harmoniser
+# couleurs
+# textui pour la traduction
+# axe des y de la carte
+# echelle carte qui commence à 0
+# ajouter du loading ? e_show_loading()
+
+
+# e_highlight
+# e_labels ?
+# e_mark_line(data = list(xAxis = 7), title = "Tortoise") # pour l'année de début de taille
 
 
 library(mangoviz)
@@ -46,17 +67,14 @@ library(echarts4r)
 
 # Evaluation variétale ----------------------------------------------------
 
-variete <- read_delim("data-raw/MA02.txt", locale = locale(encoding = "ISO-8859-1", decimal_mark = ",", grouping_mark = "")) %>% 
-  mutate(
-    Variete = cultivar %>% str_to_title() %>% factor()
-  ) %>% 
+variete <- read_delim("data-raw/MA02.txt", locale = locale(encoding = "ISO-8859-1", decimal_mark = ",", grouping_mark = "")) %>%
   rename(Annee = annee)
 
 
 # verif
 skimr::skim(variete)
 
-ftable(Annee ~ arbre, data = variete)
+ftable(Annee ~ arbre, data = cultivar)
 
 variete %>% 
   filter(masse == 0, nbfruit != 0)
@@ -64,9 +82,10 @@ variete %>%
   filter(masse != 0, nbfruit == 0)
 
 
+
 # chaque arbre récolté plusieurs fois sur la même année : aggrégation des données pour avoir une valeur par arbre et par année
 variete_arbre_annee <- variete %>% 
-  group_by(arbre, Variete, Annee) %>% 
+  group_by(arbre, cultivar, Annee) %>% 
   summarise(
     masse = sum(masse),
     nbfruit = sum(nbfruit)
@@ -74,12 +93,21 @@ variete_arbre_annee <- variete %>%
   ungroup() %>% 
   mutate(
     masse_fruit = masse / nbfruit,
-    Variete = fct_reorder(Variete, .x = masse, .fun = mean)
+    cultivar = cultivar %>% str_to_title() %>% factor(),
+    X = str_sub(arbre, end = 1) %>% factor(levels = LETTERS[11:1]),
+    Y = str_sub(arbre, start = 2) %>% factor(levels = 1:17)
   )
 
 skimr::skim(variete_arbre_annee)
 
-ftable(Annee ~ Variete, data = variete_arbre_annee)
+ftable(Annee ~ cultivar, data = variete_arbre_annee)
+
+
+
+variete_mesure <- variete_arbre_annee %>% 
+  tidyr::pivot_longer(masse:masse_fruit, names_to = "Mesure", values_to = "Valeur")
+
+
 
 
 
@@ -89,14 +117,10 @@ ftable(Annee ~ Variete, data = variete_arbre_annee)
 ## plan ####
 # représentation des bordures à valider
 
-var_plan <- variete %>% 
-  distinct(arbre, Variete) %>%
-  mutate(
-    X = str_sub(arbre, end = 1) %>% factor(levels = LETTERS[1:11]),
-    Y = str_sub(arbre, start = 2) %>% factor(levels = 17:1)
-  ) %>% 
+var_plan <- variete_mesure %>% 
+  distinct(X, Y, cultivar) %>%
   ggplot() +
-  aes(x = X, y = Y, fill = Variete) + # ajouter textui pour variété
+  aes(x = X, y = Y, fill = cultivar) + # ajouter textui pour variété
   geom_tile(color = "black") +
   scale_fill_viridis_d() + # revoir les couleurs
   scale_x_discrete(drop = FALSE) +
@@ -108,38 +132,114 @@ plotly::ggplotly(var_plan)
 
 
 # autre méthode avec echarts ?
-# à simplifier !
+# légendes ?
 
 variete_arbre_annee %>%
-  mutate(
-    X = str_sub(arbre, end = 1) %>% factor(levels = LETTERS[1:11]),
-    Y = str_sub(arbre, start = 2) %>% factor(levels = 17:1)
-  ) %>% 
-  # dplyr::rename(
-  #   `Production annuelle (kg)` = masse,
-  #   `Nombre de fruits` = nbfruit,
-  #   `Masse moyenne d'un fruit` = masse_fruit
-  #   ) |>
-  # tidyr::pivot_longer(c("Production annuelle (kg)", "Nombre de fruits", "Masse moyenne d'un fruit"), names_to = "Mesure", values_to = "Valeurs") |> # textui
-  tidyr::pivot_longer(masse:masse_fruit, names_to = "Mesure", values_to = "Valeurs") |>
-  # filter(Variete == cultivar, Mesure == mesure) |> # input
-  filter(Mesure == mesure) |> # input
-  tidyr::pivot_wider(names_from = Variete, values_from = Valeurs) |>
-  arrange(arbre) |>
-  group_by(Annee) |>
-  e_charts(X, timeline = TRUE, reorder = FALSE,) |>
-  e_grid(left = "30%") |>
-  e_heatmap(Y, Heidi) |>
+  distinct(X, Y, cultivar) %>%
+  mutate(bidon = 1) %>%
+  tidyr::pivot_wider(names_from = cultivar, values_from = bidon) |>
+  e_charts(X) |>
+  e_heatmap(Y, Heidi, name = "Heidi") |>
   e_heatmap(Y, José) |>
   e_heatmap(Y, Sensation) |>
-  # e_visual_map(Heidi) |>
-  e_title(cultivar)
+  e_tooltip()
+
+
+
+## Récapitulons ####
+
+# input
+
+mesure <- "masse"
+mesure <- "nbfruit"
+mesure <- "masse_fruit"
+
+
+
+### Bar plot : comparaison variétale ####
+# faire modèle
+
+annees <- 2010:2015
+annees <- 2016
+
+# à voir si mettre les modèles dans une iste, pour gagenr du temps à l'affichage ?
+# Attention les 3 modèles pour les 3 mesures à vérifier !
+
+t_params <- powerTransform(variete_arbre_annee[[mesure]], family = "bcnPower")
+
+variete_mesure %>% 
+  filter(Mesure == mesure) %>% # input
+  mutate(Valeur_t = ifelse(!is.na(Valeur), bcnPower(Valeur, lambda = t_params$lambda, gamma = t_params$gamma), NA)) %>% # tranformation de variable
+  lm(Valeur_t ~ factor(Annee) * cultivar, data = .) %>% # modèle A VERIFIER
+  ref_grid(at = list(Annee = annees)) %>% # idée : at y mettre que les années concernées ?
+  update(tran = make.tran("bcnPower", c(t_params$lambda, t_params$gamma))) %>% # prise en compte de la transformation pour estimer les moyennes marginales
+  emmeans("cultivar", type = "response") %>% # estimation des moyennes marginales, idée : enlever le by année sur un jeu filtré pour faire avec plusieurs années
+  as_tibble() %>%
+  # filter(Annee == annees) |> # si input : une seule année
+  e_charts(cultivar) %>% 
+  e_bar(response, legend = FALSE, name = NA) %>%
+  e_error_bar(lower.CL, upper.CL) %>%
+  # e_mark_line(data = list(xAxis = cultivar)) %>% # input
+  e_axis(axis = "y", formatter = e_axis_formatter(locale = "fr")) |>
+  e_title("Production annuelle moyenne par arbre (kg)", "en fonction de la variété et des années de récolte sélectionnées") %>% # textui
+  e_tooltip()
+
+
+
+### Heat map : suivi spatial ####
+
+# input
+# seulement si 1 variété, pas d'année en input
+variete_heatmap <- "Heidi"
+
+variete_mesure %>%
+  filter(Mesure == mesure) |> # input
+  tidyr::pivot_wider(names_from = cultivar, values_from = Valeur) |> # pour garder toutes les lignes et colonnes de la parcelle
+  arrange(as.numeric(as.character(Y)), desc(X)) |>
+  rename(Selec = all_of(variete_heatmap)) |> # input
+  group_by(Annee)|>
+  e_charts(X, reorder = FALSE, timeline = TRUE) |>
+  e_grid(left = "30%") |>
+  e_heatmap(Y, Selec) |>
+  e_visual_map(Selec) |>
+  e_title(variete) # "Production annuelle par arbre (kg) de la variété XX"
+
+
+
+
+### lines :  Suivi temporel ####
+
+
+varietes <- "Heidi"
+varietes <- c("Heidi", "Irwin", "José")
+
+
+variete_mesure %>% 
+  filter(Mesure == mesure) %>% # input
+  mutate(Valeur_t = ifelse(!is.na(Valeur), bcnPower(Valeur, lambda = t_params$lambda, gamma = t_params$gamma), NA)) %>% # tranformation de variable
+  lm(Valeur_t ~ factor(Annee) * cultivar, data = .) %>% # modèles vérifiés préalablement
+  ref_grid(at = list(cultivar = varietes)) %>%
+  update(tran = make.tran("bcnPower", c(t_params$lambda, t_params$gamma))) %>% # prise en compte de la transformation pour estimer les moyennes marginales
+  emmeans("Annee", by = "cultivar", type = "response") %>% # estimation des moyennes marginales
+  as_tibble() %>%
+  mutate(Annee = factor(Annee)) |>
+  # filter(cultivar == cultivar) |> # input
+  group_by(cultivar) |>
+  e_charts(Annee) %>% 
+  e_line(response) %>%
+  # e_band(lower.CL, upper.CL) %>% # à mettre si une seule variété cochée
+  e_axis(axis = "y", formatter = e_axis_formatter(locale = "fr")) |>
+  e_tooltip(trigger = "axis", formatter = e_tooltip_pointer_formatter(locale = "fr", digits = 0)) #%>% 
+  # e_mark_line(data = list(xAxis = cultivar)) %>% # si on arrivait à mettre l'année en train d'être visualisée dans les timeline ?
+  # e_title(cultivar)
+
+# ajouter la ligne horizontale pour une variété cochée
 
 
 
 
 
-## par arbre par année ####
+## travail en cours ####
 
 
 
@@ -152,8 +252,6 @@ cultivar <- "Heidi"
 # Demander de choisir si production, nb fruits ou masse moyenne des fruits
 mesure <- "masse" # ou nbfruit ou masse_fruit
 
-# A FAIRE : transformer la production en tonnes ?
-
 
 
 
@@ -165,10 +263,6 @@ mesure <- "masse" # ou nbfruit ou masse_fruit
 
 
 e2 <- variete_arbre_annee %>%
-  mutate(
-    X = str_sub(arbre, end = 1) %>% factor(levels = LETTERS[1:11]),
-    Y = str_sub(arbre, start = 2) %>% factor(levels = 17:1)
-  ) %>% 
   # dplyr::rename(
   #   `Production annuelle (kg)` = masse,
   #   `Nombre de fruits` = nbfruit,
@@ -176,9 +270,9 @@ e2 <- variete_arbre_annee %>%
   #   ) |>
   # tidyr::pivot_longer(c("Production annuelle (kg)", "Nombre de fruits", "Masse moyenne d'un fruit"), names_to = "Mesure", values_to = "Valeurs") |> # textui
   tidyr::pivot_longer(masse:masse_fruit, names_to = "Mesure", values_to = "Valeurs") |>
-  # filter(Variete == cultivar, Mesure == mesure) |> # input
+  # filter(cultivar == cultivar, Mesure == mesure) |> # input
   filter(Mesure == mesure) |> # input
-  tidyr::pivot_wider(names_from = Variete, values_from = Valeurs) |> # pour garder toutes les ligens et colonnes de la parcelle
+  tidyr::pivot_wider(names_from = cultivar, values_from = Valeurs) |> # pour garder toutes les ligens et colonnes de la parcelle
   arrange(as.numeric(as.character(Y)) %>% desc()) |>
   rename(Selec = cultivar) |> # input
   group_by(Annee) |>
@@ -204,77 +298,87 @@ e2 <- variete_arbre_annee %>%
 
 
 
-ggplot(variete_arbre_annee) +
-  aes(x = Annee, y = nbfruit, group = arbre) +
-  geom_line(alpha = 0.2) +
-  geom_point(alpha = 0.5) +
-  facet_wrap(~ Variete)
-
-ggplot(variete_arbre_annee) +
-  aes(x = Annee, y = masse, group = arbre) +
-  geom_line(alpha = 0.2) +
-  geom_point(alpha = 0.5) +
-  facet_wrap(~ Variete)
-ggplot(variete_arbre_annee) +
-  aes(x = Variete, y = masse) +
-  geom_point(alpha = 0.5) +
-  facet_wrap(~ Annee)
-
-ggplot(variete_arbre_annee) +
-  aes(x = Annee, y = masse_fruit, group = arbre) +
-  geom_line(alpha = 0.2) +
-  geom_point(alpha = 0.5) +
-  facet_wrap(~ Variete)
-
-ggplot(variete_arbre_annee) +
-  aes(x = nbfruit, y = masse, color = Annee) +
-  geom_point(alpha = 0.5) +
-  facet_wrap(~ Variete)
-ggplot(variete_arbre_annee) +
-  aes(x = sqrt(nbfruit), y = sqrt(masse), color = Annee) +
-  geom_point(alpha = 0.5) +
-  facet_wrap(~ Variete)
-
-
-#### * modele masse ####
+# ggplot(variete_arbre_annee) +
+#   aes(x = Annee, y = nbfruit, group = arbre) +
+#   geom_line(alpha = 0.2) +
+#   geom_point(alpha = 0.5) +
+#   facet_wrap(~ cultivar)
+# 
+# ggplot(variete_arbre_annee) +
+#   aes(x = Annee, y = masse, group = arbre) +
+#   geom_line(alpha = 0.2) +
+#   geom_point(alpha = 0.5) +
+#   facet_wrap(~ cultivar)
+# ggplot(variete_arbre_annee) +
+#   aes(x = cultivar, y = masse) +
+#   geom_point(alpha = 0.5) +
+#   facet_wrap(~ Annee)
+# 
+# ggplot(variete_arbre_annee) +
+#   aes(x = Annee, y = masse_fruit, group = arbre) +
+#   geom_line(alpha = 0.2) +
+#   geom_point(alpha = 0.5) +
+#   facet_wrap(~ cultivar)
+# 
+# ggplot(variete_arbre_annee) +
+#   aes(x = nbfruit, y = masse, color = Annee) +
+#   geom_point(alpha = 0.5) +
+#   facet_wrap(~ cultivar)
+# ggplot(variete_arbre_annee) +
+#   aes(x = sqrt(nbfruit), y = sqrt(masse), color = Annee) +
+#   geom_point(alpha = 0.5) +
+#   facet_wrap(~ cultivar)
 
 
-# je n'arrrive pas à prendre en compte la transfo pwr dans le lm puis emmeans
-# powerTransform(variete_arbre_annee$masse, family = "bcnPower") %>% summary()
-# powerTransform(variete_arbre_annee$masse + 0.1) %>% summary()
 
-# tran <- make.tran("boxcox", 0.33)
-# mod_var_masse <- with(
-#   tran, 
-#   lm(masse ~ nbfruit * factor(Annee) * Variete, data = variete_arbre_annee)
-# )
+#### Vérification des modèles ####
+
+mesure <- "masse"
+mesure <- "nbfruit"
+mesure <- "masse_fruit"
 
 
-mod_var_masse <- lm(sqrt(masse) ~ factor(Annee) * Variete, data = variete_arbre_annee)
-mod_var_masse <- lm(sqrt(masse) ~ nbfruit * Variete, data = variete_arbre_annee)
+t_params <- powerTransform(variete_arbre_annee[[mesure]], family = "bcnPower")
+
+variete_filtre <- variete_mesure %>% 
+  filter(Mesure == mesure) %>% # input
+  mutate(Valeur_t = ifelse(!is.na(Valeur), bcnPower(Valeur, lambda = t_params$lambda, gamma = t_params$gamma), NA)) # tranformation de variable
+
+mod_variete <-  lm(Valeur_t ~ factor(Annee) * cultivar, data = variete_filtre)
 
 
-plot(mod_var_masse)
+plot(mod_variete)
 
-anova(mod_var_masse)
-Anova(mod_var_masse)
+anova(mod_variete)
+Anova(mod_variete)
 
-variete_arbre_annee %>% 
-  modelr::add_predictions(mod_var_masse) %>% 
-  # group_by(Variete, Annee) %>%
-  yardstick::mae(masse, pred^2) # rsq
+variete_filtre %>% 
+  modelr::add_predictions(mod_variete) %>% 
+  # group_by(cultivar, Annee) %>%
+  yardstick::mae(Valeur_t, pred) # rsq
 
-broom::glance(mod_var_masse)
+broom::glance(mod_variete)
 
-variete_arbre_annee %>% 
-  modelr::add_predictions(mod_var_masse) %>% 
+variete_filtre %>% 
+  modelr::add_predictions(mod_variete) %>% 
   ggplot() +
-  aes(masse, pred^2) +
+  aes(Valeur_t, pred) +
   geom_abline(slope = 1, intercept = 0) +
   geom_point()
 
 
 
+  
+  
+  
+  
+  
+  
+  
+  
+#### comparaisons multiples ####
+  
+  
 ref_grid(mod_var_masse)
 ref_grid(mod_var_masse, cov.reduce = range)
 
@@ -284,13 +388,13 @@ ref_grid(mod_var_masse, cov.reduce = range)
 # compare var pour chaque année
 comp_mass_var_annee <- emmeans(
   mod_var_masse, 
-  "Variete", 
+  "cultivar", 
   by = "Annee", 
   type = "response" 
   # cov.reduce = range
   ) #%>% plot(comparisons = TRUE)
 
-# emmip(mod_var_masse, Variete ~ Annee, CIs = TRUE, type = "response", cov.reduce = range)
+# emmip(mod_var_masse, cultivar ~ Annee, CIs = TRUE, type = "response", cov.reduce = range)
 
 
 # A FAIRE : mettre dans le même tableau les résultats des 3 mesures (masse, nbfruit et masse_fruit) pour faire choisir l'utilisateur
@@ -301,7 +405,7 @@ e1 <- confint(comp_mass_var_annee) %>%
   # filter(Mesure == mesure) %>%  # input
   arrange(Annee, response) |>
   group_by(Annee) %>%
-  e_charts(Variete, reorder = FALSE, timeline = TRUE, elementId = "e1") %>% 
+  e_charts(cultivar, reorder = FALSE, timeline = TRUE, elementId = "e1") %>% 
   e_bar(response, legend = FALSE, name = NA) %>%
   e_error_bar(lower.CL, upper.CL) %>%
   e_mark_line(data = list(xAxis = cultivar)) %>% # input
@@ -313,13 +417,13 @@ e1 <- confint(comp_mass_var_annee) %>%
 # a mettre ?
 variete_arbre_annee %>% 
   group_by(Annee) %>%
-  e_charts(Variete, timeline = TRUE) |>
+  e_charts(cultivar, timeline = TRUE) |>
   # e_scatter(masse, symbol_size = 5) |>
   e_boxplot(masse)
 
 variete_arbre_annee %>% 
   filter(Annee == 2015) %>% 
-  group_by(Variete) %>%
+  group_by(cultivar) %>%
   e_charts() |>
   # e_scatter(masse, symbol_size = 5) |>
   e_boxplot(masse)
@@ -330,14 +434,14 @@ variete_arbre_annee %>%
 # et lier le graphique avec e_connect() ?
 
 # compare les années pour chaque var
-comp_mass_annee_var <- emmeans(mod_var_masse, "Annee", by = "Variete", type = "response"
+comp_mass_annee_var <- emmeans(mod_var_masse, "Annee", by = "cultivar", type = "response"
                                # , cov.reduce = range
                                )
 
 e3 <- confint(comp_mass_annee_var) %>%
   as_tibble() %>%
   mutate(Annee = factor(Annee)) |>
-  filter(Variete == cultivar) |> # input
+  filter(cultivar == cultivar) |> # input
   e_charts(Annee) %>% 
   e_line(response, legend = FALSE) %>%
   e_band(lower.CL, upper.CL) %>%
@@ -348,68 +452,18 @@ e3 <- confint(comp_mass_annee_var) %>%
 
 
 
-# emmip(mod_var_masse, Variete ~ Annee, CIs = TRUE, type = "response", cov.reduce = range)
-# emmip(mod_var_masse, Annee ~ Variete, CIs = TRUE, type = "response", cov.reduce = range)
-# emmip(mod_var_masse, ~ Variete, CIs = TRUE, type = "response", cov.reduce = range) # ???
+# emmip(mod_var_masse, cultivar ~ Annee, CIs = TRUE, type = "response", cov.reduce = range)
+# emmip(mod_var_masse, Annee ~ cultivar, CIs = TRUE, type = "response", cov.reduce = range)
+# emmip(mod_var_masse, ~ cultivar, CIs = TRUE, type = "response", cov.reduce = range) # ???
 # 
-# emtrends(mod_var_masse, "Variete", by = "Annee", var = "sqrt(nbfruit)") %>% plot(comparisons = TRUE)
-# emtrends(mod_var_masse, ~ Variete, var = "nbfruit") %>% plot(comparisons = TRUE)
+# emtrends(mod_var_masse, "cultivar", by = "Annee", var = "sqrt(nbfruit)") %>% plot(comparisons = TRUE)
+# emtrends(mod_var_masse, ~ cultivar, var = "nbfruit") %>% plot(comparisons = TRUE)
 # correspond(ait) au poids estimé en g d'un fruit
 
 
 e_arrange(e1, e_arrange(e2, e3, cols = 2))
 
-# A FAIRE
-# limite supérieure des légendes à harmoniser
-# couleurs
-# pb 2015 : inclure nombre de fruits dans le modèle ou pas ?
-# gérer pour les 3 mesures
-# textui pour la traduction
-# axe des y de la carte
-# echelle carte qui commence à 0
-# ajouter du loading ? e_show_loading()
 
-
-
-
-#### * modele nb fruits ####
-
-powerTransform(variete_arbre_annee$nbfruit, family = "bcnPower") %>% summary()
-
-mod_var_nb <- lm(sqrt(nbfruit) ~ factor(Annee) * Variete, data = variete_arbre_annee)
-
-plot(mod_var_nb)
-
-anova(mod_var_nb)
-Anova(mod_var_nb)
-
-variete_arbre_annee %>% 
-  modelr::add_predictions(mod_var_nb) %>% 
-  # group_by(Variete, Annee) %>% 
-  yardstick::mae(nbfruit, pred^2) # rsq
-
-variete_arbre_annee %>% 
-  modelr::add_predictions(mod_var_nb) %>% 
-  ggplot() +
-  aes(nbfruit, pred^2) +
-  geom_abline(slope = 1, intercept = 0) +
-  geom_point()
-
-broom::glance(mod_var_nb)
-
-ref_grid(mod_var_nb)
-
-emmeans(mod_var_nb, "Variete", by = "Annee", type = "response") %>% plot(comparisons = TRUE)
-emmip(mod_var_nb, Variete ~ Annee, CIs = TRUE, type = "response")
-emmip(mod_var_nb, Annee ~ Variete, CIs = TRUE, type = "response")
-
-
-
-
-
-# e_highlight
-# e_labels ?
-# e_mark_line(data = list(xAxis = 7), title = "Tortoise") # pour l'année de début de taille
 
 
 
