@@ -1,16 +1,23 @@
-**IPSIM-Cirsium** is a tool developped by INRA for professionals in agriculture to predict and manage the damage caused by thistle on crops in France.
+<img src="mangoviz-logo.png" id="logo"> 
 
-### User guide
+> **MangoViz** is an interactive dashboard for exploring long-term experiments on mango by CIRAD research center.
 
-1. Choose your language
-1. Go to **your situation** tab
-1. Tick what you want and validate
-1. Explore model results
-1. Go back to the questionnaire for testing new combinations...
 
-**NOT UPDATED YET**
 
-***
-> Your data is used to produce the result and is not retained.
 
-***
+
+
+
+*** 
+
+Last update : 2021-10-12 
+
+Logo ©[DoAna](https://doana-r.com)  
+<!-- Photographies © Jesper Rasmussen sauf mention contraire -->
+
+The wirtten content of this app is available under the [CC-BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/) and the source code under the [MIT license](https://mit-license.org/) (© [DoAna](https://www.doana-r.com/) 2021).
+
+this website is built with [R](https://www.r-project.org/) and [shiny](https://shiny.rstudio.com/).
+
+Source code : https://gitlab.com/doana-r/mangoviz
+<!-- peut-être à herberger sur le groupe du CIRAD -->

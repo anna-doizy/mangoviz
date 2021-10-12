@@ -1,21 +1,31 @@
 
 <img src="mangoviz-logo.png" id="logo"> 
 
-> **MangoViz** est un tableau de bord pour explorer les résultats d'expériences scientifiques au long-terme menées sur la mangue par le CIRAD.
+> **MangoViz** est un tableau de bord interactif pour explorer les résultats d'expériences scientifiques au long-terme menées sur la mangue par le CIRAD.
 
 
 
+***
 
-
-
-
-
-
+<p class="center">
+  <a href="https://www.cirad.fr/">
+    <img src="logo-cirad.jpg" class="logo-10">
+  </a>
+  <a href="https://agriculture.gouv.fr/">
+    <img src="logo-ministere-agriculture.jpg" class="logo-10">
+  </a>
+  <a href="https://www.europe-en-france.gouv.fr/fr">
+    <img src="logo-feder.jpg" class="logo-10">
+  </a>
+  <a href="https://europa.eu/european-union/index_en">
+    <img src="logo-eu.jpg" class="logo-10">
+  </a>
+</p>
 
 
 *** 
 
-Dernière mise à jour : 2021-09-23 
+Dernière mise à jour : 2021-10-12 
 
 Logo ©[DoAna](https://doana-r.com)  
 <!-- Photographies © Jesper Rasmussen sauf mention contraire -->
