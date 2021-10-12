@@ -3,7 +3,14 @@
 suppressPackageStartupMessages({
   library(shiny)
   library(shinydashboard)
-  library(shinyhelper)
+  library(shinyWidgets)
+  # library(shinyhelper)
+  library(dplyr)
+  library(ggplot2)
+  library(plotly)
+  library(car)
+  library(emmeans)
+  library(echarts4r)
   library(mangoviz)
 })
 
@@ -84,9 +91,81 @@ function(req) {
         div(includeMarkdown(sprintf("locale/accueil_%s.md", lang)), class = "markdown-tab")
       ))
 
+      # Onglet essai taille ####
+      , tabItem(tabName = "taille", fluidRow(
+        
+      )) # end of taille tab
       
-      
-      
+      # Onglet évaluation variétale ####
+      , tabItem(tabName = "variete", fluidRow(
+        column(
+          6, 
+          box(
+            title = "Présentation", # textui
+            width = 12,
+            status = "success",
+            solidHeader = TRUE,
+            "texte pour décrire le protocole expérimental",
+            plotlyOutput("variete_parcelle")
+          ),
+          
+          # où le mettre ?
+          radioGroupButtons(
+            inputId = "variete_mesure",
+            label = "Mesure", # textui
+            choices = unique(variete$Mesure), # vecteur nommé pour textui
+            individual = TRUE,
+            checkIcon = list(
+              yes = tags$i(class = "fa fa-circle", 
+                           style = "color: steelblue"), # changer couleur
+              no = tags$i(class = "fa fa-circle-o", 
+                          style = "color: steelblue"))
+          ),
+          
+          
+          box(
+            title = "Suivi spatial", # textui
+            width = 12,
+            status = "success",
+            solidHeader = TRUE,
+            selectInput(
+              "variete_select_var",
+              "Choix de la variété", # textui
+              choices = levels(variete$cultivar),
+              selected = variete$cultivar[1] # temporaire
+            ),
+            echarts4rOutput("variete_spatial")
+          )
+        ),
+        column(
+          6, 
+          box(
+            title = "Comparaison des variétés", # textui
+            width = 12,
+            status = "success",
+            solidHeader = TRUE,
+            checkboxGroupButtons(
+              "variete_checkbox_year",
+              "Choix d'une ou plusieurs années", # textui
+              choices = unique(variete$Annee),
+              selected = variete$Annee[1]
+            ),
+            echarts4rOutput("variete_var")
+          ),
+          box(
+            title = "Suivi temporel", # textui
+            width = 12,
+            status = "success",
+            solidHeader = TRUE,
+            multiInput(
+              "variete_multi_var",
+              "Choix d'une ou plusieurs variétés",
+              choices = levels(variete$cultivar)
+            ),
+            echarts4rOutput("variete_temporel")
+          )
+        )
+      ))
       
       
       # Onglet en savoir plus ####
