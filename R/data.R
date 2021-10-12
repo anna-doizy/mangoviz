@@ -8,20 +8,14 @@
 #' @format data.frame 48x4
 "textesUI"
 
-#' Meteorological data from meteo France
+#' Varietal essay
 #'
-#' @format data.frame 497x9
+#' @format data.frame 2,814 x 7
 #' \describe{
-#'   \item{NUM_POSTE}{Station identifier}
-#'   \item{DAT}{Month as a date vector (March, April and May from 2018 to 2020)}
-#'   \item{TMMOY}{Monthly average of the daily mean temperatures in °C}
-#'   \item{RR}{Monthly cumul of rain in mm}
-#'   \item{Nom}{Name of the closest city}
-#'   \item{Latitude, Longitude}{Geographical coordinates of the station}
-#'   \item{Altitude}{Station elevation}
-#'   \item{Mois}{Month as a character vector}
-#' }
-#' 
-#' @source \url{https://donneespubliques.meteofrance.fr/?fond=produit&id_produit=115&id_rubrique=38}
-# "meteo"
+#'   \item{arbre}{tree identifier}
+#'   \item{cultivar}{mango tree cultivar}
+#'   \item{Annee}{Year of the observation}
+#'   \item{X, Y}{Mtree coordinates}
+#'   \item{Mesure, Valeurs}{Either the production in grams (masse) or the number of fruits (nbfruit) or the mean fruit weight in grams (masse_fruit) per tree per year of harvest}
+"variete"
 
