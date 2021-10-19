@@ -22,12 +22,12 @@ variete <- read_delim("data-raw/MA02.txt", locale = locale(encoding = "ISO-8859-
   rename(Annee = annee) %>% 
   group_by(arbre, cultivar, Annee) %>% 
   summarise(
-    masse = sum(masse),
+    masse = sum(masse/1000), # kg
     nbfruit = sum(nbfruit)
   ) %>% 
   ungroup() %>% 
   mutate(
-    masse_fruit = masse / nbfruit,
+    masse_fruit = masse / nbfruit * 1000, # g
     cultivar = cultivar %>% str_to_title() %>% factor(),
     X = str_sub(arbre, end = 1) %>% factor(levels = LETTERS[11:1]),
     Y = str_sub(arbre, start = 2) %>% factor(levels = 1:17)
