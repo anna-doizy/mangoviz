@@ -30,21 +30,41 @@
 
 # rdv du 19 oct
 # - mode d'emploi
-# - passer les g en kg
 # - ordre des ligne colonne du plan de parcelle à mettre comme suivi spatial
-# - décimales dans les étiquettes du graphe 1 à enlever
+# - décimales dans les étiquettes du graphe 1 à enlever OK
 # - arbre en facteur aléatoire ?
 # - comparer les moyennes estimes aux moyennes observées
 # - faire un graphique pour représenter l'étendue et pas l'intervalle de confiance des moyennes (pour tester)
 # - logo : photo plus nette, trait plus fin, autre police (plu ronde et fine), couleur ?
 # - format de citation à réfléchir
+
+## Eval variétale
+
 # -  dans présentation : photos des variétés, fiches variétales, photo aérienne de la parcelle, description du protocole et des valeurs mesurées
 # - dans résultats : 
-# 1/ comp variétale : barres horizontales
-# 2/ suivi temporel : trouver un format de sélection qui prend moins de place
+# 1/ comp variétale : barres horizontales (repasser en ggplot ?) A VOIR
+# 2/ suivi temporel : trouver un format de sélection qui prend moins de place OK TESTER SUR TEL
 # 3/ suivi spatial : en bas, tester de repasser en ggplot avec un facet_wrap(~ Annee), ajouter possibilité d'afficher toutes les variétés ensemble
+
 # - garder en tete possible ajout des valeurs brix pH etc. (données au niveau du fruit)
 
+
+
+# Customiize tooltip
+
+# mtcars |>  
+#   tibble::rownames_to_column("model") |> 
+#   e_charts(wt) |> 
+#   e_scatter(mpg, qsec, bind = model) |>
+#   e_tooltip(
+#     formatter = htmlwidgets::JS("
+#       function(params){
+#         return('<strong>' + params.name + 
+#                 '</strong><br />wt: ' + params.value[0] + 
+#                 '<br />mpg: ' + params.value[1]) 
+#                 }
+#     ")
+#   )
 
 
 
@@ -188,7 +208,8 @@ variete_mesure %>%
   # e_mark_line(data = list(xAxis = cultivar)) %>% # input
   e_axis(axis = "y", formatter = e_axis_formatter(locale = "fr")) |>
   e_title("Production annuelle moyenne par arbre (kg)", "en fonction de la variété et des années de récolte sélectionnées") %>% # textui
-  e_tooltip()
+  e_tooltip() |>
+  e_flip_coords()
 
 
 

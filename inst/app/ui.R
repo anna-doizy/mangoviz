@@ -177,7 +177,7 @@ function(req) {
                 "variete_checkbox_year",
                 "Choix d'une ou plusieurs années", # textui
                 choices = unique(variete$Annee),
-                selected = variete$Annee[1]
+                selected = unique(variete$Annee) # toutes les années sélectionées par défaut
               ),
               echarts4rOutput("variete_var")
             )
@@ -188,10 +188,12 @@ function(req) {
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              multiInput(
+              selectInput(
                "variete_multi_var",
-               "Choix d'une ou plusieurs variétés",
-               choices = levels(variete$cultivar)
+               "Choix d'une ou plusieurs variétés", # vérifier si ça fonctionne avec le téléphone
+               choices = levels(variete$cultivar),
+               selected = "Caro",
+               multiple = TRUE
               ),
               echarts4rOutput("variete_temporel")
             )
@@ -209,7 +211,7 @@ function(req) {
               "variete_select_var",
               "Choix de la variété", # textui
               choices = levels(variete$cultivar),
-              selected = variete$cultivar[1] # temporaire
+              selected = "Caro"
               ),
               echarts4rOutput("variete_spatial")
             )
