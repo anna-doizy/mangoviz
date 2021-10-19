@@ -1,29 +1,3 @@
-# deployment to shinyapps.io with rsconnect
-
-# SETUP
-# create a new repo on gitlab and github
-# git remote add origin git@gitlab.com:cirad-apps/mangoviz.git
-# git remote set-url --add --push origin git@github.com:anna-doizy/mangoviz.git
-# git remote set-url --add --push origin git@gitlab.com:cirad-apps/mangoviz.git
-# git remote -v
-# origin  git@gitlab.com:cirad-apps/mangoviz.git (fetch)
-# origin  git@github.com:anna-doizy/mangoviz.git (push)
-# origin  git@gitlab.com:cirad-apps/mangoviz.git (push)
-# git push -u origin master/main
-
-# EACH TIME before deployment
-# update all packages
-# change "update date" in the accueil FR et EN
-# check and install this package
-# check if parse("inst/app/server.R"), parse("inst/app/ui.R") work
-# commit & push
-# restart R session
-# remotes::install_github("anna-doizy/mangoviz")
-# publish the app
-
-# nécessaire car comme l'application charge le package pour démarrer (récupère le jeu suivi), il a besoin d'être installé proprement dans le serveur distant. Pour l'instant RStudio (shinyapps) ne permet de faire cela qu'avec des packages classiques (CRAN) ou github, mais pas gitlab...
-
-
 
 # A FAIRE ####
 
@@ -31,19 +5,51 @@
 # - ratio des graphes
 # - textui
 # - format des nombres à checker en fonction de la langue
-# - vérifier que le emmeans fait bien ce qu'il faut quand on mets plusieurs années ensemble
+# - vérifier que le emmeans fait bien ce qu'il faut quand on met plusieurs années ensemble
+# - limite supérieure des légendes à harmoniser
+# - couleurs
+# - axe des y de la carte
+# - echelle carte qui commence à 0
 
-# limite supérieure des légendes à harmoniser
-# couleurs
-# textui pour la traduction
-# axe des y de la carte
-# echelle carte qui commence à 0
+
 # ajouter du loading ? e_show_loading()
-
-
 # e_highlight
 # e_labels ?
 # e_mark_line(data = list(xAxis = 7), title = "Tortoise") # pour l'année de début de taille
+
+
+
+# mail du 12 oct
+# - je n'ai rempli que l'onglet Évaluation variétale,
+# - ce n'est pas la peine de chercher à le mettre en anglais
+# - je n'ai pas encore travaillé sur les textes des graphiques, leurs couleurs et les échelles des axes, mais j'ai réussi à formater les nombres correctement
+# - il faut sélectionner au moins une variété pour que le dernier graphique fonctionne
+# - je n'ai pas encore intégré les bandes de confiance et la ligne horizontale pour le dernier graphique dans le cas où une seule variété est sélectionnée
+
+
+
+# rdv du 19 oct
+# - mode d'emploi
+# - passer les g en kg
+# - ordre des ligne colonne du plan de parcelle à mettre comme suivi spatial
+# - décimales dans les étiquettes du graphe 1 à enlever
+# - arbre en facteur aléatoire ?
+# - comparer les moyennes estimes aux moyennes observées
+# - faire un graphique pour représenter l'étendue et pas l'intervalle de confiance des moyennes (pour tester)
+# - logo : photo plus nette, trait plus fin, autre police (plu ronde et fine), couleur ?
+# - format de citation à réfléchir
+# -  dans présentation : photos des variétés, fiches variétales, photo aérienne de la parcelle, description du protocole et des valeurs mesurées
+# - dans résultats : 
+# 1/ comp variétale : barres horizontales
+# 2/ suivi temporel : trouver un format de sélection qui prend moins de place
+# 3/ suivi spatial : en bas, tester de repasser en ggplot avec un facet_wrap(~ Annee), ajouter possibilité d'afficher toutes les variétés ensemble
+# - garder en tete possible ajout des valeurs brix pH etc. (données au niveau du fruit)
+
+
+
+
+
+
 
 
 library(mangoviz)

@@ -49,19 +49,59 @@ function(req) {
           }),
           hr()
         )
-      }
+      },
 
       # Tabs
-      , lapply(seq(along.with = onglets$id), function(tab) {
-        menuItem(
-          text = strong(onglets[[lang]][tab]),
-          tabName = onglets$id[tab],
-          icon = icon(onglets$icon[tab])
-        )
-      }),
+
+      menuItem(
+        text = strong(textesUI[[lang]][textesUI$id == "accueil"]),
+        tabName = "accueil",
+        icon = icon("seedling")
+      ),
+      
+      menuItem(
+        text = strong(textesUI[[lang]][textesUI$id == "taille"]),
+        tabName = "taille",
+        menuSubItem(
+          text = textesUI[[lang]][textesUI$id == "presentation"],
+          tabName = "taille_presentation"
+        ),
+        menuSubItem(
+          text = textesUI[[lang]][textesUI$id == "resultats"],
+          tabName = "taille_resultats"
+        ),
+        icon = icon("cut")
+      ),
+      
+      menuItem(
+        text = strong(textesUI[[lang]][textesUI$id == "variete"]),
+        tabName = "variete",
+        menuSubItem(
+          text = textesUI[[lang]][textesUI$id == "presentation"],
+          tabName = "var_presentation"
+        ),
+        menuSubItem(
+          text = textesUI[[lang]][textesUI$id == "resultats"],
+          tabName = "var_resultats"
+        ),
+        icon = icon("dna")
+      ),
+      
+      menuItem(
+        text = strong(textesUI[[lang]][textesUI$id == "savoirplus"]),
+        tabName = "savoirplus",
+        icon = icon("book")
+      ),
+      
+      menuItem(
+        text = strong(textesUI[[lang]][textesUI$id == "remerciements"]),
+        tabName = "remerciements",
+        icon = icon("heart")
+      ),
+
       menuItem(
         text = strong(textesUI[[lang]][textesUI$id == "contact"]),
-        href = "mailto:mangoviz@cirad.fr", # CHANGER
+        href = "mailto:mangoviz@cirad.fr", # à créer
         icon = icon("at")
       )
     )
@@ -87,7 +127,7 @@ function(req) {
 
       # Onglet Accueil ####
       
-      tabItem(tabName = "presentation", fluidRow(
+      tabItem(tabName = "accueil", fluidRow(
         div(includeMarkdown(sprintf("locale/accueil_%s.md", lang)), class = "markdown-tab")
       ))
 
@@ -96,10 +136,11 @@ function(req) {
         
       )) # end of taille tab
       
+      
       # Onglet évaluation variétale ####
-      , tabItem(tabName = "variete", fluidRow(
+      , tabItem(tabName = "var_presentation", fluidRow(
         column(
-          6, 
+          12, 
           box(
             title = "Présentation", # textui
             width = 12,
@@ -107,7 +148,11 @@ function(req) {
             solidHeader = TRUE,
             "texte pour décrire le protocole expérimental",
             plotlyOutput("variete_parcelle")
-          ),
+          )
+        )))
+
+
+      , tabItem(tabName = "var_resultats", 
           
           # où le mettre ?
           radioGroupButtons(
@@ -120,52 +165,57 @@ function(req) {
                            style = "color: steelblue"), # changer couleur
               no = tags$i(class = "fa fa-circle-o", 
                           style = "color: steelblue"))
+          ), 
+          fluidRow(
+          column(6,
+            box(
+              title = "Comparaison des variétés", # textui
+              width = 12,
+              status = "success",
+              solidHeader = TRUE,
+              checkboxGroupButtons(
+                "variete_checkbox_year",
+                "Choix d'une ou plusieurs années", # textui
+                choices = unique(variete$Annee),
+                selected = variete$Annee[1]
+              ),
+              echarts4rOutput("variete_var")
+            )
           ),
+          column(6,
+            box(
+              title = "Suivi temporel", # textui
+              width = 12,
+              status = "success",
+              solidHeader = TRUE,
+              multiInput(
+               "variete_multi_var",
+               "Choix d'une ou plusieurs variétés",
+               choices = levels(variete$cultivar)
+              ),
+              echarts4rOutput("variete_temporel")
+            )
+          )
           
-          
-          box(
-            title = "Suivi spatial", # textui
-            width = 12,
-            status = "success",
-            solidHeader = TRUE,
-            selectInput(
+        ),
+        fluidRow(
+          column(12,
+            box(
+              title = "Suivi spatial", # textui
+              width = 12,
+              status = "success",
+              solidHeader = TRUE,
+              selectInput(
               "variete_select_var",
               "Choix de la variété", # textui
               choices = levels(variete$cultivar),
               selected = variete$cultivar[1] # temporaire
-            ),
-            echarts4rOutput("variete_spatial")
-          )
-        ),
-        column(
-          6, 
-          box(
-            title = "Comparaison des variétés", # textui
-            width = 12,
-            status = "success",
-            solidHeader = TRUE,
-            checkboxGroupButtons(
-              "variete_checkbox_year",
-              "Choix d'une ou plusieurs années", # textui
-              choices = unique(variete$Annee),
-              selected = variete$Annee[1]
-            ),
-            echarts4rOutput("variete_var")
-          ),
-          box(
-            title = "Suivi temporel", # textui
-            width = 12,
-            status = "success",
-            solidHeader = TRUE,
-            multiInput(
-              "variete_multi_var",
-              "Choix d'une ou plusieurs variétés",
-              choices = levels(variete$cultivar)
-            ),
-            echarts4rOutput("variete_temporel")
+              ),
+              echarts4rOutput("variete_spatial")
+            )
           )
         )
-      ))
+      )
       
       
       # Onglet en savoir plus ####
