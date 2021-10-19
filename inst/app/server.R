@@ -53,8 +53,8 @@ server <- function(input, output, session) {
       e_charts(X, reorder = FALSE, timeline = TRUE) |>
       e_grid(left = "30%") |>
       e_heatmap(Y, Selec) |>
-      e_visual_map(Selec) |>
-      e_title(variete) # "Production annuelle par arbre (kg) de la variété XX"
+      e_visual_map(Selec) # |>
+      # e_title(variete) # "Production annuelle par arbre (kg) de la variété XX"
   })
   
   
@@ -74,11 +74,13 @@ server <- function(input, output, session) {
       emmeans("cultivar", type = "response") %>% # estimation des moyennes marginales
       as_tibble() %>%
       e_charts(cultivar) %>% 
-      e_bar(response, legend = FALSE, name = NA) %>%
-      e_error_bar(lower.CL, upper.CL) %>%
-      e_axis(axis = "y", formatter = e_axis_formatter(locale = lang)) |>
-      e_title("Production annuelle moyenne par arbre (kg)", "en fonction de la variété et des années de récolte sélectionnées") %>% # textui
-      e_tooltip()
+      e_bar(response, legend = FALSE, name = "truc") %>%
+      e_error_bar(lower.CL, upper.CL, name = "machin") %>%
+      e_y_axis(formatter = e_axis_formatter(locale = lang)) |>
+      e_x_axis(axisLabel = list(interval = 0, rotate = 45)) |> 
+      # e_flip_coords() |> # flip axis, ne marche pas avec les barres d'erreur
+      # e_title("Production annuelle moyenne par arbre (kg)", "en fonction de la variété et des années de récolte sélectionnées") %>% # textui
+      e_tooltip(formatter = e_tooltip_item_formatter(locale = lang, digits = 1))
   })
   
   output$variete_temporel <- renderEcharts4r({
