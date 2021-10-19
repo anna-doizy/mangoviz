@@ -12,7 +12,7 @@ A data frame of 2 814 x 7
 \item{cultivar}{mango tree cultivar}
 \item{Annee}{Year of the observation}
 \item{X, Y}{Tree coordinates}
-\item{Mesure, Valeur}{Either the production in grams (masse) or the number of fruits (nbfruit) or the mean fruit weight in grams (masse_fruit) per tree per year of harvest}
+\item{Mesure, Valeur}{Either the production in kilograms (masse) or the number of fruits (nbfruit) or the mean fruit weight in grams (masse_fruit) per tree per year of harvest}
 }
 }
 \usage{
