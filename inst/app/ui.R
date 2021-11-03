@@ -225,10 +225,10 @@ function(req) {
         div(includeMarkdown(sprintf("locale/savoirplus_%s.md", lang)), class = "markdown-tab")
       ))
       
-      # Onglet Remerciements ####
-      , tabItem(tabName = "remerciements", fluidRow(
-        div(includeMarkdown(sprintf("locale/remerciements_%s.md", lang)), class = "markdown-tab")
-      ))
+      # # Onglet Remerciements ####
+      # , tabItem(tabName = "remerciements", fluidRow(
+      #   div(includeMarkdown(sprintf("locale/remerciements_%s.md", lang)), class = "markdown-tab")
+      # ))
 
     ) # end of tabItems
   ) # end of Dashboardbody
