@@ -4,78 +4,54 @@
 # - travailler les couleurs et les échelles (à harmoniser entre les différentes espèces)
 # - ratio des graphes
 # - textui
-# - format des nombres à checker en fonction de la langue
-# - vérifier que le emmeans fait bien ce qu'il faut quand on met plusieurs années ensemble
 # - limite supérieure des légendes à harmoniser
-# - couleurs
 # - axe des y de la carte
+# - nom et titre des axes, titres des graphiques
 # - echelle carte qui commence à 0
+# - ajouter du loading ? e_show_loading()
 
-
-# ajouter du loading ? e_show_loading()
-# e_highlight
-# e_labels ?
-# e_mark_line(data = list(xAxis = 7), title = "Tortoise") # pour l'année de début de taille
-
-
-
-# mail du 12 oct
 # - je n'ai rempli que l'onglet Évaluation variétale,
 # - ce n'est pas la peine de chercher à le mettre en anglais
-# - je n'ai pas encore travaillé sur les textes des graphiques, leurs couleurs et les échelles des axes, mais j'ai réussi à formater les nombres correctement
-# - il faut sélectionner au moins une variété pour que le dernier graphique fonctionne
-# - je n'ai pas encore intégré les bandes de confiance et la ligne horizontale pour le dernier graphique dans le cas où une seule variété est sélectionnée
-
-
-
-# rdv du 19 oct
 # - mode d'emploi
-# - ordre des ligne colonne du plan de parcelle à mettre comme suivi spatial
-# - décimales dans les étiquettes du graphe 1 à enlever OK
-# - arbre en facteur aléatoire ?
-# - comparer les moyennes estimes aux moyennes observées
-# - faire un graphique pour représenter l'étendue et pas l'intervalle de confiance des moyennes (pour tester)
-# - logo : photo plus nette, trait plus fin, autre police (plu ronde et fine), couleur ?
-# - format de citation à réfléchir
+# - logo : photo plus nette, trait plus fin, autre police (plu ronde et fine), couleur ? A CHOISIR
+# - format de citation de l'appli à réfléchir
+# - harmoniser les pipes
 
 ## Eval variétale
 
 # -  dans présentation : photos des variétés, fiches variétales, photo aérienne de la parcelle, description du protocole et des valeurs mesurées
 # - dans résultats : 
-# 1/ comp variétale : barres horizontales (repasser en ggplot ?) A VOIR
-# 2/ suivi temporel : trouver un format de sélection qui prend moins de place OK TESTER SUR TEL
-# 3/ suivi spatial : en bas, tester de repasser en ggplot avec un facet_wrap(~ Annee), ajouter possibilité d'afficher toutes les variétés ensemble
+# ajouter possibilité d'afficher toutes les variétés ensemble 
 
 # - garder en tete possible ajout des valeurs brix pH etc. (données au niveau du fruit)
 
 
-
-# Customiize tooltip
-
-# mtcars |>  
-#   tibble::rownames_to_column("model") |> 
-#   e_charts(wt) |> 
-#   e_scatter(mpg, qsec, bind = model) |>
-#   e_tooltip(
-#     formatter = htmlwidgets::JS("
-#       function(params){
-#         return('<strong>' + params.name + 
-#                 '</strong><br />wt: ' + params.value[0] + 
-#                 '<br />mpg: ' + params.value[1]) 
-#                 }
-#     ")
-#   )
+# STAT
+# - arbre en facteur aléatoire ?
+# - comparer les moyennes estimes aux moyennes observées
+# - faire un graphique pour représenter l'étendue et pas l'intervalle de confiance des moyennes (pour tester)
+# - vérifier que le emmeans fait bien ce qu'il faut quand on met plusieurs années ensemble
 
 
+# FAIT
+# - il faut sélectionner au moins une variété pour que le dernier graphique fonctionne OK
+# - je n'ai pas encore intégré les bandes de confiance et la ligne horizontale pour le dernier graphique dans le cas où une seule variété est sélectionnée OK
+# - ordre des ligne colonne du plan de parcelle à mettre comme suivi spatial OK
+# - décimales dans les étiquettes du graphe 1 à enlever OK
+# 1/ comp variétale : barres horizontales (repasser en ggplot ?) NON
+# 2/ suivi temporel : trouver un format de sélection qui prend moins de place OK
+# 3/ suivi spatial : en bas, tester de repasser en ggplot avec un facet_wrap(~ Annee) OK
+# - format des nombres à checker en fonction de la langue OK
 
 
+
+# server ####
 
 
 
 library(mangoviz)
 
 lang <- "fr"
-
 
 
 library(lme4)
@@ -88,10 +64,129 @@ library(dplyr)
 library(stringr)
 library(forcats)
 library(ggplot2)
+library(plotly)
 library(echarts4r)
 
 
-# Evaluation variétale ----------------------------------------------------
+input <- list(
+  # variete_mesure = "masse",
+  variete_mesure = "nbfruit",
+  # variete_mesure = "masse_fruit",
+  # variete_select_var = "Caro",
+  variete_checkbox_year = 2010:2015,
+  # variete_checkbox_year = 2016,
+  # variete_multi_var = c("Heidi", "Irwin", "José")
+  variete_multi_var = "Heidi"
+)
+
+
+
+# plan de la parcelle
+var_plan <- variete %>% 
+  distinct(X, Y, cultivar) %>%
+  ggplot() +
+  aes(x = X, y = Y, fill = cultivar) + # ajouter textui pour variété
+  geom_tile(color = "black") +
+  scale_fill_viridis_d() + # revoir les couleurs
+  scale_x_discrete(drop = FALSE) +
+  scale_y_discrete(drop = FALSE) +
+  coord_fixed() +
+  labs(x = NULL, y = NULL)
+
+ggplotly(var_plan)
+
+
+
+
+
+
+
+# comparaison des variétés
+
+
+var_cultivar <- if(!is.null(input$variete_checkbox_year))
+  variete %>% 
+    filter(Mesure == input$variete_mesure, Annee %in% input$variete_checkbox_year) %>%
+    ggplot() +
+    aes(x = cultivar, y = Valeur, fill = cultivar) +
+    geom_violin(alpha = 0.8, color = "transparent") +
+    geom_jitter(alpha = 0.5, width = 0.2, height = 0) +
+    geom_point(stat = "summary", fun = median, color = "red", size = 3)
+
+
+ggplotly(var_cultivar)
+
+
+
+
+
+
+
+# comparaison des années (suivi temporel)
+
+var_annee <- if(length(input$variete_multi_var) == 1) {
+  variete %>% 
+    filter(Mesure == input$variete_mesure, cultivar == input$variete_multi_var) %>%
+    ggplot() +
+    aes(x = Annee, y = Valeur, colour = cultivar) +
+    geom_line(aes(group = arbre), alpha = 0.2) +
+    geom_point(alpha = 0.5) +
+    geom_point(stat = "summary", fun = median, color = "black", size = 3)
+} else {
+  variete %>% 
+    filter(Mesure == input$variete_mesure) %>%
+    group_by(Annee, cultivar) %>% 
+    summarise(
+      Mediane = median(Valeur, na.rm = TRUE)
+    ) %>% 
+    ggplot() +
+    aes(x = Annee, y = Mediane, colour = cultivar) +
+    geom_line(aes(group = cultivar)) +
+    geom_point()
+}
+
+ggplotly(var_annee)
+
+
+
+
+
+
+
+
+# mesure à l'échelle de la parcelle
+var_spatial <- variete %>% 
+  filter(Mesure == input$variete_mesure, cultivar %in% input$variete_multi_var) %>%
+  ggplot() +
+  aes(x = X, y = Y, fill = Valeur) +
+  geom_tile(color = "black") +
+  # scale_fill_viridis_d() + # revoir les couleurs
+  scale_x_discrete(drop = FALSE) +
+  scale_y_discrete(drop = FALSE) +
+  coord_fixed() +
+  labs(x = NULL, y = NULL) +
+  facet_wrap(~ Annee, nrow = 2)
+
+ggplotly(var_spatial)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Evaluation variétale (VIEUX) ----------------------------------------------------
 
 variete <- read_delim("data-raw/MA02.txt", locale = locale(encoding = "ISO-8859-1", decimal_mark = ",", grouping_mark = "")) %>%
   rename(Annee = annee)
@@ -183,6 +278,37 @@ mesure <- "masse_fruit"
 
 
 ### Bar plot : comparaison variétale ####
+
+
+
+
+t_params <- powerTransform(variete[variete$Mesure == input$variete_mesure, "Valeur"], family = "bcnPower")
+
+variete %>% 
+  filter(Mesure == input$variete_mesure) %>%
+  mutate(Valeur_t = ifelse(!is.na(Valeur), bcnPower(Valeur, lambda = t_params$lambda, gamma = t_params$gamma), NA)) %>% # tranformation de variable
+  lm(Valeur_t ~ factor(Annee) * cultivar, data = .) %>%
+  ref_grid(at = list(Annee = input$variete_checkbox_year %>% as.numeric())) %>% # POURQUOI ?
+  update(tran = make.tran("bcnPower", c(t_params$lambda, t_params$gamma))) %>% # prise en compte de la transformation pour estimer les moyennes marginales
+  emmeans("cultivar", type = "response") %>% # estimation des moyennes marginales
+  as_tibble() %>%
+  mutate(response = round(response, 0)) %>% 
+  e_charts(cultivar) %>% 
+  e_bar(response, legend = FALSE) %>%
+  e_labels(position = "inside") %>% 
+  e_error_bar(lower.CL, upper.CL) %>%
+  e_y_axis(formatter = e_axis_formatter(locale = lang)) |>
+  e_x_axis(axisLabel = list(interval = 0, rotate = 25))  |>
+  suppressMessages() |> suppressWarnings()
+# e_flip_coords() |> # flip axis, ne marche pas avec les barres d'erreur
+# e_title("Production annuelle moyenne par arbre (kg)", "en fonction de la variété et des années de récolte sélectionnées") %>% # textui
+# e_tooltip(formatter = e_tooltip_item_formatter(locale = lang, digits = 1))
+
+
+
+
+
+
 # faire modèle
 
 annees <- 2010:2015
@@ -233,8 +359,61 @@ variete_mesure %>%
 
 
 
+tata <- variete %>%
+  filter(Mesure == input$variete_mesure) |>
+  tidyr::pivot_wider(names_from = cultivar, values_from = Valeur) |> # pour garder toutes les lignes et colonnes de la parcelle
+  arrange(as.numeric(as.character(Y)), desc(X)) |>
+  rename(Selec = all_of(input$variete_select_var)) |>
+  group_by(Annee)|>
+  e_charts(X, reorder = FALSE, timeline = TRUE) |>
+  e_grid(left = "30%") |>
+  e_heatmap(Y, Selec) |>
+  e_visual_map(Selec) # |>
+# e_title(variete) # "Production annuelle par arbre (kg) de la variété XX"
+
+toto <- lapply(unique(variete$Annee), function(an) {
+  variete %>%
+    filter(Mesure == input$variete_mesure, Annee == an) |>
+    tidyr::pivot_wider(names_from = cultivar, values_from = Valeur) |> # pour garder toutes les lignes et colonnes de la parcelle
+    arrange(as.numeric(as.character(Y)), desc(X)) |>
+    rename(Selec = all_of(input$variete_select_var)) |>
+    e_charts(X, reorder = FALSE) |>
+    e_grid(left = "30%") |>
+    e_heatmap(Y, Selec) |>
+    e_visual_map(Selec) |> 
+    e_title(an)
+}) %>% 
+  e_arrange(ids = ., rows = 2) # title
+
+
 
 ### lines :  Suivi temporel ####
+
+
+# pourrait se mettre en eventReactive pour optimiser
+t_params <- powerTransform(variete[variete$Mesure == input$variete_mesure, "Valeur"], family = "bcnPower")
+
+variete %>% 
+  filter(Mesure == input$variete_mesure) %>% # input
+  mutate(Valeur_t = ifelse(!is.na(Valeur), bcnPower(Valeur, lambda = t_params$lambda, gamma = t_params$gamma), NA)) %>% # tranformation de variable
+  lm(Valeur_t ~ factor(Annee) * cultivar, data = .) %>% # modèles vérifiés préalablement
+  ref_grid(at = list(cultivar = input$variete_multi_var)) %>%
+  update(tran = make.tran("bcnPower", c(t_params$lambda, t_params$gamma))) %>% # prise en compte de la transformation pour estimer les moyennes marginales
+  emmeans("Annee", by = "cultivar", type = "response") %>% # estimation des moyennes marginales
+  as_tibble() %>%
+  mutate(Annee = factor(Annee)) |>
+  # filter(cultivar == cultivar) |> # input
+  group_by(cultivar) |>
+  e_charts(Annee) %>% 
+  e_line(response) %>%
+  {ifelse(length(input$variete_multi_var) == 1, e_band(., lower.CL, upper.CL), .)} %>% 
+  # e_band(lower.CL, upper.CL) %>% # à ajouter si une seule variété cochée
+  e_axis(axis = "y", formatter = e_axis_formatter(locale = lang)) |>
+  e_tooltip(trigger = "axis", formatter = e_tooltip_pointer_formatter(locale = lang, digits = 0)) #%>% 
+# e_mark_line(data = list(xAxis = cultivar)) %>% # si on arrivait à mettre l'année en train d'être visualisée dans les timeline ?
+# e_title(cultivar)
+
+
 
 
 varietes <- "Heidi"
@@ -323,38 +502,6 @@ e2 <- variete_arbre_annee %>%
 
 ### temporel ####
 
-
-
-# ggplot(variete_arbre_annee) +
-#   aes(x = Annee, y = nbfruit, group = arbre) +
-#   geom_line(alpha = 0.2) +
-#   geom_point(alpha = 0.5) +
-#   facet_wrap(~ cultivar)
-# 
-# ggplot(variete_arbre_annee) +
-#   aes(x = Annee, y = masse, group = arbre) +
-#   geom_line(alpha = 0.2) +
-#   geom_point(alpha = 0.5) +
-#   facet_wrap(~ cultivar)
-# ggplot(variete_arbre_annee) +
-#   aes(x = cultivar, y = masse) +
-#   geom_point(alpha = 0.5) +
-#   facet_wrap(~ Annee)
-# 
-# ggplot(variete_arbre_annee) +
-#   aes(x = Annee, y = masse_fruit, group = arbre) +
-#   geom_line(alpha = 0.2) +
-#   geom_point(alpha = 0.5) +
-#   facet_wrap(~ cultivar)
-# 
-# ggplot(variete_arbre_annee) +
-#   aes(x = nbfruit, y = masse, color = Annee) +
-#   geom_point(alpha = 0.5) +
-#   facet_wrap(~ cultivar)
-# ggplot(variete_arbre_annee) +
-#   aes(x = sqrt(nbfruit), y = sqrt(masse), color = Annee) +
-#   geom_point(alpha = 0.5) +
-#   facet_wrap(~ cultivar)
 
 
 
