@@ -26,6 +26,16 @@ server <- function(input, output, session) {
 
 # Evaluation variétale ----------------------------------------------------
 
+  
+  ## Présentation ####
+  
+  output$variete_img <- renderImage({
+    list(src = paste0("./www/fiches-varietales/", input$variete_radio_cultivar, ".png"))
+  }, deleteFile = FALSE)
+  
+  
+  
+  ## Résultats ####
 
   output$variete_parcelle <- renderPlotly({
     var_plan <- variete %>% 

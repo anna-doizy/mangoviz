@@ -84,26 +84,39 @@ function(req) {
           text = textesUI[[lang]][textesUI$id == "resultats"],
           tabName = "var_resultats"
         ),
+        radioButtons(
+          inputId = "variete_mesure",
+          label = "Mesure", # textui
+          choices = unique(variete$Mesure) %>% setNames(c("Production", "Nombre de fruits", "Masse des fruits")) # vecteur nommé pour textui
+          # individual = TRUE,
+          # direction = "vertical",
+          # checkIcon = list(
+          #   yes = tags$i(class = "fa fa-circle", 
+          #                style = "color: steelblue"), # changer couleur
+          #   no = tags$i(class = "fa fa-circle-o", 
+          #               style = "color: steelblue"))
+        ),
         icon = icon("dna")
       ),
       
+      # rassembler les 3 en un seul ?
       menuItem(
         text = strong(textesUI[[lang]][textesUI$id == "savoirplus"]),
         tabName = "savoirplus",
         icon = icon("book")
-      ),
-      
-      menuItem(
-        text = strong(textesUI[[lang]][textesUI$id == "remerciements"]),
-        tabName = "remerciements",
-        icon = icon("heart")
-      ),
-
-      menuItem(
-        text = strong(textesUI[[lang]][textesUI$id == "contact"]),
-        href = "mailto:mangoviz@cirad.fr", # à créer
-        icon = icon("at")
       )
+      
+      # menuItem(
+      #   text = strong(textesUI[[lang]][textesUI$id == "remerciements"]),
+      #   tabName = "remerciements",
+      #   icon = icon("heart")
+      # ),
+      # 
+      # menuItem(
+      #   text = strong(textesUI[[lang]][textesUI$id == "contact"]),
+      #   href = "mailto:mangoviz@cirad.fr", # à créer
+      #   icon = icon("at")
+      # )
     )
   )
 
@@ -138,34 +151,50 @@ function(req) {
       
       
       # Onglet évaluation variétale ####
-      , tabItem(tabName = "var_presentation", fluidRow(
-        column(
-          12, 
-          box(
-            title = "Présentation", # textui
-            width = 12,
-            status = "success",
-            solidHeader = TRUE,
-            "texte pour décrire le protocole expérimental",
-            plotlyOutput("variete_parcelle")
+      , tabItem(
+        tabName = "var_presentation", 
+        fluidRow(
+          column(
+            8, 
+            box(
+              title = "Verger de l'évaluation variétale", # textui
+              width = 12, height = 570,
+              status = "success",
+              solidHeader = TRUE,
+              includeMarkdown(sprintf("locale/verger-variete_%s.md", lang))
+            ),
+            box(
+              title = "Information sur les variétés", # textui
+              width = 12, height = 1100,
+              status = "success",
+              solidHeader = TRUE,
+              radioButtons(
+                inputId = "variete_radio_cultivar",
+                label = "Choix de la variété", # textui
+                choices = unique(variete$cultivar) %>% sort(),
+                inline = TRUE
+              ),
+              imageOutput("variete_img") # A FAIRE : centrer l'image
+            )
+          ),
+          column(
+            4, 
+            box(
+              title = "Plan du verger", # textui
+              width = 12,
+              status = "success",
+              solidHeader = TRUE,
+              plotlyOutput("variete_parcelle", height = 600)
+            )
           )
-        )))
+        )
+      )
 
 
       , tabItem(tabName = "var_resultats", 
           
-          # où le mettre ?
-          radioGroupButtons(
-            inputId = "variete_mesure",
-            label = "Mesure", # textui
-            choices = unique(variete$Mesure), # vecteur nommé pour textui
-            individual = TRUE,
-            checkIcon = list(
-              yes = tags$i(class = "fa fa-circle", 
-                           style = "color: steelblue"), # changer couleur
-              no = tags$i(class = "fa fa-circle-o", 
-                          style = "color: steelblue"))
-          ), 
+          
+          
           fluidRow(
           column(6,
             box(
@@ -207,13 +236,13 @@ function(req) {
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              selectInput(
-              "variete_select_var",
-              "Choix de la variété", # textui
-              choices = levels(variete$cultivar),
-              selected = "Caro"
-              ),
-              echarts4rOutput("variete_spatial")
+              # selectInput(
+              # "variete_select_var",
+              # "Choix de la variété", # textui
+              # choices = levels(variete$cultivar),
+              # selected = "Caro"
+              # ),
+              plotOutput("variete_spatial")
             )
           )
         )
