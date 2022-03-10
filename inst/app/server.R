@@ -29,114 +29,173 @@ server <- function(input, output, session) {
   
   ## Présentation ####
   
-  output$variete_img <- renderImage({
-    list(src = paste0("./www/fiches-varietales/", input$variete_radio_cultivar, ".png"))
+  # Présentation des 10 variétés
+  
+  output$variete_ui_desc <- renderUI({
+    textesUI[textesUI$id == input$variete_radio_desc, lang] %>% 
+      markdown()
+  })
+  
+  output$variete_img_desc <- renderImage({
+    list(src = paste0("./www/varietes/", input$variete_radio_desc, ".JPG"))
+  }, deleteFile = FALSE)
+  
+  # Bilan : fiches variétales
+  output$variete_img_bilan <- renderImage({
+    list(src = paste0("./www/fiches-varietales/", input$variete_radio_bilan, ".jpg"))
   }, deleteFile = FALSE)
   
   
+  # Couleur des variétés
+  coul_var <- c("#b94137", "#0080b4", "#008355", "#7f4ecc", "#ce7e26", "#8aa543", "#56423e", "#be4b7f", "#002853", "#00c1ff") %>% 
+    setNames(unique(variete$cultivar))
   
-  ## Résultats ####
+  ## Plan de la parcelle ####
 
-  output$variete_parcelle <- renderPlotly({
-    var_plan <- variete %>% 
+  output$variete_parcelle <- renderGirafe({
+    variete %>% 
       distinct(X, Y, cultivar) %>%
-      ggplot() +
-      aes(x = X, y = Y, fill = cultivar) + # ajouter textui pour variété
-      geom_tile(color = "black") +
-      scale_fill_viridis_d() + # revoir les couleurs
-      scale_x_discrete(drop = FALSE) +
-      scale_y_discrete(drop = FALSE) +
-      coord_fixed() +
-      labs(x = NULL, y = NULL)
-    
-    ggplotly(var_plan)
+      {ggplot(.) +
+          aes(x = X, y = Y, fill = cultivar, tooltip = cultivar, data_id = cultivar) +
+          geom_tile_interactive(color = "black") +
+          scale_fill_manual(values = coul_var, guide = guide_legend(byrow = TRUE)) +
+          scale_x_discrete(drop = FALSE) +
+          scale_y_discrete(drop = FALSE) +
+          coord_fixed() +
+          labs(x = NULL, y = NULL, fill = textesUI[textesUI$id == "cultivar", lang])} %>% 
+      girafe(
+        ggobj = ., height_svg = 8,
+        options = list(
+          opts_hover_inv(css = "opacity:0.4;"),
+          opts_tooltip(use_fill = TRUE),
+          opts_hover(css = "fill:black;opacity:0.8;"),
+          opts_selection(type = "none")
+        )
+      )
   })
   
   
   
   
+  ## comparaison des variétés ####
   
-  
-  output$variete_var <- renderEcharts4r({
-    # graphe suffisamment large pour lire le nom des espèce ou inverser les x et y ?
-    
-    t_params <- powerTransform(variete[variete$Mesure == input$variete_mesure, "Valeur"], family = "bcnPower")
-    
-    if(!is.null(input$variete_checkbox_year)) # if no selected date, no plot
-      variete %>% 
-        filter(Mesure == input$variete_mesure) %>%
-        mutate(Valeur_t = ifelse(!is.na(Valeur), bcnPower(Valeur, lambda = t_params$lambda, gamma = t_params$gamma), NA)) %>% # tranformation de variable
-        lm(Valeur_t ~ factor(Annee) * cultivar, data = .) %>%
-        ref_grid(at = list(Annee = input$variete_checkbox_year %>% as.numeric())) %>% # POURQUOI ?
-        update(tran = make.tran("bcnPower", c(t_params$lambda, t_params$gamma))) %>% # prise en compte de la transformation pour estimer les moyennes marginales
-        emmeans("cultivar", type = "response") %>% # estimation des moyennes marginales
-        as_tibble() %>%
-        mutate(response = round(response, 0)) %>% 
-        e_charts(cultivar) %>% 
-        e_bar(response, legend = FALSE) %>%
-        e_labels(position = "inside") %>% 
-        e_error_bar(lower.CL, upper.CL) %>%
-        e_y_axis(formatter = e_axis_formatter(locale = lang)) |>
-        e_x_axis(axisLabel = list(interval = 0, rotate = 25))  |>
-        suppressMessages() |> suppressWarnings()
+  output$variete_var <- renderGirafe({
+    if(!is.null(input$variete_checkbox_year)) { # if no selected date, no plot
+      {variete %>% 
+        filter(Mesure == input$variete_mesure, Annee %in% input$variete_checkbox_year, !is.na(Valeur)) %>% 
+        ggplot() +
+        aes(x = cultivar, y = Valeur, fill = cultivar) +
+        geom_violin(alpha = 0.3, color = "transparent", scale = "count") +
+        geom_jitter(alpha = 0.3, width = 0.2, height = 0) +
+        geom_point(stat = "summary", fun = mean, size = 4, color = "white") +
+        geom_point_interactive(
+          stat = "summary", 
+          fun = mean, size = 3, 
+          aes(color = cultivar, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"), data_id = cultivar)
+        ) +
+        scale_fill_manual(values = coul_var, aesthetics = c("colour", "fill")) +
+        labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang]) +
+        theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+      } %>% 
+        girafe(
+          ggobj = ., 
+          options = list(
+            opts_hover_inv(css = "opacity:0.4;"),
+            opts_tooltip(use_fill = TRUE),
+            opts_hover(css = "fill:black;"),
+            opts_selection(type = "none")
+          )
+        )
+    }
   })
   
+  ## comparaison des années (suivi temporel) ####
   
-  
-  output$variete_temporel <- renderEcharts4r({
-    
-    # pourrait se mettre en eventReactive pour optimiser
-    t_params <- powerTransform(variete[variete$Mesure == input$variete_mesure, "Valeur"], family = "bcnPower")
-    
-    var_annee <- variete %>% 
-      filter(Mesure == input$variete_mesure) %>%
-      mutate(Valeur_t = ifelse(!is.na(Valeur), bcnPower(Valeur, lambda = t_params$lambda, gamma = t_params$gamma), NA)) %>% # tranformation de variable
-      lm(Valeur_t ~ factor(Annee) * cultivar, data = .) %>% # modèles vérifiés préalablement
-      ref_grid(at = list(cultivar = input$variete_multi_var)) %>%
-      update(tran = make.tran("bcnPower", c(t_params$lambda, t_params$gamma))) %>% # prise en compte de la transformation pour estimer les moyennes marginales
-      emmeans("Annee", by = "cultivar", type = "response") %>% # estimation des moyennes marginales
-      as_tibble() %>%
-      mutate(
-        Annee = factor(Annee), 
-        response = round(response, 0)
-      ) |>
-      group_by(cultivar)
-    
+  output$variete_temporel <- renderGirafe({
+
     if(!is.null(input$variete_multi_var)) # if no selected cultivar, no plot
-      if(length(input$variete_multi_var) == 1) {
-        var_annee |>
-          e_charts(Annee) %>% 
-          e_line(response) %>%
-          e_labels(digits = 0) %>% 
-          e_mark_line(data = list(yAxis = mean(var_annee$response) %>% round(0))) |># textui ?
-          e_band(lower.CL, upper.CL) %>%
-          e_axis(axis = "y", formatter = e_axis_formatter(locale = lang))
-      } else {
-        var_annee |>
-          e_charts(Annee) %>% 
-          e_line(response) %>%
-          e_axis(axis = "y", formatter = e_axis_formatter(locale = lang)) |>
-          e_tooltip(trigger = "axis", formatter = e_tooltip_pointer_formatter(locale = lang, digits = 0))
+    {
+      {if(length(input$variete_multi_var) == 1) { # if one selected cultivar
+        variete %>% 
+          filter(Mesure == input$variete_mesure, cultivar == input$variete_multi_var, !is.na(Valeur)) %>%
+          ggplot() +
+          aes(x = Annee, y = Valeur) +
+          geom_line_interactive(aes(group = arbre, data_id = arbre, tooltip = arbre, hover_css = "fill:none"), alpha = 0.1) +
+          geom_point_interactive(alpha = 0.3, aes(data_id = arbre, tooltip = arbre)) +
+          geom_smooth_interactive(method = "lm", formula = "y~1", se = FALSE, color = "black", linetype = 2, aes(tooltip = paste(textesUI[textesUI$id == "global_mean", lang], round(..y.., 1), sep = "<br>"))) +
+          geom_line(stat = "summary", fun = mean, aes(colour = cultivar)) +
+          geom_point_interactive(stat = "summary", fun = mean, size = 3, aes(colour = cultivar, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"))) +
+          scale_color_manual(values = coul_var[input$variete_multi_var]) +
+          labs(
+            x = NULL, y = NULL, 
+            title = textesUI[textesUI$id == input$variete_mesure, lang],
+            colour = textesUI[textesUI$id == "cultivar", lang]
+          )
+      } else { # if several selected cultivars
+        variete %>% 
+          filter(Mesure == input$variete_mesure, cultivar %in% input$variete_multi_var) %>%
+          group_by(Annee, cultivar) %>% 
+          summarise(
+            Moyenne = mean(Valeur, na.rm = TRUE)
+          ) %>%
+          suppressMessages() %>% # group message
+          # suppressWarnings() %>% # NA & NaN values
+          ggplot() +
+          aes(x = Annee, y = Moyenne, colour = cultivar, tooltip = paste(cultivar, round(Moyenne, 1), sep = "<br>"), data_id = cultivar) +
+          geom_line(aes(group = cultivar)) +
+          geom_point_interactive() +
+          scale_color_manual(values = coul_var[input$variete_multi_var]) +
+          labs(
+            x = NULL, y = NULL, 
+            title = textesUI[textesUI$id == input$variete_mesure, lang],
+            colour = textesUI[textesUI$id == "cultivar", lang]
+          )
+      } } %>% 
+        girafe(
+          ggobj = ., 
+          options = list(
+            opts_hover_inv(css = "opacity:0;"),
+            opts_tooltip(use_fill = TRUE),
+            opts_hover(css = "stroke-width:3px;"),
+            opts_selection(type = "none")
+          )
+        )
       }
     
     
   })
   
+  # titre : nb fruit moyen par arbre et par an
+  # expliquer ce que sont les lignes noires
   
   
-  output$variete_spatial <- renderPlot(res = 100, {
+  ## mesures à l'échelle de la parcelle ####
+  
+  output$variete_spatial <- renderGirafe({
     if(!is.null(input$variete_multi_var)) # if no selected cultivar, no plot
       variete %>% 
-      filter(Mesure == input$variete_mesure, cultivar %in% input$variete_multi_var) %>%
-      ggplot() +
-      aes(x = X, y = Y, fill = Valeur) +
-      geom_tile(color = "black") +
-      # scale_fill_viridis_d() + # revoir les couleurs
-      scale_x_discrete(drop = FALSE) +
-      scale_y_discrete(drop = FALSE) +
-      coord_fixed() +
-      labs(x = NULL, y = NULL) +
-      facet_wrap(~ Annee, nrow = 1)
+      filter(Mesure == input$variete_mesure) %>%
+      {ggplot(.) +
+          aes(x = X, y = Y, fill = Valeur, tooltip = paste(cultivar, round(Valeur, 1), sep = "<br>"), data_id = cultivar) +
+          geom_tile_interactive(colour = "black") +
+          scale_fill_gradientn(
+            colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
+            na.value = "transparent" # travailler encore le gradient de couleurs
+          ) +
+          scale_x_discrete(drop = FALSE) +
+          scale_y_discrete(drop = FALSE) +
+          coord_fixed() +
+          labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang], fill = NULL) +
+          facet_wrap(~ Annee, nrow = 1)} %>% 
+      girafe(
+        ggobj = ., width_svg = 16,
+        options = list(
+          opts_hover_inv(css = "opacity:0.2;"),
+          opts_tooltip(use_stroke = TRUE),
+          opts_hover(css = ""),
+          opts_selection(type = "single", css = "fill:black;")
+        )
+      )
 
   })
   

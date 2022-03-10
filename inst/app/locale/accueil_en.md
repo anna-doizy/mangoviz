@@ -3,14 +3,29 @@
 > **MangoViz** is an interactive dashboard for exploring long-term experiments on mango by CIRAD research center.
 
 
+***
 
-
-
-
+<p class="center">
+  <a href="https://www.cirad.fr/">
+    <img src="logo-cirad.jpg" class="logo-10">
+  </a>
+  <a href="https://www.gouvernement.fr/">
+    <img src="logo-republique-francaise.png" class="logo-10">
+  </a>
+  <a href="https://regionreunion.com/">
+    <img src="logo-region-reunion.jpg" class="logo-10">
+  </a>
+  <a href="https://www.europe-en-france.gouv.fr/fr">
+    <img src="logo-feder.jpg" class="logo-10">
+  </a>
+  <a href="https://europa.eu/european-union/index_en">
+    <img src="logo-eu.jpg" class="logo-10">
+  </a>
+</p>
 
 *** 
 
-Last update : 2021-11-02
+Last update : 2022-03-10
 
 Logo ©[DoAna](https://doana-r.com)  
 <!-- Photographies © Jesper Rasmussen sauf mention contraire -->

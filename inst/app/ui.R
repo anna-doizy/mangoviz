@@ -4,13 +4,10 @@ suppressPackageStartupMessages({
   library(shiny)
   library(shinydashboard)
   library(shinyWidgets)
-  # library(shinyhelper)
+  library(shinycssloaders)
   library(dplyr)
   library(ggplot2)
-  library(plotly)
-  library(car)
-  library(emmeans)
-  library(echarts4r)
+  library(ggiraph)
   library(mangoviz)
 })
 
@@ -54,69 +51,48 @@ function(req) {
       # Tabs
 
       menuItem(
-        text = strong(textesUI[[lang]][textesUI$id == "accueil"]),
+        text = strong(textesUI[textesUI$id == "accueil", lang]),
         tabName = "accueil",
         icon = icon("seedling")
       ),
       
       menuItem(
-        text = strong(textesUI[[lang]][textesUI$id == "taille"]),
+        text = strong(textesUI[textesUI$id == "taille", lang]),
         tabName = "taille",
         menuSubItem(
-          text = textesUI[[lang]][textesUI$id == "presentation"],
+          text = textesUI[textesUI$id == "presentation", lang],
           tabName = "taille_presentation"
         ),
         menuSubItem(
-          text = textesUI[[lang]][textesUI$id == "resultats"],
+          text = textesUI[textesUI$id == "resultats", lang],
           tabName = "taille_resultats"
         ),
         icon = icon("cut")
       ),
       
       menuItem(
-        text = strong(textesUI[[lang]][textesUI$id == "variete"]),
+        text = strong(textesUI[textesUI$id == "variete", lang]),
         tabName = "variete",
         menuSubItem(
-          text = textesUI[[lang]][textesUI$id == "presentation"],
+          text = textesUI[textesUI$id == "presentation", lang],
           tabName = "var_presentation"
         ),
         menuSubItem(
-          text = textesUI[[lang]][textesUI$id == "resultats"],
+          text = textesUI[textesUI$id == "resultats", lang],
           tabName = "var_resultats"
         ),
-        radioButtons(
-          inputId = "variete_mesure",
-          label = "Mesure", # textui
-          choices = unique(variete$Mesure) %>% setNames(c("Production", "Nombre de fruits", "Masse des fruits")) # vecteur nommé pour textui
-          # individual = TRUE,
-          # direction = "vertical",
-          # checkIcon = list(
-          #   yes = tags$i(class = "fa fa-circle", 
-          #                style = "color: steelblue"), # changer couleur
-          #   no = tags$i(class = "fa fa-circle-o", 
-          #               style = "color: steelblue"))
+        menuSubItem(
+          text = textesUI[textesUI$id == "bilan", lang],
+          tabName = "var_bilan"
         ),
         icon = icon("dna")
       ),
       
-      # rassembler les 3 en un seul ?
       menuItem(
-        text = strong(textesUI[[lang]][textesUI$id == "savoirplus"]),
+        text = strong(textesUI[textesUI$id == "savoirplus", lang]),
         tabName = "savoirplus",
         icon = icon("book")
       )
-      
-      # menuItem(
-      #   text = strong(textesUI[[lang]][textesUI$id == "remerciements"]),
-      #   tabName = "remerciements",
-      #   icon = icon("heart")
-      # ),
-      # 
-      # menuItem(
-      #   text = strong(textesUI[[lang]][textesUI$id == "contact"]),
-      #   href = "mailto:mangoviz@cirad.fr", # à créer
-      #   icon = icon("at")
-      # )
     )
   )
 
@@ -147,117 +123,184 @@ function(req) {
       # Onglet essai taille ####
       , tabItem(tabName = "taille", fluidRow(
         
-      )) # end of taille tab
+      )), # end of taille tab
       
       
       # Onglet évaluation variétale ####
-      , tabItem(
+      ## Le verger ####
+      tabItem(
         tabName = "var_presentation", 
         fluidRow(
           column(
             8, 
             box(
-              title = "Verger de l'évaluation variétale", # textui
-              width = 12, height = 570,
+              title = textesUI[textesUI$id == "variete_pres_box", lang], 
+              width = 12, #height = 570,
               status = "success",
               solidHeader = TRUE,
-              includeMarkdown(sprintf("locale/verger-variete_%s.md", lang))
-            ),
-            box(
-              title = "Information sur les variétés", # textui
-              width = 12, height = 1100,
-              status = "success",
-              solidHeader = TRUE,
+              includeMarkdown(sprintf("locale/verger-variete_%s.md", lang)),
+              
+              # test sur une figure
+              # HTML('<figure>
+              #   <img src="logo-eu.jpg" alt="Image 1">
+              #   <figcaption>Image 1</figcaption>
+              # </figure>'),
+              
+              # A FAIRE : mettre en radio buttons...
+              # apply(cultivar_desc,1, function(var) {
+              #   paste0('<figure>
+              #     <img src="varietes/', var["cultivar"],'.JPG" alt="', var[paste0("desc_", lang)],'">
+              #     <figcaption>', var[paste0("desc_", lang)],'</figcaption>
+              #     </figure>') 
+              #   }) %>% 
+              #   paste(collapse = "\n") %>% 
+              #   HTML()
+              
+              
+              
               radioButtons(
-                inputId = "variete_radio_cultivar",
-                label = "Choix de la variété", # textui
-                choices = unique(variete$cultivar) %>% sort(),
+                inputId = "variete_radio_desc",
+                label = textesUI[textesUI$id == "variete_bilan_label", lang],
+                choices = levels(variete$cultivar) %>% str_to_lower() %>% str_replace_all(" ", "_") %>% setNames(levels(variete$cultivar)),
                 inline = TRUE
               ),
-              imageOutput("variete_img") # A FAIRE : centrer l'image
-            )
+              
+              uiOutput("variete_ui_desc"),
+              imageOutput("variete_img_desc")
+              
+            )#,
+            # box(
+            #   title = "Information sur les variétés",
+            #   width = 12, height = 1100,
+            #   status = "success",
+            #   solidHeader = TRUE,
+            #   radioButtons(
+            #     inputId = "variete_radio_cultivar",
+            #     label = "Choix de la variété",
+            #     choices = unique(variete$cultivar) %>% sort(),
+            #     inline = TRUE
+            #   ),
+            #   imageOutput("variete_img") # A FAIRE : centrer l'image
+            # )
           ),
           column(
             4, 
             box(
-              title = "Plan du verger", # textui
+              title = textesUI[textesUI$id == "variete_plan_box", lang],
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              plotlyOutput("variete_parcelle", height = 600)
+              girafeOutput("variete_parcelle", height = 600)
             )
           )
         )
-      )
+      ),
 
-
-      , tabItem(tabName = "var_resultats", 
+      ## le suivi ####
+      tabItem(tabName = "var_resultats", 
           
-          
-          
-          fluidRow(
-          column(6,
+        fluidRow(
+          column(12,
             box(
-              title = "Comparaison des variétés", # textui
               width = 12,
               status = "success",
               solidHeader = TRUE,
+              radioButtons(
+                inputId = "variete_mesure",
+                label = textesUI[textesUI$id == "variete_mesure_label", lang],
+                choices = unique(variete$Mesure) %>% setNames(c(textesUI[textesUI$id == "masse", lang], textesUI[textesUI$id == "nbfruit", lang], textesUI[textesUI$id == "masse_fruit", lang])),
+                inline = TRUE
+              )
+            )
+          )
+        ),
+        
+        fluidRow(
+          column(6,
+            box(
+              title = textesUI[textesUI$id == "variete_comp_box", lang],
+              width = 12,
+              status = "success",
+              solidHeader = TRUE,
+              p(em(textesUI[textesUI$id == "variete_comp_text", lang])),
               checkboxGroupButtons(
                 "variete_checkbox_year",
-                "Choix d'une ou plusieurs années", # textui
+                textesUI[textesUI$id == "variete_comp_label", lang],
+                status = "danger",
                 choices = unique(variete$Annee),
                 selected = unique(variete$Annee) # toutes les années sélectionées par défaut
               ),
-              echarts4rOutput("variete_var")
+              girafeOutput("variete_var") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
             )
           ),
           column(6,
             box(
-              title = "Suivi temporel", # textui
+              title = textesUI[textesUI$id == "variete_temps_box", lang],
               width = 12,
               status = "success",
               solidHeader = TRUE,
+              p(em(textesUI[textesUI$id == "variete_temps_text", lang])),
               selectInput(
                "variete_multi_var",
-               "Choix d'une ou plusieurs variétés", # vérifier si ça fonctionne avec le téléphone
+               textesUI[textesUI$id == "variete_temps_label", lang],
                choices = levels(variete$cultivar),
                selected = "Caro",
                multiple = TRUE
               ),
-              echarts4rOutput("variete_temporel")
+              girafeOutput("variete_temporel") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
             )
           )
-          
+        
         ),
+        
         fluidRow(
           column(12,
             box(
-              title = "Suivi spatial", # textui
+              title = textesUI[textesUI$id == "variete_spatial_box", lang],
               width = 12,
               status = "success",
               solidHeader = TRUE,
+              p(em(textesUI[textesUI$id == "variete_spatial_text", lang])),
               # selectInput(
               # "variete_select_var",
-              # "Choix de la variété", # textui
+              # "Choix de la variété",
               # choices = levels(variete$cultivar),
               # selected = "Caro"
               # ),
-              plotOutput("variete_spatial")
+              girafeOutput("variete_spatial") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
             )
           )
         )
-      )
+      ),
       
+      ##le bilan ####
+      tabItem(
+        tabName = "var_bilan", 
+        fluidRow(
+          column(
+            12,
+            box(
+              title = textesUI[textesUI$id == "variete_bilan_box", lang],
+              width = 12, height = 1100,
+              status = "success",
+              solidHeader = TRUE,
+              radioButtons(
+                inputId = "variete_radio_bilan",
+                label = textesUI[textesUI$id == "variete_bilan_label", lang],
+                # choices = unique(variete$cultivar) %>% sort(),
+                choices = levels(variete$cultivar) %>% str_to_lower() %>% str_replace_all(" ", "_") %>% setNames(levels(variete$cultivar)),
+                inline = TRUE
+              ),
+              imageOutput("variete_img_bilan") # A FAIRE : centrer l'image
+            )
+          )
+        )
+      ),
       
       # Onglet en savoir plus ####
-      , tabItem(tabName = "savoirplus", fluidRow(
+      tabItem(tabName = "savoirplus", fluidRow(
         div(includeMarkdown(sprintf("locale/savoirplus_%s.md", lang)), class = "markdown-tab")
       ))
-      
-      # # Onglet Remerciements ####
-      # , tabItem(tabName = "remerciements", fluidRow(
-      #   div(includeMarkdown(sprintf("locale/remerciements_%s.md", lang)), class = "markdown-tab")
-      # ))
 
     ) # end of tabItems
   ) # end of Dashboardbody

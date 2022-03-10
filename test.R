@@ -1,39 +1,45 @@
 
 # A FAIRE ####
 
-# - travailler les couleurs et les échelles (à harmoniser entre les différentes espèces)
-# - ratio des graphes
-# - textui
-# - limite supérieure des légendes à harmoniser
-# - axe des y de la carte
-# - nom et titre des axes, titres des graphiques
-# - echelle carte qui commence à 0
-# - ajouter du loading ? e_show_loading()
+# attention aux échelles des graphiques (harmoniser ?)
+# changer forme du checkbox_year par des cases à cocher A VOIR
+# axe des y de la carte (?)
+# echelle carte qui commence à 0 (?)
+# ajouter possibilité d'afficher toutes les variétés ensemble (avec un switch ?)
 
-# - je n'ai rempli que l'onglet Évaluation variétale,
-# - ce n'est pas la peine de chercher à le mettre en anglais
-# - mode d'emploi
-# - logo : photo plus nette, trait plus fin, autre police (plu ronde et fine), couleur ? A CHOISIR
-# - format de citation de l'appli à réfléchir
-# - harmoniser les pipes
+# TEMPS
+# ajouter ligne horizontale pour la moyenne globale dans le suivi temporel
 
-## Eval variétale
+# SPATIAL
+# revoir échelle de couleurs, les mettre en classe éventuellement A VOIR
 
-# -  dans présentation : photos des variétés, fiches variétales, photo aérienne de la parcelle, description du protocole et des valeurs mesurées
-# - dans résultats : 
-# ajouter possibilité d'afficher toutes les variétés ensemble 
+# - organisation du texte
+# envoyer les fichiers texte à Fred pour relecture
+# Nom et contenu des onglets :
+#   le verger (origine/description + photo parcelle + photo de chaque var) : mettre des radio buttons OK
+#   le suivi de la production : les graphiques de suivi + changer l'input de place OK
+#   bilan/synthèse : les fiches variétales qui reprennent les résultats de l'essai : mettre MAJ Fred
+
+
+# - faire similaire pour le verger taille
+# - anglais OK + espagnol
+# - mode d'emploi dans l'accueil
+# - logo : attendre photo de Fred + choix de la première police
+
+
 
 # - garder en tete possible ajout des valeurs brix pH etc. (données au niveau du fruit)
 
 
-# STAT
-# - arbre en facteur aléatoire ?
-# - comparer les moyennes estimes aux moyennes observées
-# - faire un graphique pour représenter l'étendue et pas l'intervalle de confiance des moyennes (pour tester)
-# - vérifier que le emmeans fait bien ce qu'il faut quand on met plusieurs années ensemble
+# - PUBLICATION
+# format de citation de l'appli à réfléchir
+# les données dans un datapaper -> mettre le dépôt en public à ce moment
+# symposium mangue oct-nov 2023 Espagne
+# quand héberger dans le serveur du CIRAD ?
 
 
 # FAIT
+
 # - il faut sélectionner au moins une variété pour que le dernier graphique fonctionne OK
 # - je n'ai pas encore intégré les bandes de confiance et la ligne horizontale pour le dernier graphique dans le cas où une seule variété est sélectionnée OK
 # - ordre des ligne colonne du plan de parcelle à mettre comme suivi spatial OK
@@ -42,30 +48,40 @@
 # 2/ suivi temporel : trouver un format de sélection qui prend moins de place OK
 # 3/ suivi spatial : en bas, tester de repasser en ggplot avec un facet_wrap(~ Annee) OK
 # - format des nombres à checker en fonction de la langue OK
-
-
+# Variables mesurées (remplacer le texte de présentation qui ne veut rien dire) OK
+# mesure de la production : masse + nb de fruits Ok
+# cacher le code source pour le moment et mettre le dépôt en privé OK
+# - ajouter logos des institutions OK
+# - Intégrer les nouveaux graphiques sans barres d'erreur OK
+# moyenne au lieu de médiane OK
+# couleurs tranchées et cohérentes OK
+# penser aux traductions OK
+# ratio des graphes OK
+# nom et titre des axes, titres des graphiques OK
+# VIOLIN
+# surface prop. nb points OK
+# si peu de points, enveler la couche violin NON
+# noms des var à 45° ou en 2 lignes si besoin OK
+# TEMPS
+# couleur sur les traits et les points moyenne ? OK
+# relier les points moyenne OK
+# - nettoyer fichier description OK
+# trouver des meilleurs couleurs pour les variétés OK
+# Améliorer les titres des graphiques et les sous-textes OK
+# ajouter du loading pour les graphiques ? OK
+# - harmoniser les pipes OK
+# - erreurs du check : noms non portables pour les fiches variétales (à harmoniser avec les radio buttons correspondants) + taille de certains fichiers à diminuer (avec squash.io) OK
 
 # server ####
 
 
-
-library(mangoviz)
-
 lang <- "fr"
 
 
-library(lme4)
-library(lmerTest)
-library(car)
-library(emmeans)
-
-library(readr)
 library(dplyr)
-library(stringr)
-library(forcats)
 library(ggplot2)
-library(plotly)
-library(echarts4r)
+library(ggiraph)
+library(mangoviz)
 
 
 input <- list(
@@ -81,95 +97,147 @@ input <- list(
 
 
 
-# plan de la parcelle
-var_plan <- variete %>% 
+coul_var <- c("#b94137", "#0080b4", "#008355", "#7f4ecc", "#ce7e26", "#8aa543", "#56423e", "#be4b7f", "#a5af98", "#00c1ff") %>% setNames(unique(variete$cultivar))
+
+
+## plan de la parcelle ####
+
+
+variete %>% 
   distinct(X, Y, cultivar) %>%
-  ggplot() +
-  aes(x = X, y = Y, fill = cultivar) + # ajouter textui pour variété
-  geom_tile(color = "black") +
-  scale_fill_viridis_d() + # revoir les couleurs
-  scale_x_discrete(drop = FALSE) +
-  scale_y_discrete(drop = FALSE) +
-  coord_fixed() +
-  labs(x = NULL, y = NULL)
-
-ggplotly(var_plan)
-
-
-
-
-
-
-
-# comparaison des variétés
+  {ggplot(.) +
+    aes(x = X, y = Y, fill = cultivar, tooltip = cultivar, data_id = cultivar) +
+    geom_tile_interactive(color = "black") +
+    scale_fill_manual(values = coul_var, guide = guide_legend(byrow = TRUE)) +
+    scale_x_discrete(drop = FALSE) +
+    scale_y_discrete(drop = FALSE) +
+    coord_fixed() +
+    labs(x = NULL, y = NULL, fill = textesUI[[lang]][textesUI$id == "cultivar"])} %>% 
+  girafe(
+  ggobj = ., 
+  options = list(
+    opts_hover_inv(css = "opacity:0.4;"),
+    opts_tooltip(use_fill = TRUE),
+    opts_hover(css = "fill:black;opacity:0.8;")
+  )
+)
 
 
-var_cultivar <- if(!is.null(input$variete_checkbox_year))
+
+
+
+
+## comparaison des variétés ####
+
+if(!is.null(input$variete_checkbox_year)) { # if no selected date, no plot
   variete %>% 
-    filter(Mesure == input$variete_mesure, Annee %in% input$variete_checkbox_year) %>%
+    filter(Mesure == input$variete_mesure, Annee %in% input$variete_checkbox_year) %>% 
     ggplot() +
     aes(x = cultivar, y = Valeur, fill = cultivar) +
-    geom_violin(alpha = 0.8, color = "transparent") +
-    geom_jitter(alpha = 0.5, width = 0.2, height = 0) +
-    geom_point(stat = "summary", fun = median, color = "red", size = 3)
+    geom_violin(alpha = 0.2, color = "transparent", scale = "count") +
+    geom_jitter(alpha = 0.3, width = 0.2, height = 0) +
+    geom_point(stat = "summary", fun = mean, size = 4, color = "white") +
+    geom_point_interactive(
+      stat = "summary", 
+      fun = mean, size = 3, 
+      aes(color = cultivar, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"), data_id = cultivar)
+      ) +
+    scale_fill_manual(values = coul_var, aesthetics = c("colour", "fill")) +
+    labs(x = NULL, y = NULL, title = textesUI[[lang]][textesUI$id == input$variete_mesure]) +
+    theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+} %>% girafe(
+  ggobj = ., 
+  options = list(
+    opts_hover_inv(css = "opacity:0.4;"),
+    opts_tooltip(use_fill = TRUE),
+    opts_hover(css = "fill:black;")
+  )
+)
 
 
-ggplotly(var_cultivar)
 
 
+## comparaison des années (suivi temporel) ####
 
-
-
-
-
-# comparaison des années (suivi temporel)
-
-var_annee <- if(length(input$variete_multi_var) == 1) {
+{if(length(input$variete_multi_var) == 1) {
   variete %>% 
     filter(Mesure == input$variete_mesure, cultivar == input$variete_multi_var) %>%
     ggplot() +
-    aes(x = Annee, y = Valeur, colour = cultivar) +
-    geom_line(aes(group = arbre), alpha = 0.2) +
-    geom_point(alpha = 0.5) +
-    geom_point(stat = "summary", fun = median, color = "black", size = 3)
+    aes(x = Annee, y = Valeur) +
+    geom_line_interactive(aes(group = arbre, data_id = arbre, tooltip = arbre, hover_css = "fill:none"), alpha = 0.1) +
+    geom_point_interactive(alpha = 0.3, aes(data_id = arbre, tooltip = arbre)) +
+    geom_smooth_interactive(method = "lm", formula = "y~1", se = FALSE, color = "black", linetype = 2, aes(tooltip = paste(textesUI[[lang]][textesUI$id == "global_mean"], round(..y.., 1), sep = "<br>"))) +
+    geom_line(stat = "summary", fun = mean, aes(colour = cultivar)) +
+    geom_point_interactive(stat = "summary", fun = mean, size = 3, aes(colour = cultivar, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"))) +
+    scale_color_manual(values = coul_var[input$variete_multi_var]) +
+    labs(
+      x = NULL, y = NULL, 
+      title = textesUI[[lang]][textesUI$id == input$variete_mesure],
+      colour = textesUI[[lang]][textesUI$id == "cultivar"]
+    )
 } else {
   variete %>% 
-    filter(Mesure == input$variete_mesure) %>%
+    filter(Mesure == input$variete_mesure, cultivar %in% input$variete_multi_var) %>%
     group_by(Annee, cultivar) %>% 
     summarise(
-      Mediane = median(Valeur, na.rm = TRUE)
+      Moyenne = mean(Valeur, na.rm = TRUE)
     ) %>% 
     ggplot() +
-    aes(x = Annee, y = Mediane, colour = cultivar) +
+    aes(x = Annee, y = Moyenne, colour = cultivar, tooltip = paste(cultivar, round(Moyenne, 1), sep = "<br>"), data_id = cultivar) +
     geom_line(aes(group = cultivar)) +
-    geom_point()
-}
+    geom_point_interactive() +
+    scale_color_manual(values = coul_var[input$variete_multi_var]) +
+    labs(
+      x = NULL, y = NULL, 
+      title = textesUI[[lang]][textesUI$id == input$variete_mesure],
+      colour = textesUI[[lang]][textesUI$id == "cultivar"]
+    )
+} } %>% 
+  girafe(
+  ggobj = ., 
+  options = list(
+    opts_hover_inv(css = "opacity:0;"),
+    opts_tooltip(use_fill = TRUE),
+    opts_hover(css = "stroke-width:3px;")
+  )
+)
+# titre : nb fruit moyen par arbre et par an
+# expliquer ce que sont les lignes noires
 
-ggplotly(var_annee)
 
 
 
 
 
-
-
-
-# mesure à l'échelle de la parcelle
-var_spatial <- variete %>% 
-  filter(Mesure == input$variete_mesure, cultivar %in% input$variete_multi_var) %>%
-  ggplot() +
-  aes(x = X, y = Y, fill = Valeur) +
-  geom_tile(color = "black") +
-  # scale_fill_viridis_d() + # revoir les couleurs
+## mesures à l'échelle de la parcelle ####
+variete %>% 
+  filter(Mesure == input$variete_mesure) %>%
+  {ggplot(.) +
+  aes(x = X, y = Y, fill = Valeur, tooltip = paste(cultivar, round(Valeur, 1), sep = "<br>"), data_id = cultivar) +
+  geom_tile_interactive(colour = "black") +
+  scale_fill_gradientn(
+    # low = "#6d001d", mid = "#FFF200", high = "#2c3900",
+    # midpoint = mean(.$Valeur),
+    colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
+    na.value = "transparent"
+    # guide = "legend"
+  ) +
   scale_x_discrete(drop = FALSE) +
   scale_y_discrete(drop = FALSE) +
   coord_fixed() +
-  labs(x = NULL, y = NULL) +
-  facet_wrap(~ Annee, nrow = 2)
+  labs(x = NULL, y = NULL, title = textesUI[[lang]][textesUI$id == input$variete_mesure], fill = NULL) +
+  facet_wrap(~ Annee, nrow = 1)} %>% 
+  girafe(
+    ggobj = ., 
+    options = list(
+      opts_hover_inv(css = "opacity:0;"),
+      opts_tooltip(use_stroke = TRUE),
+      opts_hover(css = ""),
+      opts_selection(type = "single", css = "fill:black;")
+    )
+  )
 
-ggplotly(var_spatial)
-
-
+# travailler encore le gradient de couleurs
 
 
 
@@ -436,8 +504,8 @@ variete_mesure %>%
   # e_band(lower.CL, upper.CL) %>% # à mettre si une seule variété cochée
   e_axis(axis = "y", formatter = e_axis_formatter(locale = "fr")) |>
   e_tooltip(trigger = "axis", formatter = e_tooltip_pointer_formatter(locale = "fr", digits = 0)) #%>% 
-  # e_mark_line(data = list(xAxis = cultivar)) %>% # si on arrivait à mettre l'année en train d'être visualisée dans les timeline ?
-  # e_title(cultivar)
+# e_mark_line(data = list(xAxis = cultivar)) %>% # si on arrivait à mettre l'année en train d'être visualisée dans les timeline ?
+# e_title(cultivar)
 
 # ajouter la ligne horizontale pour une variété cochée
 
@@ -542,17 +610,17 @@ variete_filtre %>%
 
 
 
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
 #### comparaisons multiples ####
-  
-  
+
+
 ref_grid(mod_var_masse)
 ref_grid(mod_var_masse, cov.reduce = range)
 
@@ -566,7 +634,7 @@ comp_mass_var_annee <- emmeans(
   by = "Annee", 
   type = "response" 
   # cov.reduce = range
-  ) #%>% plot(comparisons = TRUE)
+) #%>% plot(comparisons = TRUE)
 
 # emmip(mod_var_masse, cultivar ~ Annee, CIs = TRUE, type = "response", cov.reduce = range)
 
@@ -610,7 +678,7 @@ variete_arbre_annee %>%
 # compare les années pour chaque var
 comp_mass_annee_var <- emmeans(mod_var_masse, "Annee", by = "cultivar", type = "response"
                                # , cov.reduce = range
-                               )
+)
 
 e3 <- confint(comp_mass_annee_var) %>%
   as_tibble() %>%
