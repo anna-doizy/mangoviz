@@ -29,6 +29,13 @@ body {
     border: 1px solid #b94137;
 }
 
+.btn-danger {
+  background-color: #f1aea6;
+}
+.btn-danger.active {
+  background-color: #b94137;
+}
+
 .skin-green .sidebar-menu > li.active > a, .skin-green .sidebar-menu > li:hover > a {
     color: #ce7e26;
     border-left-color: #b94137;
