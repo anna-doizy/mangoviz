@@ -1,7 +1,36 @@
 id,fr,en
-accueil, Accueil, Home
+accueil,Accueil,Home
 taille,Essai taille,Pruning test
 variete,Evaluation variétale,Cultivar test
-presentation, Présentation, Presentation
-resultats, Résultats, Results
+presentation,Le verger,The orchard
+resultats, Suivi,Follow-up
+bilan, Bilan,Review
+variete_pres_box,Description de l'expérience,Description of the experiment
+variete_plan_box,Plan du verger,Map of the orchard
+caro,"[REUNION]<br>La variété **Caro** provient d'un semis de chez Mr. André Caro à la Rivière Saint Louis. Sa qualité gustative ressemble à celle des fruits de José.","[REUNION]<br>The cultivar **Caro** comes from a seedling of Mr. André Caro in Rivière Saint Louis. Its taste quality is similar to that of José's fruits."
+cogshall,"[FLORIDE]<br>La variété **Cogshall** est aussi appelée « mangue américaine » ou « mangue qui dévisse ». L'apparition d'un point jaune sur l'apex du fruit est une astuce pour le récolter au stade optimal.","[FLORIDA]<br>The **Cogshall** cultivar is also known in French as the "American mango" or "unscrewing mango". The appearance of a yellow dot on the apex of the fruit is a trick to harvest it at the optimal stage."
+heidi,"[AFRIQUE DU SUD]<br>La variété **Heidi** est issue d'un croisement entre les variété Kent et Sensation.","[SOUTH AFRICA]<br>The **Heidi** cultivar is the result of a cross between the Kent and Sensation cultivars."
+irwin,"[FLORIDE]<br>La variété **Irwin** est internationalement connue et commercialisée (Taïwan, Guadeloupe, Costa Rica, Espagne, ...)","[FLORIDA]<br>The cultivar **Irwin** is internationally known and marketed (Taiwan, Guadeloupe, Costa Rica, Spain, ...)"
+jose,"[REUNION]<br>A l'origine, la variété **José** s'appelait Joseph. Son nom a évolué suite à son introduction à l'île Maurice. José représente 50 % de la production réunionnaise.","[REUNION]<br>Originally, the cultivar **José** was called Joseph. Its name evolved following its introduction in Mauritius. José represents 50% of the production of Reunion."
+kensington_pride,"[AUSTRALIE]<br>La **Kensington Pride** est une variété polyembryonnée qui est intensivement produite en Australie.","[AUSTRALIA]<br>Kensington Pride** is a polyembryonic cultivar that is intensively produced in Australia."
+kent,"[FLORIDE]<br>La variété **Kent** est une des variétés les plus exportées dans le monde.","[FLORIDA]<br>The **Kent** cultivar is one of the most exported cultivars in the world."
+nam_doc_mai,"[THAILANDE]<br>La **Nam Doc Maï** est une mangue polyembryonnée qui se consomme généralement verte en Thaïlande (en salade, séchée, ...)","[THAILAND]<br>The **Nam Doc Maï** is a polyembryonic mango which is generally consumed green in Thailand (in salad, dried, ...)"
+sensation,"[FLORIDE]<br>La variété **Sensation** est très cultivée en Afrique du Sud et au Mexique.","[FLORIDA]<br>The **Sensation** cultivar is widely grown in South Africa and Mexico."
+tommy_atkins,"[FLORIDE]<br>La variété **Tommy Atkins** est cultivée en Afrique du Sud et en Amérique Latine pour l'exportation.","[FLORIDA]<br>The **Tommy Atkins** cultivar is grown in South Africa and Latin America for export."
+variete_mesure_label,Choix de la variable,Choice of the variable
+variete_comp_box,Comparaison des variétés,Cultivar comparison
+variete_comp_text,"Ce graphique permet de visualiser la variabilité des arbres pour chaque variété du verger. Chaque point noir représente un arbre du verger. Les gros points colorés sont la moyenne de la variable sélectionnée sur tous les arbres de chaque variété. Par défaut, toutes les années sont prises en compte, mais il est possible, pour aller un peu plus loin, de sélectionner une ou plusieurs années.","This graph shows the variability of trees for each cultivar in the orchard. Each black dot represents a tree in the orchard. The big colored points are the average of the selected variable on all the trees of each cultivar. By default, all the years are taken into account, but it is possible, to go a little further, to select one or more years."
+variete_comp_label,Choix d'une ou plusieurs années,Choice of one or more years
+variete_temps_box,Suivi temporel,Temporal follow-up
+variete_temps_text,"Ce graphique permet de visualiser l'évolution temporelle de chaque variété du verger. Dans le cas où une seule variété est sélectionnée : chaque ligne grise correspond à la trajectoire d'un arbre du verger (identifié par ses coordonnées dans la parcelle) et la ligne colorée est la trajectoire moyenne de tous les arbres de cette variété. Dans le cas où plusieurs variétés sont sélectionnées : seulement les trajectoires moyennes par variété sont représentées pour ne pas alourdir le graphique. Passez la souris (ou appuyez sur une ligne si vous êtes sur un écran tactile) pour mettre en évidence une trajectoire donnée.","This graph shows the temporal evolution of each cultivar in the orchard. In the case where only one cultivar is selected: each grey line corresponds to the trajectory of a tree in the orchard (identified by its coordinates in the plot) and the colored line is the average trajectory of all trees of this cultivar. In the case where several cultivars are selected: only the average trajectories per cultivar are shown to avoid making the graph too cluttered. Move the mouse (or click on a line if you are on a touch screen) to highlight a given trajectory."
+variete_temps_label,Choix d'une ou plusieurs variétés,Choice of one or more cultivars
+variete_spatial_box,Suivi spatial,Spatial follow-up
+variete_spatial_text,"Ce graphique permet de visualiser spatialement l'évolution temporelle du verger. Chaque carré représente un arbre du verger et sa couleur indique la valeur de la variable. Passez la souris (ou appuyez sur un carré) pour obtenir la valeur précise d'un arbre à une date donnée. Cela mettra également en évidence les autres arbres de la parcelle qui sont de la même variété.","This graph allows to visualize spatially the temporal evolution of the orchard. Each square represents a tree in the orchard and its color indicates the value of the variable. Move the mouse over (or press on a square) to obtain the precise value of a tree at a given date. This will also highlight the other trees in the plot that are of the same cultivar."
+variete_bilan_box,Récapitulatif par variété,Summary by cultivar
+variete_bilan_label,Choix de la variété,Choice of the cultivar
 savoirplus,A propos,About
+cultivar,Variété,Cultivar
+global_mean,Moyenne globale :,Global mean:
+masse, Masse (kg), Mass (kg)
+nbfruit, Nombre de fruits, Number of fruits
+masse_fruit, Poids moyen d'un fruit (g), Average weight of a fruit (g)

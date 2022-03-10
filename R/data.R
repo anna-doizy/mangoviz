@@ -11,8 +11,7 @@
 #'   }
 "variete"
 
-#' Translation texts
+#' Translation texts for the UI
 #' 
 #' @format 3 columns for identifier, french and english
 "textesUI"
-
