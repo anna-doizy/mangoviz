@@ -292,7 +292,10 @@ function(req) {
                 inputId = "variete_radio_bilan",
                 label = textesUI[textesUI$id == "variete_bilan_label", lang],
                 # choices = unique(variete$cultivar) %>% sort(),
-                choices = levels(variete$cultivar) %>% str_to_lower() %>% str_replace_all(" ", "_") %>% setNames(levels(variete$cultivar)),
+                choices = levels(variete$cultivar) %>% 
+                  str_to_lower() %>% 
+                  str_replace_all(" ", "_") %>% str_replace("é", "e") %>% 
+                  setNames(levels(variete$cultivar)),
                 inline = TRUE
               ),
               imageOutput("variete_img_bilan") # A FAIRE : centrer l'image
