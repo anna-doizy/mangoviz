@@ -6,6 +6,7 @@ suppressPackageStartupMessages({
   library(shinyWidgets)
   library(shinycssloaders)
   library(dplyr)
+  library(stringr)
   library(ggplot2)
   library(ggiraph)
   library(mangoviz)

@@ -19,6 +19,7 @@ Imports:
     shinycssloaders,
     markdown,
     dplyr,
+    stringr,
     ggplot2,
     ggiraph
 Encoding: UTF-8
