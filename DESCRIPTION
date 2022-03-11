@@ -17,6 +17,7 @@ Imports:
     shinydashboard,
     shinyWidgets,
     shinycssloaders,
+    markdown,
     dplyr,
     ggplot2,
     ggiraph
