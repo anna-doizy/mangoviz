@@ -222,14 +222,15 @@ server <- function(input, output, session) {
   
   
   # Couleur des variétés
-  coul_var <- c("#b94137", "#0080b4", "#008355", "#7f4ecc", "#ce7e26", "#8aa543", "#56423e", "#be4b7f", "#002853", "#00c1ff") %>% 
-    setNames(unique(variete$cultivar))
+  coul_var <- c("#CAB2D6", "#FB9A99", "#1F78B4", "#A6CEE3", "#B2DF8A", "#FDBF6F", "#FF7F00", "#6A3D9A", "#33A02C", "#E31A1C") %>% 
+    setNames(levels(variete$cultivar))
   
   ## Plan de la parcelle ####
 
   output$variete_parcelle <- renderGirafe({
     variete %>% 
       distinct(X, Y, cultivar) %>%
+      # arrange(cultivar) %>% # legend order
       {ggplot(.) +
           aes(x = X, y = Y, fill = cultivar, tooltip = cultivar, data_id = cultivar) +
           geom_tile_interactive(color = "black") +
@@ -239,7 +240,7 @@ server <- function(input, output, session) {
           coord_fixed() +
           labs(x = NULL, y = NULL, fill = textesUI[textesUI$id == "cultivar", lang])} %>% 
       girafe(
-        ggobj = ., height_svg = 8,
+        ggobj = ., height_svg = 4, width_svg = 4,
         options = list(
           opts_hover_inv(css = "opacity:0.4;"),
           opts_tooltip(use_fill = TRUE),
@@ -314,7 +315,6 @@ server <- function(input, output, session) {
             Moyenne = mean(Valeur, na.rm = TRUE)
           ) %>%
           suppressMessages() %>% # group message
-          # suppressWarnings() %>% # NA & NaN values
           ggplot() +
           aes(x = Annee, y = Moyenne, colour = cultivar, tooltip = paste(cultivar, round(Moyenne, 1), sep = "<br>"), data_id = cultivar) +
           geom_line(aes(group = cultivar)) +
@@ -340,14 +340,10 @@ server <- function(input, output, session) {
     
   })
   
-  # titre : nb fruit moyen par arbre et par an
-  # expliquer ce que sont les lignes noires
-  
-  
   ## mesures à l'échelle de la parcelle ####
   
   output$variete_spatial <- renderGirafe({
-    if(!is.null(input$variete_multi_var)) # if no selected cultivar, no plot
+    # if(!is.null(input$variete_multi_var)) # if no selected cultivar, no plot : UTILITE ??? variete_select_var ???
       variete %>% 
       filter(Mesure == input$variete_mesure) %>%
       {ggplot(.) +
