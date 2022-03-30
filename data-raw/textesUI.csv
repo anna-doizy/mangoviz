@@ -7,6 +7,7 @@ resultats, Suivi,Follow-up
 bilan, Bilan,Review
 variete_pres_box,Description de l'expérience,Description of the experiment
 variete_plan_box,Plan du verger,Map of the orchard
+variete_var_box,Présentation des variétés,Presentation of the cultivars
 caro,"[REUNION]<br>La variété **Caro** provient d'un semis de chez Mr. André Caro à la Rivière Saint Louis. Sa qualité gustative ressemble à celle des fruits de José.","[REUNION]<br>The cultivar **Caro** comes from a seedling of Mr. André Caro in Rivière Saint Louis. Its taste quality is similar to that of José's fruits."
 cogshall,"[FLORIDE]<br>La variété **Cogshall** est aussi appelée « mangue américaine » ou « mangue qui dévisse ». L'apparition d'un point jaune sur l'apex du fruit est une astuce pour le récolter au stade optimal.","[FLORIDA]<br>The **Cogshall** cultivar is also known in French as the "American mango" or "unscrewing mango". The appearance of a yellow dot on the apex of the fruit is a trick to harvest it at the optimal stage."
 heidi,"[AFRIQUE DU SUD]<br>La variété **Heidi** est issue d'un croisement entre les variété Kent et Sensation.","[SOUTH AFRICA]<br>The **Heidi** cultivar is the result of a cross between the Kent and Sensation cultivars."
@@ -31,6 +32,11 @@ variete_bilan_label,Choix de la variété,Choice of the cultivar
 savoirplus,A propos,About
 cultivar,Variété,Cultivar
 global_mean,Moyenne globale :,Global mean:
-masse, Masse (kg), Mass (kg)
-nbfruit, Nombre de fruits, Number of fruits
-masse_fruit, Poids moyen d'un fruit (g), Average weight of a fruit (g)
+masse,Masse (kg),Mass (kg)
+nbfruit,Nombre de fruits,Number of fruits
+masse_fruit,Poids moyen d'un fruit (g),Average weight of a fruit (g)
+taille_legend,Taille,Pruning
+taille_ete,Taille en été,Summer pruning
+taille_hiver,Taille en hiver,Winter pruning
+taille_sans,Sans taille,No pruning
+pruning_start,Début de la taille,Pruning start

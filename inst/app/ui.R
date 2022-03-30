@@ -119,12 +119,112 @@ function(req) {
       
       tabItem(tabName = "accueil", fluidRow(
         div(includeMarkdown(sprintf("locale/accueil_%s.md", lang)), class = "markdown-tab")
-      ))
+      )),
 
       # Onglet essai taille ####
-      , tabItem(tabName = "taille", fluidRow(
-        
-      )), # end of taille tab
+      ## Le verger ####
+      tabItem(
+        tabName = "taille_presentation", 
+        fluidRow(
+          column(
+            6, 
+            box(
+              title = textesUI[textesUI$id == "variete_pres_box", lang], 
+              width = 12,
+              status = "success",
+              solidHeader = TRUE,
+              includeMarkdown(sprintf("locale/verger-taille_%s.md", lang))
+            )
+          ),
+          column(
+            6, 
+            box(
+              title = textesUI[textesUI$id == "variete_plan_box", lang],
+              width = 12,
+              status = "success",
+              solidHeader = TRUE,
+              girafeOutput("taille_parcelle", height = "auto", width = "90%")
+            )
+          )
+        )
+      ),
+      
+      ## le suivi ####
+      tabItem(tabName = "taille_resultats", 
+              
+              fluidRow(
+                column(12,
+                       box(
+                         width = 12,
+                         status = "success",
+                         solidHeader = TRUE,
+                         radioButtons(
+                           inputId = "taille_mesure",
+                           label = textesUI[textesUI$id == "variete_mesure_label", lang],
+                           choices = unique(taille$Mesure) %>% setNames(textesUI[textesUI$id %in% unique(taille$Mesure), lang]),
+                           inline = TRUE
+                         )
+                       )
+                )
+              ),
+              
+              fluidRow(
+                column(6,
+                       box(
+                         title = textesUI[textesUI$id == "variete_comp_box", lang],
+                         width = 12,
+                         status = "success",
+                         solidHeader = TRUE,
+                         # p(em(textesUI[textesUI$id == "variete_comp_text", lang])),
+                         checkboxGroupButtons(
+                           "taille_checkbox_year",
+                           textesUI[textesUI$id == "variete_comp_label", lang],
+                           # status = "danger",
+                           choices = unique(taille$Annee),
+                           selected = 2011:2018 # par défaut, à partir de la première année de taille
+                         ),
+                         girafeOutput("taille_taille") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
+                       )
+                ),
+                column(6,
+                       box(
+                         title = textesUI[textesUI$id == "variete_temps_box", lang],
+                         width = 12,
+                         status = "success",
+                         solidHeader = TRUE,
+                         # p(em(textesUI[textesUI$id == "variete_temps_text", lang])),
+                         selectInput(
+                           "taille_multi",
+                           textesUI[textesUI$id == "variete_temps_label", lang],
+                           choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
+                           multiple = TRUE,
+                           selected = "taille_sans"
+                         ),
+                         girafeOutput("taille_temporel") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
+                       )
+                )
+                
+              ),
+              
+              fluidRow(
+                column(12,
+                       box(
+                         title = textesUI[textesUI$id == "variete_spatial_box", lang],
+                         width = 12,
+                         status = "success",
+                         solidHeader = TRUE,
+                         # p(em(textesUI[textesUI$id == "variete_spatial_text", lang])),
+                         # selectInput(
+                         # "variete_select_var",
+                         # "Choix de la variété",
+                         # choices = levels(variete$cultivar),
+                         # selected = "Caro"
+                         # ),
+                         girafeOutput("taille_spatial") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
+                       )
+                )
+              )
+      ),
       
       
       # Onglet évaluation variétale ####
@@ -133,14 +233,29 @@ function(req) {
         tabName = "var_presentation", 
         fluidRow(
           column(
-            8, 
+            6, 
             box(
               title = textesUI[textesUI$id == "variete_pres_box", lang], 
               width = 12, #height = 570,
               status = "success",
               solidHeader = TRUE,
-              includeMarkdown(sprintf("locale/verger-variete_%s.md", lang)),
-              
+              includeMarkdown(sprintf("locale/verger-variete_%s.md", lang))
+            )
+          ),
+          column(
+            6, 
+            box(
+              title = textesUI[textesUI$id == "variete_plan_box", lang],
+              width = 12,
+              status = "success",
+              solidHeader = TRUE,
+              girafeOutput("variete_parcelle", height = "auto", width = "90%")
+            ),
+            box(
+              title = textesUI[textesUI$id == "variete_var_box", lang],
+              width = 12,
+              status = "success",
+              solidHeader = TRUE,
               # test sur une figure
               # HTML('<figure>
               #   <img src="logo-eu.jpg" alt="Image 1">
@@ -157,8 +272,6 @@ function(req) {
               #   paste(collapse = "\n") %>% 
               #   HTML()
               
-              
-              
               radioButtons(
                 inputId = "variete_radio_desc",
                 label = textesUI[textesUI$id == "variete_bilan_label", lang],
@@ -170,31 +283,8 @@ function(req) {
               ),
               
               uiOutput("variete_ui_desc"),
-              imageOutput("variete_img_desc")
-              
-            )#,
-            # box(
-            #   title = "Information sur les variétés",
-            #   width = 12, height = 1100,
-            #   status = "success",
-            #   solidHeader = TRUE,
-            #   radioButtons(
-            #     inputId = "variete_radio_cultivar",
-            #     label = "Choix de la variété",
-            #     choices = unique(variete$cultivar) %>% sort(),
-            #     inline = TRUE
-            #   ),
-            #   imageOutput("variete_img") # A FAIRE : centrer l'image
-            # )
-          ),
-          column(
-            4, 
-            box(
-              title = textesUI[textesUI$id == "variete_plan_box", lang],
-              width = 12,
-              status = "success",
-              solidHeader = TRUE,
-              girafeOutput("variete_parcelle", height = 600)
+              imageOutput("variete_img_desc", height = "auto"),
+               # A FAIRE : centrer l'image ?
             )
           )
         )
@@ -212,7 +302,7 @@ function(req) {
               radioButtons(
                 inputId = "variete_mesure",
                 label = textesUI[textesUI$id == "variete_mesure_label", lang],
-                choices = unique(variete$Mesure) %>% setNames(c(textesUI[textesUI$id == "masse", lang], textesUI[textesUI$id == "nbfruit", lang], textesUI[textesUI$id == "masse_fruit", lang])),
+                choices = unique(variete$Mesure) %>% setNames(textesUI[textesUI$id %in% unique(variete$Mesure), lang]),
                 inline = TRUE
               )
             )
@@ -230,7 +320,7 @@ function(req) {
               checkboxGroupButtons(
                 "variete_checkbox_year",
                 textesUI[textesUI$id == "variete_comp_label", lang],
-                status = "danger",
+                # status = "danger",
                 choices = unique(variete$Annee),
                 selected = unique(variete$Annee) # toutes les années sélectionées par défaut
               ),

@@ -23,6 +23,181 @@ server <- function(input, output, session) {
 
   })
   
+  
+  ## Plat themes ####
+  
+  theme_update(text = element_text(family = "sans"))
+  
+  
+  
+# Essai taille ------------------------------------------------------------
+  
+  # couleur des différents types de taille
+  coul_taille <- c(`taille_ete` = "darkgreen", `taille_hiver` = "darkblue", `taille_sans` = "darkred")
+  
+  ## Plan de la parcelle ####
+  
+  output$taille_parcelle <- renderGirafe({
+    # représentation des bordures à valider
+    # expliquer les bloc
+    # traduire label des bloc
+    
+    taille %>% 
+      distinct(X, Y, arbre, bloc, Taille) %>%
+      {ggplot(.) +
+          aes(x = X, y = Y, fill = Taille, data_id = Taille, tooltip = arbre) +
+          # geom_tile_interactive(color = "black", aes(label = arbre, tooltip = paste(..label.., textesUI[textesUI$id == "taille_ete", lang], sep = "<br>"))) + # ne marche pas
+          geom_tile_interactive(color = "black") +
+          scale_fill_manual(
+            values = coul_taille, labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille)),
+            guide = guide_legend(byrow = TRUE)
+          ) +
+          # scale_x_discrete(drop = FALSE) +
+          scale_y_discrete(drop = FALSE) +
+          coord_fixed() +
+          labs(x = NULL, y = NULL, fill = textesUI[textesUI$id == "taille_legend", lang])} %>% 
+      girafe(
+        ggobj = ., height_svg = 4, width_svg = 4,
+        options = list(
+          opts_hover_inv(css = "opacity:0.4;"),
+          opts_tooltip(use_fill = TRUE),
+          opts_hover(css = "fill:black;opacity:0.8;"),
+          opts_selection(type = "none")
+        )
+      )
+  })
+  
+  
+  ## comparaison des tailles ####
+  
+  output$taille_taille <- renderGirafe({
+    if(!is.null(input$taille_checkbox_year)) { # if no selected date, no plot
+      {taille %>% 
+          filter(Mesure == input$taille_mesure, Annee %in% input$taille_checkbox_year, !is.na(Valeur)) %>% 
+          ggplot() +
+          aes(x = Taille, y = Valeur, fill = Taille, label = arbre) +
+          geom_violin(alpha = 0.3, color = "transparent", scale = "count") +
+          geom_jitter_interactive(alpha = 0.3, width = 0.2, height = 0) + #, aes(tooltip = paste(..label.., round(..y.., 1), sep = "<br>"), data_id = bloc)) +
+          geom_point(stat = "summary", fun = mean, size = 4, color = "white") +
+          geom_point_interactive(
+            stat = "summary", 
+            fun = mean, size = 3, 
+            aes(color = Taille, tooltip = round(..y.., 1), data_id = Taille)
+          ) +
+          scale_fill_manual(values = coul_taille, aesthetics = c("colour", "fill")) +
+          labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$taille_mesure, lang]) +
+          theme(legend.position = "none")
+      } %>% 
+        girafe(
+          ggobj = ., 
+          options = list(
+            opts_hover_inv(css = "opacity:0.4;"),
+            opts_tooltip(use_fill = TRUE),
+            opts_hover(css = "fill:black;"),
+            opts_selection(type = "none")
+          )
+        )
+    }
+  })
+  
+  
+  ## comparaison des années (suivi temporel) ####
+  
+  output$taille_temporel <- renderGirafe({
+    
+    if(!is.null(input$taille_multi)) { # if no selected taille, no plot
+      {if(length(input$taille_multi) == 1) { # if one selected taille
+        taille %>% 
+          filter(Mesure == input$taille_mesure, Taille == input$taille_multi, !is.na(Valeur)) %>%
+          ggplot() +
+          aes(x = Annee, y = Valeur) +
+          geom_vline_interactive(xintercept = 2010.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) + # ou 2011.5 ??
+          geom_line_interactive(aes(group = arbre, data_id = arbre, tooltip = arbre, hover_css = "fill:none"), alpha = 0.1) +
+          geom_point_interactive(alpha = 0.3, aes(data_id = arbre, tooltip = arbre)) +
+          geom_line(stat = "summary", fun = mean, aes(colour = Taille)) +
+          geom_point_interactive(stat = "summary", fun = mean, size = 3, aes(colour = Taille, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"))) +
+          geom_smooth_interactive(method = "lm", formula = "y~1", se = FALSE, color = "black", linetype = 2, aes(tooltip = paste(textesUI[textesUI$id == "global_mean", lang], round(..y.., 1), sep = "<br>"))) +
+          scale_color_manual(values = coul_taille[input$taille_multi], labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))) +
+          scale_x_continuous(breaks = seq(2008, 2018, by = 2)) +
+          labs(
+            x = NULL, y = NULL, 
+            title = textesUI[textesUI$id == input$taille_mesure, lang],
+            colour = textesUI[textesUI$id == "taille_legend", lang]
+          )
+      } else { # if several selected taille
+        taille %>% 
+          filter(Mesure == input$taille_mesure, Taille %in% input$taille_multi) %>%
+          group_by(Annee, Taille) %>% 
+          summarise(
+            Moyenne = mean(Valeur, na.rm = TRUE)
+          ) %>%
+          suppressMessages() %>% # group message
+          ggplot() +
+          aes(x = Annee, y = Moyenne, colour = Taille, tooltip = paste(Taille, round(Moyenne, 1), sep = "<br>"), data_id = Taille) +
+          geom_vline_interactive(xintercept = 2010.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) + # ou 2011.5 ??
+          geom_line(aes(group = Taille)) +
+          geom_point_interactive() +
+          scale_color_manual(values = coul_taille[input$taille_multi], labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))) +
+          scale_x_continuous(breaks = seq(2008, 2018, by = 2)) +
+          labs(
+            x = NULL, y = NULL, 
+            title = textesUI[textesUI$id == input$taille_mesure, lang],
+            colour = textesUI[textesUI$id == "taille_legend", lang]
+          )
+      } } %>% 
+        suppressWarnings() %>% # geom_vline(): Ignoring `mapping` because `xintercept` was provided.
+        girafe(
+          ggobj = ., 
+          options = list(
+            opts_hover_inv(css = "opacity:0;"),
+            opts_tooltip(use_fill = TRUE),
+            opts_hover(css = "stroke-width:3px;"),
+            opts_selection(type = "none")
+          )
+        )
+    }
+    
+    
+  })
+  
+  ## mesures à l'échelle de la parcelle ####
+  
+  output$taille_spatial <- renderGirafe({
+    # traduire tooltip OK
+    # vérifier valeurs extrêmes de poids moyen de fruit
+    # une ou deux lignes ?
+    # comment montrer l'année où on a commencé à tailler ? -> l'ajouter dans le texte ?
+    
+    taille %>% 
+      filter(Mesure == input$taille_mesure) %>%
+      rowwise() %>% 
+      mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
+      {ggplot(.) +
+          aes(x = X, y = Y, fill = Valeur, tooltip = paste(Taille_trad, round(Valeur, 1), sep = "<br>"), data_id = Taille) +
+          geom_tile_interactive(colour = "black") +
+          scale_fill_gradientn(
+            colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
+            na.value = "transparent" # travailler encore le gradient de couleurs
+          ) +
+          # scale_x_discrete(drop = FALSE) +
+          scale_y_discrete(drop = FALSE) +
+          coord_fixed() +
+          labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang], fill = NULL) +
+          facet_wrap(~ Annee, nrow = 2)} %>% 
+      girafe(
+        ggobj = ., width_svg = 12,
+        options = list(
+          opts_hover_inv(css = "opacity:0.2;"),
+          opts_tooltip(use_stroke = TRUE),
+          opts_hover(css = ""),
+          opts_selection(type = "none")
+        )
+      )
+    
+  })
+  
+  
+  
 
 # Evaluation variétale ----------------------------------------------------
 

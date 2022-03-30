@@ -1,31 +1,35 @@
 
 # A FAIRE ####
 
-# attention aux échelles des graphiques (harmoniser ?)
-# changer forme du checkbox_year par des cases à cocher A VOIR
-# axe des y de la carte (?)
-# echelle carte qui commence à 0 (?)
+# changer couleur du checkbox_year (le rouge est pour les bandes de titre) A VOIR
+# changer les couleurs des var par celles de Isabelle OK MAIS PALICHON SUR LES GRAPHIQUES
+# Confirmer les années de taille des arbres !!??
+
+# vérifier soigneusement les textui
+
+# TAILLE
+# début de la taille plus marqué et visible (rectangle ?)
+# "Les arbres ont été taillés tous les deux ans à partir de 2012"
+
+# VARIETE
 # ajouter possibilité d'afficher toutes les variétés ensemble (avec un switch ?)
+# couleur du gradient : tester https://personal.sron.nl/~pault/#fig:scheme_iridescent : faire des comparaisons à montrer à Isabelle
 
-# TEMPS
-# ajouter ligne horizontale pour la moyenne globale dans le suivi temporel
 
-# SPATIAL
+# spatial :
 # revoir échelle de couleurs, les mettre en classe éventuellement A VOIR
-
-# - organisation du texte
-# envoyer les fichiers texte à Fred pour relecture
-# Nom et contenu des onglets :
-#   le verger (origine/description + photo parcelle + photo de chaque var) : mettre des radio buttons OK
-#   le suivi de la production : les graphiques de suivi + changer l'input de place OK
-#   bilan/synthèse : les fiches variétales qui reprennent les résultats de l'essai : mettre MAJ Fred
+# selection de chaque cultivar
+# faire un graphe spatial global
 
 
-# - faire similaire pour le verger taille
-# - anglais OK + espagnol
+# AUTRE
+
+# - envoyer les fichiers texte à Fred pour relecture
+# - anglais presque OK + espagnol
 # - mode d'emploi dans l'accueil
 # - logo : attendre photo de Fred + choix de la première police
-
+# - responsive : image width + ratio des graphiques (taille de police des labels des axes) A VOIR
+# - MAJ des fiches variétales
 
 
 # - garder en tete possible ajout des valeurs brix pH etc. (données au niveau du fruit)
@@ -63,6 +67,7 @@
 # si peu de points, enveler la couche violin NON
 # noms des var à 45° ou en 2 lignes si besoin OK
 # TEMPS
+# ajouter ligne horizontale pour la moyenne globale dans le suivi temporel OK
 # couleur sur les traits et les points moyenne ? OK
 # relier les points moyenne OK
 # - nettoyer fichier description OK
@@ -71,6 +76,16 @@
 # ajouter du loading pour les graphiques ? OK
 # - harmoniser les pipes OK
 # - erreurs du check : noms non portables pour les fiches variétales (à harmoniser avec les radio buttons correspondants) + taille de certains fichiers à diminuer (avec squash.io) OK
+# Nom et contenu des onglets :
+#   le verger (origine/description + photo parcelle + photo de chaque var) : mettre des radio buttons OK
+#   le suivi de la production : les graphiques de suivi + changer l'input de place OK
+#   bilan/synthèse : les fiches variétales qui reprennent les résultats de l'essai : OK
+# intégrer les graphiques taille dans l'appli OK
+# enlever le "onclick" ("bug carrés noirs") OK
+# harmoniser police des graphiques avec le reste de l'app OK
+# réorganisation layout onglet verger : le plan doit être suffisamment grand, penser à un espace pour la photo du verger OK
+
+
 
 # server ####
 
@@ -83,12 +98,12 @@ library(ggplot2)
 library(ggiraph)
 library(mangoviz)
 
+# VARIETES ####
 
 input <- list(
   # variete_mesure = "masse",
   variete_mesure = "nbfruit",
   # variete_mesure = "masse_fruit",
-  # variete_select_var = "Caro",
   variete_checkbox_year = 2010:2015,
   # variete_checkbox_year = 2016,
   # variete_multi_var = c("Heidi", "Irwin", "José")
@@ -96,33 +111,30 @@ input <- list(
 )
 
 
-
 coul_var <- c("#b94137", "#0080b4", "#008355", "#7f4ecc", "#ce7e26", "#8aa543", "#56423e", "#be4b7f", "#a5af98", "#00c1ff") %>% setNames(unique(variete$cultivar))
 
 
-## plan de la parcelle ####
-
+## Plan de la parcelle ####
 
 variete %>% 
   distinct(X, Y, cultivar) %>%
   {ggplot(.) +
-    aes(x = X, y = Y, fill = cultivar, tooltip = cultivar, data_id = cultivar) +
-    geom_tile_interactive(color = "black") +
-    scale_fill_manual(values = coul_var, guide = guide_legend(byrow = TRUE)) +
-    scale_x_discrete(drop = FALSE) +
-    scale_y_discrete(drop = FALSE) +
-    coord_fixed() +
-    labs(x = NULL, y = NULL, fill = textesUI[[lang]][textesUI$id == "cultivar"])} %>% 
+      aes(x = X, y = Y, fill = cultivar, tooltip = cultivar, data_id = cultivar) +
+      geom_tile_interactive(color = "black") +
+      scale_fill_manual(values = coul_var, guide = guide_legend(byrow = TRUE)) +
+      scale_x_discrete(drop = FALSE) +
+      scale_y_discrete(drop = FALSE) +
+      coord_fixed() +
+      labs(x = NULL, y = NULL, fill = textesUI[textesUI$id == "cultivar", lang])} %>% 
   girafe(
-  ggobj = ., 
-  options = list(
-    opts_hover_inv(css = "opacity:0.4;"),
-    opts_tooltip(use_fill = TRUE),
-    opts_hover(css = "fill:black;opacity:0.8;")
+    ggobj = ., height_svg = 8,
+    options = list(
+      opts_hover_inv(css = "opacity:0.4;"),
+      opts_tooltip(use_fill = TRUE),
+      opts_hover(css = "fill:black;opacity:0.8;"),
+      opts_selection(type = "none")
+    )
   )
-)
-
-
 
 
 
@@ -130,119 +142,289 @@ variete %>%
 ## comparaison des variétés ####
 
 if(!is.null(input$variete_checkbox_year)) { # if no selected date, no plot
-  variete %>% 
-    filter(Mesure == input$variete_mesure, Annee %in% input$variete_checkbox_year) %>% 
-    ggplot() +
-    aes(x = cultivar, y = Valeur, fill = cultivar) +
-    geom_violin(alpha = 0.2, color = "transparent", scale = "count") +
-    geom_jitter(alpha = 0.3, width = 0.2, height = 0) +
-    geom_point(stat = "summary", fun = mean, size = 4, color = "white") +
-    geom_point_interactive(
-      stat = "summary", 
-      fun = mean, size = 3, 
-      aes(color = cultivar, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"), data_id = cultivar)
+  {variete %>% 
+      filter(Mesure == input$variete_mesure, Annee %in% input$variete_checkbox_year, !is.na(Valeur)) %>% 
+      ggplot() +
+      aes(x = cultivar, y = Valeur, fill = cultivar) +
+      geom_violin(alpha = 0.3, color = "transparent", scale = "count") +
+      geom_jitter(alpha = 0.3, width = 0.2, height = 0) +
+      geom_point(stat = "summary", fun = mean, size = 4, color = "white") +
+      geom_point_interactive(
+        stat = "summary", 
+        fun = mean, size = 3, 
+        aes(color = cultivar, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"), data_id = cultivar)
       ) +
-    scale_fill_manual(values = coul_var, aesthetics = c("colour", "fill")) +
-    labs(x = NULL, y = NULL, title = textesUI[[lang]][textesUI$id == input$variete_mesure]) +
-    theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
-} %>% girafe(
-  ggobj = ., 
-  options = list(
-    opts_hover_inv(css = "opacity:0.4;"),
-    opts_tooltip(use_fill = TRUE),
-    opts_hover(css = "fill:black;")
-  )
-)
-
-
-
+      scale_fill_manual(values = coul_var, aesthetics = c("colour", "fill")) +
+      labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang]) +
+      theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+  } %>% 
+    girafe(
+      ggobj = ., 
+      options = list(
+        opts_hover_inv(css = "opacity:0.4;"),
+        opts_tooltip(use_fill = TRUE),
+        opts_hover(css = "fill:black;"),
+        opts_selection(type = "none")
+      )
+    )
+}
 
 ## comparaison des années (suivi temporel) ####
 
-{if(length(input$variete_multi_var) == 1) {
-  variete %>% 
-    filter(Mesure == input$variete_mesure, cultivar == input$variete_multi_var) %>%
-    ggplot() +
-    aes(x = Annee, y = Valeur) +
-    geom_line_interactive(aes(group = arbre, data_id = arbre, tooltip = arbre, hover_css = "fill:none"), alpha = 0.1) +
-    geom_point_interactive(alpha = 0.3, aes(data_id = arbre, tooltip = arbre)) +
-    geom_smooth_interactive(method = "lm", formula = "y~1", se = FALSE, color = "black", linetype = 2, aes(tooltip = paste(textesUI[[lang]][textesUI$id == "global_mean"], round(..y.., 1), sep = "<br>"))) +
-    geom_line(stat = "summary", fun = mean, aes(colour = cultivar)) +
-    geom_point_interactive(stat = "summary", fun = mean, size = 3, aes(colour = cultivar, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"))) +
-    scale_color_manual(values = coul_var[input$variete_multi_var]) +
-    labs(
-      x = NULL, y = NULL, 
-      title = textesUI[[lang]][textesUI$id == input$variete_mesure],
-      colour = textesUI[[lang]][textesUI$id == "cultivar"]
+  
+if(!is.null(input$variete_multi_var)) # if no selected cultivar, no plot
+{
+  {if(length(input$variete_multi_var) == 1) { # if one selected cultivar
+    variete %>% 
+      filter(Mesure == input$variete_mesure, cultivar == input$variete_multi_var, !is.na(Valeur)) %>%
+      ggplot() +
+      aes(x = Annee, y = Valeur) +
+      geom_line_interactive(aes(group = arbre, data_id = arbre, tooltip = arbre, hover_css = "fill:none"), alpha = 0.1) +
+      geom_point_interactive(alpha = 0.3, aes(data_id = arbre, tooltip = arbre)) +
+      geom_smooth_interactive(method = "lm", formula = "y~1", se = FALSE, color = "black", linetype = 2, aes(tooltip = paste(textesUI[textesUI$id == "global_mean", lang], round(..y.., 1), sep = "<br>"))) +
+      geom_line(stat = "summary", fun = mean, aes(colour = cultivar)) +
+      geom_point_interactive(stat = "summary", fun = mean, size = 3, aes(colour = cultivar, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"))) +
+      scale_color_manual(values = coul_var[input$variete_multi_var]) +
+      labs(
+        x = NULL, y = NULL, 
+        title = textesUI[textesUI$id == input$variete_mesure, lang],
+        colour = textesUI[textesUI$id == "cultivar", lang]
+      )
+  } else { # if several selected cultivars
+    variete %>% 
+      filter(Mesure == input$variete_mesure, cultivar %in% input$variete_multi_var) %>%
+      group_by(Annee, cultivar) %>% 
+      summarise(
+        Moyenne = mean(Valeur, na.rm = TRUE)
+      ) %>%
+      suppressMessages() %>% # group message
+      # suppressWarnings() %>% # NA & NaN values
+      ggplot() +
+      aes(x = Annee, y = Moyenne, colour = cultivar, tooltip = paste(cultivar, round(Moyenne, 1), sep = "<br>"), data_id = cultivar) +
+      geom_line(aes(group = cultivar)) +
+      geom_point_interactive() +
+      scale_color_manual(values = coul_var[input$variete_multi_var]) +
+      labs(
+        x = NULL, y = NULL, 
+        title = textesUI[textesUI$id == input$variete_mesure, lang],
+        colour = textesUI[textesUI$id == "cultivar", lang]
+      )
+  } } %>% 
+    girafe(
+      ggobj = ., 
+      options = list(
+        opts_hover_inv(css = "opacity:0;"),
+        opts_tooltip(use_fill = TRUE),
+        opts_hover(css = "stroke-width:3px;"),
+        opts_selection(type = "none")
+      )
     )
-} else {
-  variete %>% 
-    filter(Mesure == input$variete_mesure, cultivar %in% input$variete_multi_var) %>%
-    group_by(Annee, cultivar) %>% 
-    summarise(
-      Moyenne = mean(Valeur, na.rm = TRUE)
-    ) %>% 
-    ggplot() +
-    aes(x = Annee, y = Moyenne, colour = cultivar, tooltip = paste(cultivar, round(Moyenne, 1), sep = "<br>"), data_id = cultivar) +
-    geom_line(aes(group = cultivar)) +
-    geom_point_interactive() +
-    scale_color_manual(values = coul_var[input$variete_multi_var]) +
-    labs(
-      x = NULL, y = NULL, 
-      title = textesUI[[lang]][textesUI$id == input$variete_mesure],
-      colour = textesUI[[lang]][textesUI$id == "cultivar"]
-    )
-} } %>% 
-  girafe(
-  ggobj = ., 
-  options = list(
-    opts_hover_inv(css = "opacity:0;"),
-    opts_tooltip(use_fill = TRUE),
-    opts_hover(css = "stroke-width:3px;")
-  )
-)
-# titre : nb fruit moyen par arbre et par an
-# expliquer ce que sont les lignes noires
-
-
-
-
+}
 
 
 ## mesures à l'échelle de la parcelle ####
-variete %>% 
+
+
+if(!is.null(input$variete_multi_var)) # if no selected cultivar, no plot
+  variete %>% 
   filter(Mesure == input$variete_mesure) %>%
   {ggplot(.) +
-  aes(x = X, y = Y, fill = Valeur, tooltip = paste(cultivar, round(Valeur, 1), sep = "<br>"), data_id = cultivar) +
-  geom_tile_interactive(colour = "black") +
-  scale_fill_gradientn(
-    # low = "#6d001d", mid = "#FFF200", high = "#2c3900",
-    # midpoint = mean(.$Valeur),
-    colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
-    na.value = "transparent"
-    # guide = "legend"
-  ) +
-  scale_x_discrete(drop = FALSE) +
-  scale_y_discrete(drop = FALSE) +
-  coord_fixed() +
-  labs(x = NULL, y = NULL, title = textesUI[[lang]][textesUI$id == input$variete_mesure], fill = NULL) +
-  facet_wrap(~ Annee, nrow = 1)} %>% 
+      aes(x = X, y = Y, fill = Valeur, tooltip = paste(cultivar, round(Valeur, 1), sep = "<br>"), data_id = cultivar) +
+      geom_tile_interactive(colour = "black") +
+      scale_fill_gradientn(
+        colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
+        na.value = "transparent" # travailler encore le gradient de couleurs
+      ) +
+      scale_x_discrete(drop = FALSE) +
+      scale_y_discrete(drop = FALSE) +
+      coord_fixed() +
+      labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang], fill = NULL) +
+      facet_wrap(~ Annee, nrow = 1)} %>% 
   girafe(
-    ggobj = ., 
+    ggobj = ., width_svg = 16,
     options = list(
-      opts_hover_inv(css = "opacity:0;"),
+      opts_hover_inv(css = "opacity:0.2;"),
       opts_tooltip(use_stroke = TRUE),
       opts_hover(css = ""),
       opts_selection(type = "single", css = "fill:black;")
     )
   )
 
-# travailler encore le gradient de couleurs
+# TAILLE ####
 
 
 
 
+coul_taille <- c(`taille_ete` = "darkgreen", `taille_hiver` = "darkblue", `taille_sans` = "darkred")
 
+input <- list(
+  # taille_mesure = "masse",
+  # taille_mesure = "nbfruit",
+  taille_mesure = "masse_fruit",
+  taille_checkbox_year = 2011:2018,
+  # taille_checkbox_year = 2016,
+  # taille_multi = c("taille_ete", "taille_hiver", "taille_sans")
+  taille_multi = "taille_ete"
+)
+
+
+# Attention la taille des arbres a commencé entre 2011 et 2012
+# que signifie taille en été/en hiver par rapport à l'année de récolte ?
+
+
+## plan de la parcelle ####
+# représentation des bordures à valider
+# expliquer les bloc
+# traduire label des bloc
+
+taille %>% 
+  distinct(X, Y, arbre, bloc, Taille) %>%
+  {ggplot(.) +
+      aes(x = X, y = Y, fill = Taille, data_id = Taille, tooltip = arbre) +
+      # geom_tile_interactive(color = "black", aes(label = arbre, tooltip = paste(..label.., textesUI[textesUI$id == "taille_ete", lang], sep = "<br>"))) + # ne marche pas
+      geom_tile_interactive(color = "black") +
+      scale_fill_manual(
+        values = coul_taille, labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille)),
+        guide = guide_legend(byrow = TRUE)
+      ) +
+      # scale_x_discrete(drop = FALSE) +
+      scale_y_discrete(drop = FALSE) +
+      coord_fixed() +
+      labs(x = NULL, y = NULL, fill = textesUI[textesUI$id == "taille_legend", lang])} %>% 
+  girafe(
+    ggobj = ., 
+    options = list(
+      opts_hover_inv(css = "opacity:0.4;"),
+      opts_tooltip(use_fill = TRUE),
+      opts_hover(css = "fill:black;opacity:0.8;")
+    )
+  )
+
+
+
+## comparaison des tailles ####
+# déselectionner par défaut les années avant 2011 ?
+# distinguer les blocs ? que mettre dans les tooltips ?
+
+if(!is.null(input$taille_checkbox_year)) { # if no selected date, no plot
+  {taille %>% 
+      filter(Mesure == input$taille_mesure, Annee %in% input$taille_checkbox_year, !is.na(Valeur)) %>% 
+      ggplot() +
+      aes(x = Taille, y = Valeur, fill = Taille, label = arbre) +
+      geom_violin(alpha = 0.3, color = "transparent", scale = "count") +
+      geom_jitter_interactive(alpha = 0.3, width = 0.2, height = 0) + #, aes(tooltip = paste(..label.., round(..y.., 1), sep = "<br>"), data_id = bloc)) +
+      geom_point(stat = "summary", fun = mean, size = 4, color = "white") +
+      geom_point_interactive(
+        stat = "summary", 
+        fun = mean, size = 3, 
+        aes(color = Taille, tooltip = round(..y.., 1), data_id = Taille)
+      ) +
+      scale_fill_manual(values = coul_taille, aesthetics = c("colour", "fill")) +
+      labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$taille_mesure, lang]) +
+      theme(legend.position = "none")
+  } %>% 
+    girafe(
+      ggobj = ., 
+      options = list(
+        opts_hover_inv(css = "opacity:0.4;"),
+        opts_tooltip(use_fill = TRUE),
+        opts_hover(css = "fill:black;"),
+        opts_selection(type = "none")
+      )
+    )
+}
+
+
+## comparaison des années (suivi temporel) ####
+# ajouter une ligne verticale en 2011 OK
+# améliorer l'échelle des années OK
+
+if(!is.null(input$taille_multi)) { # if no selected taille, no plot
+  {if(length(input$taille_multi) == 1) { # if one selected taille
+    taille %>% 
+      filter(Mesure == input$taille_mesure, Taille == input$taille_multi, !is.na(Valeur)) %>%
+      ggplot() +
+      aes(x = Annee, y = Valeur) +
+      geom_vline_interactive(xintercept = 2010.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) + # ou 2011.5 ??
+      geom_line_interactive(aes(group = arbre, data_id = arbre, tooltip = arbre, hover_css = "fill:none"), alpha = 0.1) +
+      geom_point_interactive(alpha = 0.3, aes(data_id = arbre, tooltip = arbre)) +
+      geom_line(stat = "summary", fun = mean, aes(colour = Taille)) +
+      geom_point_interactive(stat = "summary", fun = mean, size = 3, aes(colour = Taille, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"))) +
+      geom_smooth_interactive(method = "lm", formula = "y~1", se = FALSE, color = "black", linetype = 2, aes(tooltip = paste(textesUI[textesUI$id == "global_mean", lang], round(..y.., 1), sep = "<br>"))) +
+      scale_color_manual(values = coul_taille[input$taille_multi]) +
+      scale_x_continuous(breaks = seq(2008, 2018, by = 2)) +
+      labs(
+        x = NULL, y = NULL, 
+        title = textesUI[textesUI$id == input$taille_mesure, lang],
+        colour = textesUI[textesUI$id == "taille_legend", lang]
+      )
+  } else { # if several selected taille
+    taille %>% 
+      filter(Mesure == input$taille_mesure, Taille %in% input$taille_multi) %>%
+      group_by(Annee, Taille) %>% 
+      summarise(
+        Moyenne = mean(Valeur, na.rm = TRUE)
+      ) %>%
+      suppressMessages() %>% # group message
+      # suppressWarnings() %>% # NA & NaN values
+      ggplot() +
+      aes(x = Annee, y = Moyenne, colour = Taille, tooltip = paste(Taille, round(Moyenne, 1), sep = "<br>"), data_id = Taille) +
+      geom_vline_interactive(xintercept = 2010.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) + # ou 2011.5 ??
+      geom_line(aes(group = Taille)) +
+      geom_point_interactive() +
+      scale_color_manual(values = coul_taille[input$taille_multi]) +
+      scale_x_continuous(breaks = seq(2008, 2018, by = 2)) +
+      labs(
+        x = NULL, y = NULL, 
+        title = textesUI[textesUI$id == input$taille_mesure, lang],
+        colour = textesUI[textesUI$id == "taille_legend", lang]
+      )
+  } } %>% 
+    girafe(
+      ggobj = ., 
+      options = list(
+        opts_hover_inv(css = "opacity:0;"),
+        opts_tooltip(use_fill = TRUE),
+        opts_hover(css = "stroke-width:3px;"),
+        opts_selection(type = "none")
+      )
+    )
+}
+
+
+
+## mesures à l'échelle de la parcelle ####
+
+# traduire tooltip OK
+# vérifier valeurs extrêmes de poids moyen de fruit
+# une ou deux lignes ?
+# comment montrer l'année où on a commencé à tailler ? -> l'ajouter dans le texte ?
+
+taille %>% 
+  filter(Mesure == input$taille_mesure) %>%
+  rowwise() %>% 
+  mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
+  {ggplot(.) +
+      aes(x = X, y = Y, fill = Valeur, tooltip = paste(Taille_trad, round(Valeur, 1), sep = "<br>"), data_id = Taille) +
+      geom_tile_interactive(colour = "black") +
+      scale_fill_gradientn(
+        colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
+        na.value = "transparent" # travailler encore le gradient de couleurs
+      ) +
+      # scale_x_discrete(drop = FALSE) +
+      scale_y_discrete(drop = FALSE) +
+      coord_fixed() +
+      labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang], fill = NULL) +
+      facet_wrap(~ Annee, nrow = 2)} %>% 
+  girafe(
+    ggobj = ., width_svg = 12,
+    options = list(
+      opts_hover_inv(css = "opacity:0.2;"),
+      opts_tooltip(use_stroke = TRUE),
+      opts_hover(css = ""),
+      opts_selection(type = "single", css = "fill:black;")
+    )
+  )
 
 
 
@@ -303,7 +485,7 @@ variete_mesure <- variete_arbre_annee %>%
 # couleurs_var <- c()
 
 
-## plan ####
+## plan
 # représentation des bordures à valider
 
 var_plan <- variete_mesure %>% 
@@ -335,7 +517,7 @@ variete_arbre_annee %>%
 
 
 
-## Récapitulons ####
+## Récapitulons
 
 # input
 
@@ -345,7 +527,7 @@ mesure <- "masse_fruit"
 
 
 
-### Bar plot : comparaison variétale ####
+### Bar plot : comparaison variétale
 
 
 
@@ -407,7 +589,7 @@ variete_mesure %>%
 
 
 
-### Heat map : suivi spatial ####
+### Heat map : suivi spatial
 
 # input
 # seulement si 1 variété, pas d'année en input
@@ -455,7 +637,7 @@ toto <- lapply(unique(variete$Annee), function(an) {
 
 
 
-### lines :  Suivi temporel ####
+### lines :  Suivi temporel
 
 
 # pourrait se mettre en eventReactive pour optimiser
@@ -513,11 +695,11 @@ variete_mesure %>%
 
 
 
-## travail en cours ####
+## travail en cours
 
 
 
-### spatial ####
+### spatial
 
 
 # Demander de choisir la variété
@@ -568,12 +750,12 @@ e2 <- variete_arbre_annee %>%
 
 
 
-### temporel ####
+### temporel
 
 
 
 
-#### Vérification des modèles ####
+#### Vérification des modèles
 
 mesure <- "masse"
 mesure <- "nbfruit"
@@ -618,7 +800,7 @@ variete_filtre %>%
 
 
 
-#### comparaisons multiples ####
+#### comparaisons multiples
 
 
 ref_grid(mod_var_masse)
@@ -709,45 +891,47 @@ e_arrange(e1, e_arrange(e2, e3, cols = 2))
 
 
 
-
-# Facteur taille ----------------------------------------------------------
-
-
+# facteur taille (VIEUX) ####
 
 taille <- read_delim("data-raw/MA05.txt", locale = locale(encoding = "ISO-8859-1", decimal_mark = ",", grouping_mark = "")) %>%
+  filter(taille != "bordure") %>% 
+  group_by(arbre, bloc, annee, taille) %>% 
+  summarise(
+    masse = sum(masse/1000, na.rm = TRUE), # kg
+    nbfruit = sum(nbfruit)
+  ) %>% 
+  ungroup() %>% 
   mutate(
+    masse_fruit = masse / nbfruit * 1000, # g
     Annee = str_sub(annee, end = 4) %>% as.numeric(),
-    Taille = taille %>% fct_recode("taille en été" = "taille02", "taille en hiver" = "taille07" ,"sans taille" ="tem")
-  )
-
-ftable(Annee ~ arbre, data = taille)
-
-taille %>% 
-  filter(masse == 0, nbfruit != 0)
-taille %>% 
-  filter(masse != 0, nbfruit == 0)
+    Taille = taille %>% fct_recode("taille en été" = "taille02", "taille en hiver" = "taille07" ,"sans taille" ="tem"),
+    bloc = factor(bloc),
+    X = str_sub(arbre, end = 1) %>% factor(levels = LETTERS[11:1]),
+    Y = str_sub(arbre, start = 2) %>% factor(levels = 1:17)
+  ) %>% 
+  tidyr::pivot_longer(masse:masse_fruit, names_to = "Mesure", values_to = "Valeur")
 
 
-# couleurs_taille_b <- c(bordure = "grey", `taille en été` = "darkgreen", `taille en hiver` = "darkblue", `sans taille` = "darkred")
-couleurs_taille <- c(`taille en été` = "darkgreen", `taille en hiver` = "darkblue", `sans taille` = "darkred")
+coul_taille <- c(`taille en été` = "darkgreen", `taille en hiver` = "darkblue", `sans taille` = "darkred")
 
 # plan
 # représentation des bordures à valider
 
 taille %>% 
-  filter(taille != "bordure") %>% 
   distinct(arbre, bloc, Taille) %>%
-  mutate(
-    X = str_sub(arbre, end = 1),
-    Y = str_sub(arbre, start = 2) %>% factor(levels = 17:1)
-  ) %>% 
   ggplot() +
   aes(x = X, y = Y, fill = Taille) +
   geom_tile(color = "black") +
-  scale_fill_manual(values = couleurs_taille) + # revoir les couleurs
+  scale_fill_manual(values = coul_taille) + # revoir les couleurs
   coord_fixed() +
   scale_y_discrete(drop = FALSE) +
   labs(x = NULL, y = NULL) 
+
+
+
+
+
+
 
 
 
@@ -815,37 +999,37 @@ ggplot(taille_arbre_annee) +
   facet_wrap(~ Annee)
 
 
-# modele masse
-
-mod_taille_masse <- lmer(masse ~ nbfruit * factor(Annee) * Taille + (1|bloc), data = taille_arbre_annee)
-
-ranova(mod_taille_masse) # effet bloc
-Anova(mod_taille_masse)
-
-ref_grid(mod_taille_masse)
-
-emmeans(mod_taille_masse, "Taille", by = "Annee") %>% plot(comparisons = TRUE)
-emmip(mod_taille_masse, Taille ~ Annee, CIs = TRUE) +
-  coord_cartesian(ylim = c(0, 100000))
-emmip(mod_taille_masse, Annee ~ Taille, CIs = TRUE)
-
-emtrends(mod_taille_masse, "Taille", by = "Annee", var = "nbfruit") %>% plot(comparisons = TRUE)
-emtrends(mod_taille_masse, ~ Taille, var = "nbfruit") %>% plot(comparisons = TRUE)
-
-
-# modele nombre de fruits
-
-mod_taille_nb <- lmer(nbfruit ~ factor(Annee) * Taille * (1|bloc), data = taille_arbre_annee)
-
-ranova(mod_taille_nb) # effet bloc
-Anova(mod_taille_nb)
-
-ref_grid(mod_taille_nb)
-
-emmeans(mod_taille_nb, "Taille", by = "Annee") %>% plot(comparisons = TRUE)
-emmip(mod_taille_nb, Taille ~ Annee, CIs = TRUE) +
-  scale_colour_manual(values = couleurs_taille)
-emmip(mod_taille_nb, Annee ~ Taille, CIs = TRUE)
+# # modele masse
+# 
+# mod_taille_masse <- lmer(masse ~ nbfruit * factor(Annee) * Taille + (1|bloc), data = taille_arbre_annee)
+# 
+# ranova(mod_taille_masse) # effet bloc
+# Anova(mod_taille_masse)
+# 
+# ref_grid(mod_taille_masse)
+# 
+# emmeans(mod_taille_masse, "Taille", by = "Annee") %>% plot(comparisons = TRUE)
+# emmip(mod_taille_masse, Taille ~ Annee, CIs = TRUE) +
+#   coord_cartesian(ylim = c(0, 100000))
+# emmip(mod_taille_masse, Annee ~ Taille, CIs = TRUE)
+# 
+# emtrends(mod_taille_masse, "Taille", by = "Annee", var = "nbfruit") %>% plot(comparisons = TRUE)
+# emtrends(mod_taille_masse, ~ Taille, var = "nbfruit") %>% plot(comparisons = TRUE)
+# 
+# 
+# # modele nombre de fruits
+# 
+# mod_taille_nb <- lmer(nbfruit ~ factor(Annee) * Taille * (1|bloc), data = taille_arbre_annee)
+# 
+# ranova(mod_taille_nb) # effet bloc
+# Anova(mod_taille_nb)
+# 
+# ref_grid(mod_taille_nb)
+# 
+# emmeans(mod_taille_nb, "Taille", by = "Annee") %>% plot(comparisons = TRUE)
+# emmip(mod_taille_nb, Taille ~ Annee, CIs = TRUE) +
+#   scale_colour_manual(values = couleurs_taille)
+# emmip(mod_taille_nb, Annee ~ Taille, CIs = TRUE)
 
 
 
