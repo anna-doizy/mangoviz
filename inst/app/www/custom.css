@@ -29,12 +29,14 @@ body {
     border: 1px solid #b94137;
 }
 
+/*
 .btn-danger {
   background-color: #f1aea6;
 }
 .btn-danger.active {
   background-color: #b94137;
 }
+*/
 
 .skin-green .sidebar-menu > li.active > a, .skin-green .sidebar-menu > li:hover > a {
     color: #ce7e26;
@@ -108,6 +110,10 @@ hr {
   max-height: 400px;
 }
 
+.inbox-img {
+  max-width: 100%;
+}
+
 #logo {
   display: block;
   margin-left: auto;
@@ -123,8 +129,13 @@ hr {
   margin: 5px;
 }
 
-.center{
+.center, .shiny-image-output{
   text-align: center;
+}
+
+#variete_img_desc img{
+  width: 100%; 
+  max-width: 320px;
 }
 
 #footer {
