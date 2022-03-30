@@ -364,11 +364,20 @@ server <- function(input, output, session) {
           opts_hover_inv(css = "opacity:0.2;"),
           opts_tooltip(use_stroke = TRUE),
           opts_hover(css = ""),
-          opts_selection(type = "single", css = "fill:black;")
+          opts_selection(type = "none")
         )
       )
 
   })
+  
+  
+
+
+  
+  
+  
+  
+  
   
   
   
