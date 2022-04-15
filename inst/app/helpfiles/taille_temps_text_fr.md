@@ -1,0 +1,4 @@
+Ce graphique permet de visualiser l'évolution temporelle de chaque mode de taille du verger. 
+Dans le cas où un seul mode de taille est sélectionnée : chaque ligne grise correspond à la trajectoire d'un arbre du verger (identifié par ses coordonnées dans la parcelle) et la ligne colorée est la trajectoire moyenne de tous les arbres de ce mode de taille. 
+Dans le cas où plusieurs variétés sont sélectionnées : seulement les trajectoires moyennes par mode de taille sont représentées pour ne pas alourdir le graphique. 
+Passez la souris (ou appuyez sur une ligne si vous êtes sur un écran tactile) pour mettre en évidence une trajectoire donnée.

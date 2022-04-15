@@ -29,6 +29,12 @@ body {
     border: 1px solid #b94137;
 }
 
+
+/* buttons colors */
+.btn-default{
+  color: #808080;
+}
+
 /*
 .btn-danger {
   background-color: #f1aea6;
@@ -75,7 +81,7 @@ hr {
   border-top: 1px solid #092d01;
 }
 
-/* validate button color */
+/* validate button color 
 #valider{
   color: #ecf0f5; 
   background-color: #222d32; 
@@ -87,7 +93,7 @@ hr {
   color: #ce7e26; 
   background-color: #1e282c; 
   border-color: #1e282c;
-}
+}*/
 
 
 
@@ -144,4 +150,11 @@ hr {
   margin-right: auto;
 }
 
-
+/* helpers position when it is in a box header  */
+.shinyhelper-container.shinyhelper-container2 {
+  position: relative;
+  color: #fff;
+  float: right;
+  right: 0;
+  padding-left: 10px;
+}

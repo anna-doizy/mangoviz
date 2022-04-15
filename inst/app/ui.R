@@ -5,6 +5,7 @@ suppressPackageStartupMessages({
   library(shinydashboard)
   library(shinyWidgets)
   library(shinycssloaders)
+  library(shinyhelper)
   library(dplyr)
   library(stringr)
   library(ggplot2)
@@ -171,7 +172,12 @@ function(req) {
               fluidRow(
                 column(6,
                        box(
-                         title = textesUI[textesUI$id == "variete_comp_box", lang],
+                         title = textesUI[textesUI$id == "taille_comp_box", lang] %>% 
+                           helper(
+                             content = paste("taille_comp_text", lang, sep = "_"),
+                             buttonLabel = "OK",
+                             size = "l", class = "shinyhelper-container2"
+                           ),
                          width = 12,
                          status = "success",
                          solidHeader = TRUE,
@@ -312,11 +318,15 @@ function(req) {
         fluidRow(
           column(6,
             box(
-              title = textesUI[textesUI$id == "variete_comp_box", lang],
+              title = textesUI[textesUI$id == "variete_comp_box", lang] %>% 
+                helper(
+                  content = paste("variete_comp_text", lang, sep = "_"),
+                  buttonLabel = "OK",
+                  size = "l", class = "shinyhelper-container2"
+                ),
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              p(em(textesUI[textesUI$id == "variete_comp_text", lang])),
               checkboxGroupButtons(
                 "variete_checkbox_year",
                 textesUI[textesUI$id == "variete_comp_label", lang],
