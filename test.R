@@ -1,25 +1,20 @@
 
 # A FAIRE ####
 
-# changer couleur du checkbox_year (le rouge est pour les bandes de titre) A VOIR
-# changer les couleurs des var par celles de Isabelle OK MAIS PALICHON SUR LES GRAPHIQUES
+# améliorer partie responsive
 # Confirmer les années de taille des arbres !!??
-
-# vérifier soigneusement les textui
 
 # TAILLE
 # début de la taille plus marqué et visible (rectangle ?)
 # "Les arbres ont été taillés tous les deux ans à partir de 2012"
 
 # VARIETE
-# ajouter possibilité d'afficher toutes les variétés ensemble (avec un switch ?)
-# couleur du gradient : tester https://personal.sron.nl/~pault/#fig:scheme_iridescent : faire des comparaisons à montrer à Isabelle
+# ajouter possibilité d'afficher toutes les variétés ensemble (avec un switch ?) # OK
 
-
-# spatial :
-# revoir échelle de couleurs, les mettre en classe éventuellement A VOIR
-# selection de chaque cultivar
-# faire un graphe spatial global
+# SPATIAL
+# revoir échelle de couleurs, les mettre en classe éventuellement OK
+# selection de chaque cultivar OK
+# faire un graphe spatial global OK
 
 
 # AUTRE
@@ -84,7 +79,10 @@
 # enlever le "onclick" ("bug carrés noirs") OK
 # harmoniser police des graphiques avec le reste de l'app OK
 # réorganisation layout onglet verger : le plan doit être suffisamment grand, penser à un espace pour la photo du verger OK
-
+# changer couleur du checkbox_year (le rouge est pour les bandes de titre) OK
+# changer les couleurs des var par celles de Isabelle OK MAIS PALICHON SUR LES GRAPHIQUES
+# ajouter des helpers OK
+# couleur du gradient : tester https://personal.sron.nl/~pault/#fig:scheme_iridescent : OK
 
 
 # server ####
@@ -107,7 +105,10 @@ input <- list(
   variete_checkbox_year = 2010:2015,
   # variete_checkbox_year = 2016,
   # variete_multi_var = c("Heidi", "Irwin", "José")
-  variete_multi_var = "Heidi"
+  variete_multi_var = "Heidi", # plusieurs pour temp
+  variete_select_var = "all",
+  # variete_select_var = "Heidi", # une seule pour spatial
+  variete_all_year = TRUE # switch
 )
 
 
@@ -223,32 +224,63 @@ if(!is.null(input$variete_multi_var)) # if no selected cultivar, no plot
 
 
 ## mesures à l'échelle de la parcelle ####
-
-
-if(!is.null(input$variete_multi_var)) # if no selected cultivar, no plot
+{if(input$variete_all_year) {
   variete %>% 
-  filter(Mesure == input$variete_mesure) %>%
-  {ggplot(.) +
+    filter(
+      Mesure == input$variete_mesure, 
+      cultivar %in% if(input$variete_select_var == "all") {levels(variete$cultivar)} else {input$variete_select_var}
+    ) %>% 
+    group_by(X, Y, cultivar) %>% 
+    summarise(Moyenne = mean(Valeur, na.rm = TRUE)) %>% 
+    suppressMessages() %>% # group message
+    ggplot() +
+      aes(x = X, y = Y, fill = Moyenne, tooltip = paste(cultivar, round(Moyenne, 1), sep = "<br>"), data_id = cultivar) +
+      geom_tile_interactive(colour = "black") +
+      scale_fill_gradientn(
+        # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
+        colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
+        na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
+      ) +
+      scale_x_discrete(drop = FALSE) +
+      scale_y_discrete(drop = FALSE) +
+      coord_fixed() +
+      labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang], fill = NULL)
+  } else {
+    variete %>% 
+      filter(
+        Mesure == input$variete_mesure, 
+        cultivar %in% if(input$variete_select_var == "all") {levels(variete$cultivar)} else {input$variete_select_var}
+      ) %>%
+    ggplot() +
       aes(x = X, y = Y, fill = Valeur, tooltip = paste(cultivar, round(Valeur, 1), sep = "<br>"), data_id = cultivar) +
       geom_tile_interactive(colour = "black") +
       scale_fill_gradientn(
-        colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
-        na.value = "transparent" # travailler encore le gradient de couleurs
+        # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
+        colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
+        na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
       ) +
       scale_x_discrete(drop = FALSE) +
       scale_y_discrete(drop = FALSE) +
       coord_fixed() +
       labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang], fill = NULL) +
-      facet_wrap(~ Annee, nrow = 1)} %>% 
+      facet_wrap(~ Annee, nrow = 1)
+  }}%>%
   girafe(
     ggobj = ., width_svg = 16,
     options = list(
       opts_hover_inv(css = "opacity:0.2;"),
       opts_tooltip(use_stroke = TRUE),
       opts_hover(css = ""),
-      opts_selection(type = "single", css = "fill:black;")
+      opts_selection(type = "none")
     )
   )
+  
+
+  
+
+
+
+
 
 # TAILLE ####
 

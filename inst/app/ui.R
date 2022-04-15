@@ -194,17 +194,27 @@ function(req) {
                 ),
                 column(6,
                        box(
-                         title = textesUI[textesUI$id == "variete_temps_box", lang],
+                         title = textesUI[textesUI$id == "taille_temps_box", lang] %>% 
+                           helper(
+                             content = paste("taille_temps_text", lang, sep = "_"),
+                             buttonLabel = "OK",
+                             size = "l", class = "shinyhelper-container2"
+                           ),
                          width = 12,
                          status = "success",
                          solidHeader = TRUE,
-                         # p(em(textesUI[textesUI$id == "variete_temps_text", lang])),
-                         selectInput(
+                         # selectInput(
+                         #   "taille_multi",
+                         #   textesUI[textesUI$id == "variete_temps_label", lang],
+                         #   choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
+                         #   multiple = TRUE,
+                         #   selected = "taille_sans"
+                         # ),
+                         radioGroupButtons(
                            "taille_multi",
+                           individual = TRUE,
                            textesUI[textesUI$id == "variete_temps_label", lang],
-                           choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
-                           multiple = TRUE,
-                           selected = "taille_sans"
+                           choices = c("all", levels(taille$Taille)) %>% setNames(textesUI[textesUI$id %in% c(levels(taille$Taille), "all"), lang]) # Attention à l'ordre
                          ),
                          girafeOutput("taille_temporel") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
                        )
@@ -215,7 +225,12 @@ function(req) {
               fluidRow(
                 column(12,
                        box(
-                         title = textesUI[textesUI$id == "variete_spatial_box", lang],
+                         title = textesUI[textesUI$id == "taille_spatial_box", lang] %>% 
+                           helper(
+                             content = paste("taille_spatial_text", lang, sep = "_"),
+                             buttonLabel = "OK",
+                             size = "l", class = "shinyhelper-container2"
+                           ),
                          width = 12,
                          status = "success",
                          solidHeader = TRUE,
@@ -339,18 +354,32 @@ function(req) {
           ),
           column(6,
             box(
-              title = textesUI[textesUI$id == "variete_temps_box", lang],
+              title = textesUI[textesUI$id == "variete_temps_box", lang] %>% 
+                helper(
+                  content = paste("variete_temps_text", lang, sep = "_"),
+                  buttonLabel = "OK",
+                  size = "l", class = "shinyhelper-container2"
+                ),
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              p(em(textesUI[textesUI$id == "variete_temps_text", lang])),
-              selectInput(
-               "variete_multi_var",
-               textesUI[textesUI$id == "variete_temps_label", lang],
-               choices = levels(variete$cultivar),
-               selected = "Caro",
-               multiple = TRUE
+              
+              fluidRow(
+                column(8, selectInput(
+                 "variete_multi_var",
+                 textesUI[textesUI$id == "variete_temps_label", lang],
+                 choices = levels(variete$cultivar),
+                 selected = "Caro",
+                 multiple = TRUE
+                )),
+                
+                column(4, p(), actionBttn(
+                  inputId = "variete_all_var",
+                  label = textesUI[textesUI$id == "variete_all_label", lang],
+                  style = "material-flat"
+                ))
               ),
+              
               girafeOutput("variete_temporel") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
             )
           )
@@ -360,17 +389,32 @@ function(req) {
         fluidRow(
           column(12,
             box(
-              title = textesUI[textesUI$id == "variete_spatial_box", lang],
+              title = textesUI[textesUI$id == "variete_spatial_box", lang] %>% 
+                helper(
+                  content = paste("variete_spatial_text", lang, sep = "_"),
+                  buttonLabel = "OK",
+                  size = "l", class = "shinyhelper-container2"
+                ),
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              p(em(textesUI[textesUI$id == "variete_spatial_text", lang])),
-              # selectInput(
-              # "variete_select_var",
-              # "Choix de la variété",
-              # choices = levels(variete$cultivar),
-              # selected = "Caro"
-              # ),
+              
+              
+              fluidRow(
+                column(2, p(strong(textesUI[textesUI$id == "variete_global_label", lang])),
+                  materialSwitch(
+                    inputId = "variete_all_year" #, label = ""
+                  )
+                ),
+                column(10, radioGroupButtons(
+                  "variete_select_var",
+                  individual = TRUE,
+                  textesUI[textesUI$id == "variete_bilan_label", lang],
+                  choices = c("all", levels(variete$cultivar)) %>% setNames(c(textesUI[textesUI$id =="all", lang], levels(variete$cultivar)))
+                  )
+                )
+              ),
+              
               girafeOutput("variete_spatial") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
             )
           )

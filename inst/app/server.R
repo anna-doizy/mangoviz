@@ -85,6 +85,7 @@ server <- function(input, output, session) {
             aes(color = Taille, tooltip = round(..y.., 1), data_id = Taille)
           ) +
           scale_fill_manual(values = coul_taille, aesthetics = c("colour", "fill")) +
+          scale_x_discrete(labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))) +
           labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$taille_mesure, lang]) +
           theme(legend.position = "none")
       } %>% 
@@ -105,8 +106,9 @@ server <- function(input, output, session) {
   
   output$taille_temporel <- renderGirafe({
     
-    if(!is.null(input$taille_multi)) { # if no selected taille, no plot
-      {if(length(input$taille_multi) == 1) { # if one selected taille
+    # if(!is.null(input$taille_multi)) { # if no selected taille, no plot
+      # {if(length(input$taille_multi) == 1) { # if one selected taille
+      {if(input$taille_multi != "all") { # if one selected taille
         taille %>% 
           filter(Mesure == input$taille_mesure, Taille == input$taille_multi, !is.na(Valeur)) %>%
           ggplot() +
@@ -290,6 +292,23 @@ server <- function(input, output, session) {
   
   ## comparaison des années (suivi temporel) ####
   
+  observeEvent(input$variete_all_var, { 
+    # action du bouton "tout sélectionner"
+    # if(input$variete_all_var){
+      updateSelectInput(
+        session,
+        "variete_multi_var",
+        selected = levels(variete$cultivar)
+      )
+    # }
+    # si on réenlève des variétés -> décoche le bouton
+    # if(length(input$variete_multi_var) < 10){
+    #   updateMaterialSwitch(session, "variete_all_var", value = FALSE)
+    # }
+    
+  })
+  
+ 
   output$variete_temporel <- renderGirafe({
 
     if(!is.null(input$variete_multi_var)) # if no selected cultivar, no plot
@@ -346,21 +365,47 @@ server <- function(input, output, session) {
   ## mesures à l'échelle de la parcelle ####
   
   output$variete_spatial <- renderGirafe({
-    # if(!is.null(input$variete_multi_var)) # if no selected cultivar, no plot : UTILITE ??? variete_select_var ???
+    {if(input$variete_all_year) {
       variete %>% 
-      filter(Mesure == input$variete_mesure) %>%
-      {ggplot(.) +
-          aes(x = X, y = Y, fill = Valeur, tooltip = paste(cultivar, round(Valeur, 1), sep = "<br>"), data_id = cultivar) +
-          geom_tile_interactive(colour = "black") +
-          scale_fill_gradientn(
-            colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
-            na.value = "transparent" # travailler encore le gradient de couleurs
-          ) +
-          scale_x_discrete(drop = FALSE) +
-          scale_y_discrete(drop = FALSE) +
-          coord_fixed() +
-          labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang], fill = NULL) +
-          facet_wrap(~ Annee, nrow = 1)} %>% 
+        filter(
+          Mesure == input$variete_mesure, 
+          cultivar %in% if(input$variete_select_var == "all") {levels(variete$cultivar)} else {input$variete_select_var}
+        ) %>% 
+        group_by(X, Y, cultivar) %>% 
+        summarise(Moyenne = mean(Valeur, na.rm = TRUE)) %>% 
+        suppressMessages() %>% # group message
+        ggplot() +
+        aes(x = X, y = Y, fill = Moyenne, tooltip = paste(cultivar, round(Moyenne, 1), sep = "<br>"), data_id = cultivar) +
+        geom_tile_interactive(colour = "black") +
+        scale_fill_gradientn(
+          # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
+          colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
+          na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
+        ) +
+        scale_x_discrete(drop = FALSE) +
+        scale_y_discrete(drop = FALSE) +
+        coord_fixed() +
+        labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang], fill = NULL)
+    } else {
+      variete %>% 
+        filter(
+          Mesure == input$variete_mesure, 
+          cultivar %in% if(input$variete_select_var == "all") {levels(variete$cultivar)} else {input$variete_select_var}
+        ) %>%
+        ggplot() +
+        aes(x = X, y = Y, fill = Valeur, tooltip = paste(cultivar, round(Valeur, 1), sep = "<br>"), data_id = cultivar) +
+        geom_tile_interactive(colour = "black") +
+        scale_fill_gradientn(
+          # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
+          colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
+          na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
+        ) +
+        scale_x_discrete(drop = FALSE) +
+        scale_y_discrete(drop = FALSE) +
+        coord_fixed() +
+        labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang], fill = NULL) +
+        facet_wrap(~ Annee, nrow = 1)
+    }}%>%
       girafe(
         ggobj = ., width_svg = 16,
         options = list(
