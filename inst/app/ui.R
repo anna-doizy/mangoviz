@@ -241,6 +241,22 @@ function(req) {
                          # choices = levels(variete$cultivar),
                          # selected = "Caro"
                          # ),
+                         
+                         fluidRow(
+                           column(2, p(strong(textesUI[textesUI$id == "timeviz_global_switch", lang])),
+                                  materialSwitch(
+                                    inputId = "taille_all_year" #, label = ""
+                                  )
+                           ),
+                           column(10, radioGroupButtons(
+                             "taille_select",
+                             individual = TRUE,
+                             textesUI[textesUI$id == "taille_temps_label", lang],
+                             choices = c("all", levels(taille$Taille)) %>% setNames(textesUI[textesUI$id %in% c(levels(taille$Taille), "all"), lang])
+                           )
+                           )
+                         ),
+                         
                          girafeOutput("taille_spatial") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
                        )
                 )
@@ -401,7 +417,7 @@ function(req) {
               
               
               fluidRow(
-                column(2, p(strong(textesUI[textesUI$id == "variete_global_label", lang])),
+                column(2, p(strong(textesUI[textesUI$id == "timeviz_global_switch", lang])),
                   materialSwitch(
                     inputId = "variete_all_year" #, label = ""
                   )

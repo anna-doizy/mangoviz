@@ -25,7 +25,7 @@ variete_temps_box,Suivi temporel,Temporal follow-up
 variete_all_label, Tout sélectionner, Select all
 variete_temps_label,Choix d'une ou plusieurs variétés,Choice of one or more cultivars
 variete_spatial_box,Suivi spatial,Spatial follow-up
-variete_global_label,Visualisation dans le temps / globale,Through time/global visualisation
+timeviz_global_switch,Visualisation par année ou globale,Per year or global visualisation
 variete_bilan_box,Récapitulatif par variété,Summary by cultivar
 variete_bilan_label,Choix de la variété,Choice of the cultivar
 savoirplus,A propos,About
