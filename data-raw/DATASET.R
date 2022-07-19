@@ -59,5 +59,51 @@ usethis::use_data(variete, taille, overwrite = TRUE)
 devtools::document()
 
 
+# Cycles de taille --------------------------------------------------------
 
+library(tidyverse)
+library(lubridate)
+library(ggimage)
 
+date_taille <- tibble(
+  Taille = rep(c("taille_hiver", "taille_ete"), times = 2),
+  Date_taille = c("2016-08-01", "2016-02-01", "2018-08-01", "2018-02-01") %>% as.Date(),
+  Depart = c(4, 4, 2, 2), # sens et position de la flèche
+  Pointe = Depart - 0.6,
+  pos_img = Depart + 0.5,
+  img = "www/shears_ratio.png"
+)
+
+cycle <- tribble(
+  ~Debut,    ~Fin,                  ~Etape,
+  "2015-08-01", "2016-05-01", "croissance_vegetative",
+  "2016-05-01", "2016-07-01",                 "repos",
+  "2016-07-01", "2016-10-01",             "floraison",
+  "2016-10-01", "2016-12-15",      "croissance_fruit",
+  "2016-12-15", "2017-02-01",        "maturite_fruit",
+  "2016-08-01", "2017-05-01", "croissance_vegetative",
+  "2017-05-01", "2017-07-01",                 "repos",
+  "2017-07-01", "2017-10-01",             "floraison",
+  "2017-10-01", "2017-12-15",      "croissance_fruit",
+  "2017-12-15", "2018-02-01",        "maturite_fruit",
+  "2017-08-01", "2018-05-01", "croissance_vegetative",
+  "2018-05-01", "2018-07-01",                 "repos",
+  "2018-07-01", "2018-10-01",             "floraison",
+  "2018-10-01", "2018-12-15",      "croissance_fruit",
+  "2018-12-15", "2019-02-01",        "maturite_fruit"
+) %>% 
+  mutate(
+    Debut = as.Date(Debut),
+    Fin = (ymd(Fin) - days(4)) %>% as.Date(),
+    Cycle = rep(3:1, each = 5) %>% factor(),
+    Etape = paste(rep(1:5, times = 3), Etape, sep = "_") %>% factor()
+  )
+
+date_labels <- tibble(
+  pas = seq(as.Date("2015-06-01"), as.Date("2019-04-01"), "month"),
+  annee = paste0("N", year(pas) - 2015),
+  etiquette = ifelse(month(pas) == 7, paste(format(pas, "%m"), annee, sep = "\n"), format(pas, "%m"))
+)
+
+usethis::use_data(date_taille, cycle, date_labels, overwrite = TRUE)
+devtools::document()

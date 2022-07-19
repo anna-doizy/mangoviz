@@ -1,29 +1,50 @@
 
 # A FAIRE ####
 
-# améliorer partie responsive
-# Confirmer les années de taille des arbres !!??
+# pondéréer les moyennes par le nb de fruits par arbre NON
+# mettre en label le nombre de fruits qui ont permis de calculer les moyennes ? Ou juste expliquer qqpart
+
+# ajouter les données jusqu'en 2021 (attente de Fred)
+# clarifier les labels des années ? 2016-2017
+# ajouter carte réunion avec un point et les coordonénes des vergers
+# préciser que les rangées 17 et 1 : plants de bordure
+# police des graphes ?
+# plan du verger : ajouter carrés gris pour figurer les arbres de bordure (les ajouter en code)
+# mettre une croix en F12 (essai taille) ?
+# pourquoi dans les plans la sélection ne garde pas la couleur comme dans suivi spatial ?
+# ajouter boite modalité de taille avec calendrier des tailles des récoltes dans un graphique
+
+# élargir dimensions graphe suivi temporel
+
+# faire un script pour Isabelle choix des couleurs
+
+
 
 # TAILLE
 # début de la taille plus marqué et visible (rectangle ?)
 # "Les arbres ont été taillés tous les deux ans à partir de 2012"
 
-# VARIETE
-# ajouter possibilité d'afficher toutes les variétés ensemble (avec un switch ?) # OK
+# une ou deux lignes de sous-graphes ? automatique ?
+# comment montrer l'année où on a commencé à tailler ? -> l'ajouter dans le texte ?
 
-# SPATIAL
-# revoir échelle de couleurs, les mettre en classe éventuellement OK
-# selection de chaque cultivar OK
-# faire un graphe spatial global OK
+# 1er graphique : interaction sur les points noirs avec dataid : arbre
+
+# temp : texte choix d'une ou plusieurs var
+
+
+# VARIETE
+# changer format du bouton (temp) pour faire comme pour cultivar (temp et spatial) -> tous les boutons comme suivi temp dans éval var !!
+# couleur du bouton "tout sélectionner"
 
 
 # AUTRE
 
-# - envoyer les fichiers texte à Fred pour relecture
+# - envoyer les fichiers texte à Fred pour relecture **en cours**
 # - anglais presque OK + espagnol
 # - mode d'emploi dans l'accueil
-# - logo : attendre photo de Fred + choix de la première police
+
 # - responsive : image width + ratio des graphiques (taille de police des labels des axes) A VOIR
+# ajout phrase ctrl + ou - pour ajuster les tailles des graphiques
 # - MAJ des fiches variétales
 
 
@@ -35,6 +56,18 @@
 # les données dans un datapaper -> mettre le dépôt en public à ce moment
 # symposium mangue oct-nov 2023 Espagne
 # quand héberger dans le serveur du CIRAD ?
+# données à déposer dans dataverse CIRAD : à citer (Fred)
+
+# Guillaume : est-ce qu'on peut mettre l'appli en open et les données en privé ? Sinon tout en privé
+
+# mettre en doc (README) la structure des données qu'il faut
+
+# si demande du code source alors donner qu'une partie des données (quelques arbres et 2 ans et 2 modalités (taille ou var)) -> minimum fonctionnel
+
+
+# obj : bêta tests d'ici la fin de l'année
+# textes avec traduction : d'ici le 14 juillet
+
 
 
 # FAIT
@@ -83,6 +116,24 @@
 # changer les couleurs des var par celles de Isabelle OK MAIS PALICHON SUR LES GRAPHIQUES
 # ajouter des helpers OK
 # couleur du gradient : tester https://personal.sron.nl/~pault/#fig:scheme_iridescent : OK
+# ajouter possibilité d'afficher toutes les variétés ensemble (avec un switch ?) OK
+# revoir échelle de couleurs, les mettre en classe éventuellement OK
+# selection de chaque cultivar OK
+# faire un graphe spatial global OK
+# traduire tooltip OK
+
+# 2022-07-19
+# - logo : attendre photo de Fred ? (choix de la première police OK)
+# faire un graphique spatial global comme pour cultivar OK
+# vérifier valeurs extrêmes de poids moyen de fruit OK
+# Confirmer les années de taille des arbres OK
+# mettre les sécateurs à la bonne échelle OK
+# aligner les sécateurs sur le cycle de taille OK
+# marquer le passage des années OK
+# mettre les années au niveau du milieu de l'année OK
+# remplacer les années par N, N+1, etc. OK
+# intégrer le graphique cycle des tailles dans l'appli
+
 
 
 # server ####
@@ -296,7 +347,10 @@ input <- list(
   taille_checkbox_year = 2011:2018,
   # taille_checkbox_year = 2016,
   # taille_multi = c("taille_ete", "taille_hiver", "taille_sans")
-  taille_multi = "taille_ete"
+  taille_multi = "taille_ete", # pour temp
+  # taille_select = "all",
+  taille_select = "taille_ete", # pour spatial
+  taille_all_year = FALSE # switch
 )
 
 
@@ -427,39 +481,155 @@ if(!is.null(input$taille_multi)) { # if no selected taille, no plot
 
 ## mesures à l'échelle de la parcelle ####
 
-# traduire tooltip OK
-# vérifier valeurs extrêmes de poids moyen de fruit
-# une ou deux lignes ?
-# comment montrer l'année où on a commencé à tailler ? -> l'ajouter dans le texte ?
 
-taille %>% 
-  filter(Mesure == input$taille_mesure) %>%
-  rowwise() %>% 
-  mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
-  {ggplot(.) +
-      aes(x = X, y = Y, fill = Valeur, tooltip = paste(Taille_trad, round(Valeur, 1), sep = "<br>"), data_id = Taille) +
-      geom_tile_interactive(colour = "black") +
-      scale_fill_gradientn(
-        colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
-        na.value = "transparent" # travailler encore le gradient de couleurs
-      ) +
-      # scale_x_discrete(drop = FALSE) +
-      scale_y_discrete(drop = FALSE) +
-      coord_fixed() +
-      labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang], fill = NULL) +
-      facet_wrap(~ Annee, nrow = 2)} %>% 
+{if(input$taille_all_year) {
+  taille %>% 
+    filter(
+      Mesure == input$taille_mesure, 
+      Taille %in% if(input$taille_select == "all") {levels(taille$Taille)} else {input$taille_select}
+    ) %>% 
+    group_by(X, Y, Taille) %>% 
+    summarise(Moyenne = mean(Valeur, na.rm = TRUE)) %>% 
+    suppressMessages() %>% # group message
+    rowwise() %>% 
+    mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
+    ggplot() +
+    aes(x = X, y = Y, fill = Moyenne, tooltip = paste(Taille_trad, round(Moyenne, 1), sep = "<br>"), data_id = Taille) +
+    geom_tile_interactive(colour = "black") +
+    scale_fill_gradientn(
+      # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
+      colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
+      na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
+    ) +
+    scale_x_discrete(drop = FALSE) +
+    scale_y_discrete(drop = FALSE) +
+    coord_fixed() +
+    labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$taille_mesure, lang], fill = NULL)
+} else {
+  taille %>% 
+    filter(
+      Mesure == input$taille_mesure, 
+      Taille %in% if(input$taille_select == "all") {levels(taille$Taille)} else {input$taille_select}
+    ) %>%
+    rowwise() %>% 
+    mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
+    ggplot() +
+    aes(x = X, y = Y, fill = Valeur, tooltip = paste(Taille_trad, round(Valeur, 1), sep = "<br>"), data_id = Taille) +
+    geom_tile_interactive(colour = "black") +
+    scale_fill_gradientn(
+      # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
+      colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
+      na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
+    ) +
+    scale_x_discrete(drop = FALSE) +
+    scale_y_discrete(drop = FALSE) +
+    coord_fixed() +
+    labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$taille_mesure, lang], fill = NULL) +
+    facet_wrap(~ Annee, nrow = 2)
+}}%>%
   girafe(
-    ggobj = ., width_svg = 12,
+    ggobj = ., width_svg = 16,
     options = list(
       opts_hover_inv(css = "opacity:0.2;"),
       opts_tooltip(use_stroke = TRUE),
       opts_hover(css = ""),
-      opts_selection(type = "single", css = "fill:black;")
+      opts_selection(type = "none")
     )
   )
 
 
 
+
+
+
+# Cycle manguier ----------------------------------------------------------
+
+lang <- "fr"
+
+library(tidyverse)
+library(lubridate)
+# library(scales)
+library(ggimage)
+library(mangoviz)
+# library(png)
+# library(grid)
+
+# img <- png::readPNG("inst/app/www/shears.png")
+# rasterGrob(img)
+
+
+date_taille <- tibble(
+  Taille = rep(c("taille_hiver", "taille_ete"), times = 2),
+  Date_taille = c("2016-08-01", "2016-02-01", "2018-08-01", "2018-02-01") %>% as.Date(),
+  Depart = c(4, 4, 2, 2), # sens et position de la flèche
+  Pointe = Depart - 0.6,
+  pos_img = Depart + 0.5,
+  img = "inst/app/www/shears_ratio.png"
+)
+
+cycle <- tribble(
+  ~Debut,    ~Fin,                  ~Etape,
+  "2015-08-01", "2016-05-01", "croissance_vegetative",
+  "2016-05-01", "2016-07-01",                 "repos",
+  "2016-07-01", "2016-10-01",             "floraison",
+  "2016-10-01", "2016-12-15",      "croissance_fruit",
+  "2016-12-15", "2017-02-01",        "maturite_fruit",
+  "2016-08-01", "2017-05-01", "croissance_vegetative",
+  "2017-05-01", "2017-07-01",                 "repos",
+  "2017-07-01", "2017-10-01",             "floraison",
+  "2017-10-01", "2017-12-15",      "croissance_fruit",
+  "2017-12-15", "2018-02-01",        "maturite_fruit",
+  "2017-08-01", "2018-05-01", "croissance_vegetative",
+  "2018-05-01", "2018-07-01",                 "repos",
+  "2018-07-01", "2018-10-01",             "floraison",
+  "2018-10-01", "2018-12-15",      "croissance_fruit",
+  "2018-12-15", "2019-02-01",        "maturite_fruit"
+) %>% 
+  mutate(
+    Debut = as.Date(Debut),
+    Fin = (ymd(Fin) - days(4)) %>% as.Date(),
+    Cycle = rep(3:1, each = 5) %>% factor(),
+    Etape = paste(rep(1:5, times = 3), Etape, sep = "_") %>% factor()
+  )
+
+date_labels <- tibble(
+  pas = seq(as.Date("2015-06-01"), as.Date("2019-04-01"), "month"),
+  annee = paste0("N", year(pas) - 2015),
+  etiquette = ifelse(month(pas) == 7, paste(format(pas, "%m"), annee, sep = "\n"), format(pas, "%m"))
+)
+
+
+ggplot(cycle) +
+  aes(x = Debut, y = Cycle) +
+  geom_vline(xintercept = seq(as.Date("2016-01-01"), as.Date("2019-01-01"), "year"), size = 2, color = "white") +
+  geom_segment(
+    aes(xend = Fin, yend = Cycle, colour = Etape),
+    size = 8
+  ) +
+  geom_segment(
+    data = date_taille, 
+    mapping = aes(x = Date_taille, xend = Date_taille, y = Depart, yend = Pointe), 
+    arrow = arrow(length = unit(0.1, "inches")),
+    size = 1, colour = "black"
+  ) +
+  geom_image(
+    data = date_taille, 
+    mapping = aes(x = Date_taille, y = pos_img, image = img), 
+    size = 0.05
+  ) +
+  scale_color_manual(
+    labels = textesUI[textesUI$id %in% levels(cycle$Etape), lang] %>% setNames(levels(cycle$Etape)),
+    values = c("#007510", "#47CBFF", "#FFC038", "#FF8800", "#DE3800") %>% setNames(levels(cycle$Etape))
+  ) +
+  scale_y_discrete(breaks = NULL) +
+  scale_x_date(
+    breaks = date_labels$pas, 
+    minor_breaks = NULL, 
+    labels = date_labels$etiquette
+    ) +
+  coord_fixed(70, ylim = c(0.8, 4.5)) +
+  labs(x = NULL, y = "", colour = "") +
+  theme(legend.position = "bottom", axis.text.x = element_text(face = "bold"))
 
 
 

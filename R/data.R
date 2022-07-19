@@ -29,3 +29,40 @@
 #' 
 #' @format 3 columns for identifier, french and english
 "textesUI"
+
+#' Data for pruning cycle graph: Pruning dates
+#'
+#' @format A data frame of 4 x 6
+#' 
+#' \describe{
+#'   \item{Taille}{Type of pruning}
+#'   \item{Date_taille}{Pruning date}
+#'   \item{Depart}{Beginning of the arrow}
+#'   \item{Pointe}{End of the arrow}
+#'   \item{pos_img}{Position of the shears image}
+#'   \item{img}{Path to the shears image}
+#'   }
+"date_taille"
+
+#' Data for pruning cycle graph: Mango tree steps (through 3 cycles)
+#'
+#' @format A data frame of 15 x 4
+#' 
+#' \describe{
+#'   \item{Debut}{Date of the beginning of the step}
+#'   \item{Fin}{Date of the end of the step}
+#'   \item{Etape}{Name/id of the step}
+#'   \item{Cycle}{Cycle id}
+#'   }
+"cycle"
+
+#' Data for pruning cycle graph: Date labels for the x axis
+#'
+#' @format A data frame of 47 x 3
+#' 
+#' \describe{
+#'   \item{pas}{date break}
+#'   \item{annee}{turn the year into a general identifier}
+#'   \item{etiquette}{date label, with a month format + the year id once per year}
+#'   }
+"date_labels"

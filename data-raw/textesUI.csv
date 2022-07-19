@@ -5,9 +5,10 @@ variete,Evaluation variétale,Cultivar test
 presentation,Le verger,The orchard
 resultats, Suivi,Follow-up
 bilan, Bilan,Review
-variete_pres_box,Description de l'expérience,Description of the experiment
-variete_plan_box,Plan du verger,Map of the orchard
+pres_box,Description de l'expérience,Description of the experiment
+plan_box,Plan du verger,Map of the orchard
 variete_var_box,Présentation des variétés,Presentation of the cultivars
+taille_cycle_box,Présentation des cycles de taille,Presentation of the pruning cycles
 caro,"[REUNION]<br>La variété **Caro** provient d'un semis de chez Mr. André Caro à la Rivière Saint Louis. Sa qualité gustative ressemble à celle des fruits de José.","[REUNION]<br>The cultivar **Caro** comes from a seedling of Mr. André Caro in Rivière Saint Louis. Its taste quality is similar to that of José's fruits."
 cogshall,"[FLORIDE]<br>La variété **Cogshall** est aussi appelée « mangue américaine » ou « mangue qui dévisse ». L'apparition d'un point jaune sur l'apex du fruit est une astuce pour le récolter au stade optimal.","[FLORIDA]<br>The **Cogshall** cultivar is also known in French as the "American mango" or "unscrewing mango". The appearance of a yellow dot on the apex of the fruit is a trick to harvest it at the optimal stage."
 heidi,"[AFRIQUE DU SUD]<br>La variété **Heidi** est issue d'un croisement entre les variété Kent et Sensation.","[SOUTH AFRICA]<br>The **Heidi** cultivar is the result of a cross between the Kent and Sensation cultivars."
@@ -45,3 +46,8 @@ taille_comp_label,Choix d'une ou plusieurs années,Choice of one or more years
 taille_temps_box,Suivi temporel,Temporal follow-up
 taille_temps_label,Choix du mode de taille,Choice of the pruning method
 taille_spatial_box,Suivi spatial,Spatial follow-up
+1_croissance_vegetative, Croissance végétative, Vegetative growth
+2_repos, Repos, Resting
+3_floraison, Floraison, Flowering
+4_croissance_fruit, Croissance des fruits, Fruit growth
+5_maturite_fruit, Maturité des fruits, Fruit maturity

@@ -130,7 +130,7 @@ function(req) {
           column(
             6, 
             box(
-              title = textesUI[textesUI$id == "variete_pres_box", lang], 
+              title = textesUI[textesUI$id == "pres_box", lang], 
               width = 12,
               status = "success",
               solidHeader = TRUE,
@@ -140,11 +140,18 @@ function(req) {
           column(
             6, 
             box(
-              title = textesUI[textesUI$id == "variete_plan_box", lang],
+              title = textesUI[textesUI$id == "plan_box", lang],
               width = 12,
               status = "success",
               solidHeader = TRUE,
               girafeOutput("taille_parcelle", height = "auto", width = "90%")
+            ),
+            box(
+              title = textesUI[textesUI$id == "taille_cycle_box", lang],
+              width = 12,
+              status = "success",
+              solidHeader = TRUE,
+              plotOutput("cycles_taille")
             )
           )
         )
@@ -272,7 +279,7 @@ function(req) {
           column(
             6, 
             box(
-              title = textesUI[textesUI$id == "variete_pres_box", lang], 
+              title = textesUI[textesUI$id == "pres_box", lang], 
               width = 12, #height = 570,
               status = "success",
               solidHeader = TRUE,
@@ -282,7 +289,7 @@ function(req) {
           column(
             6, 
             box(
-              title = textesUI[textesUI$id == "variete_plan_box", lang],
+              title = textesUI[textesUI$id == "plan_box", lang],
               width = 12,
               status = "success",
               solidHeader = TRUE,

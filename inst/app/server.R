@@ -67,6 +67,42 @@ server <- function(input, output, session) {
       )
   })
   
+  ## Description du cycle des tailles
+  
+  output$cycles_taille <- renderPlot({
+    ggplot(cycle) +
+      aes(x = Debut, y = Cycle) +
+      geom_vline(xintercept = seq(as.Date("2016-01-01"), as.Date("2019-01-01"), "year"), size = 2, color = "white") +
+      geom_segment(
+        aes(xend = Fin, yend = Cycle, colour = Etape),
+        size = 8
+      ) +
+      geom_segment(
+        data = date_taille, 
+        mapping = aes(x = Date_taille, xend = Date_taille, y = Depart, yend = Pointe), 
+        arrow = arrow(length = unit(0.1, "inches")),
+        size = 1, colour = "black"
+      ) +
+      geom_image(
+        data = date_taille, 
+        mapping = aes(x = Date_taille, y = pos_img, image = img), 
+        size = 0.05
+      ) +
+      scale_color_manual(
+        labels = textesUI[textesUI$id %in% levels(cycle$Etape), lang] %>% setNames(levels(cycle$Etape)),
+        values = c("#007510", "#47CBFF", "#FFC038", "#FF8800", "#DE3800") %>% setNames(levels(cycle$Etape))
+      ) +
+      scale_y_discrete(breaks = NULL) +
+      scale_x_date(
+        breaks = date_labels$pas, 
+        minor_breaks = NULL, 
+        labels = date_labels$etiquette
+      ) +
+      coord_fixed(70, ylim = c(0.8, 4.5)) +
+      labs(x = NULL, y = "", colour = "") +
+      theme(legend.position = "bottom", axis.text.x = element_text(face = "bold"))
+  })
+  
   
   ## comparaison des tailles ####
   
