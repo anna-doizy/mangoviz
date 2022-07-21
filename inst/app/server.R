@@ -147,15 +147,20 @@ server <- function(input, output, session) {
       {if(input$taille_multi != "all") { # if one selected taille
         taille %>% 
           filter(Mesure == input$taille_mesure, Taille == input$taille_multi, !is.na(Valeur)) %>%
+          rowwise() %>% 
+          mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
           ggplot() +
           aes(x = Annee, y = Valeur) +
           geom_vline_interactive(xintercept = 2010.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) + # ou 2011.5 ??
           geom_line_interactive(aes(group = arbre, data_id = arbre, tooltip = arbre, hover_css = "fill:none"), alpha = 0.1) +
           geom_point_interactive(alpha = 0.3, aes(data_id = arbre, tooltip = arbre)) +
-          geom_line(stat = "summary", fun = mean, aes(colour = Taille)) +
-          geom_point_interactive(stat = "summary", fun = mean, size = 3, aes(colour = Taille, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"))) +
+          geom_line(stat = "summary", fun = mean, aes(colour = Taille_trad)) +
+          geom_point_interactive(stat = "summary", fun = mean, size = 3, aes(colour = Taille_trad, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"))) +
           geom_smooth_interactive(method = "lm", formula = "y~1", se = FALSE, color = "black", linetype = 2, aes(tooltip = paste(textesUI[textesUI$id == "global_mean", lang], round(..y.., 1), sep = "<br>"))) +
-          scale_color_manual(values = coul_taille[input$taille_multi], labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))) +
+          scale_color_manual(
+            values = coul_taille[input$taille_multi] %>% unname() # car aes color : Taille_trad
+            # labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))
+            ) +
           scale_x_continuous(breaks = seq(2008, 2018, by = 2)) +
           labs(
             x = NULL, y = NULL, 
@@ -171,8 +176,10 @@ server <- function(input, output, session) {
             Moyenne = mean(Valeur, na.rm = TRUE)
           ) %>%
           suppressMessages() %>% # group message
+          rowwise() %>% 
+          mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
           ggplot() +
-          aes(x = Annee, y = Moyenne, colour = Taille, tooltip = paste(Taille, round(Moyenne, 1), sep = "<br>"), data_id = Taille) +
+          aes(x = Annee, y = Moyenne, colour = Taille, tooltip = paste(Taille_trad, round(Moyenne, 1), sep = "<br>"), data_id = Taille) +
           geom_vline_interactive(xintercept = 2010.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) + # ou 2011.5 ??
           geom_line(aes(group = Taille)) +
           geom_point_interactive() +
