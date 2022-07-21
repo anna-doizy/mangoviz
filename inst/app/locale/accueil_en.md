@@ -25,14 +25,14 @@
 
 *** 
 
-Last update : 2022-04-15
+Last update : 2022-07-20
 
 Logo ©[DoAna](https://doana-r.com)  
 <!-- Photographies © Jesper Rasmussen sauf mention contraire -->
 
-The wirtten content of this app is available under the [CC-BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/) and the source code under the [MIT license](https://mit-license.org/) (© [DoAna](https://www.doana-r.com/) 2021).
+The written content of this app is available under the [CC-BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/) and the source code under the [MIT license](https://mit-license.org/) (© [DoAna](https://www.doana-r.com/) 2021) under request.
 
-this website is built with [R](https://www.r-project.org/) and [shiny](https://shiny.rstudio.com/).
+This website is built with [R](https://www.r-project.org/) and [shiny](https://shiny.rstudio.com/).
 
-Source code : https://gitlab.com/doana-r/mangoviz
+<!--Source code : https://gitlab.com/doana-r/mangoviz-->
 <!-- peut-être à herberger sur le groupe du CIRAD -->

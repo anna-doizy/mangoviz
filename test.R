@@ -6,7 +6,7 @@
 
 # ajouter les données jusqu'en 2021 (attente de Fred)
 # clarifier les labels des années ? 2016-2017
-# ajouter carte réunion avec un point et les coordonénes des vergers
+# ajouter carte réunion avec un point et les coordonnées des vergers
 # préciser que les rangées 17 et 1 : plants de bordure
 # police des graphes ?
 # plan du verger : ajouter carrés gris pour figurer les arbres de bordure (les ajouter en code)
@@ -39,7 +39,6 @@
 
 # AUTRE
 
-# - envoyer les fichiers texte à Fred pour relecture **en cours**
 # - anglais presque OK + espagnol
 # - mode d'emploi dans l'accueil
 
@@ -133,7 +132,11 @@
 # mettre les années au niveau du milieu de l'année OK
 # remplacer les années par N, N+1, etc. OK
 # intégrer le graphique cycle des tailles dans l'appli
-
+# 2022-07-20
+# intégrer les corrections textesUI, locale d'Isabelle
+# déboguer les labels du graphe taille temporel
+# 2022-07-21 
+# - intégrer les corrections des helpfiles d'Isabelle
 
 
 # server ####

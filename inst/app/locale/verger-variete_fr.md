@@ -1,22 +1,29 @@
 
-### Objectif de la mise en place d'une évaluation variétale
+### Objectif
 
-L'objectif est de comparer la production de fruits de 10 variétés de manguiers dans une même parcelle.
-
-
-### Informations générales sur le verger expérimental
+L'objectif de l'essai d'évaluation variétale est de comparer la production de fruits de 10 variétés de manguiers.
 
 
-- **Localisation** : Cirad - Station Bassin Plat, Saint-Pierre, Ile de la Réunion
+### Verger expérimental
+
+
+- **Localisation** : Cirad - Station Bassin Plat, Saint-Pierre, Ile de la Réunion (21°19’S, 55°29’E, 125m a.s.l)
 - **Année de plantation** : 2007
-- **Densité de plantation** : 5m x 6m *(ça veut dire quoi ?)*
+- **Densité de plantation** : 278 arbres / ha (6m x 6m)
+- **Variétés** : mélange variétal
 - **Porte-greffe** : Maison rouge
 
-### Variables suivies pour caractériser la production du verger
 
-- Mesure de la **masse** de mangues produites par arbre et par an (en kilogrammes)
-- Mesure du **nombre de fruits** arrivés à maturité par arbre et par an
-- Calcul de la **masse moyenne d'un fruit** par arbre et par an (en grammes)
+??? Informations sur la taille des arbres: non taillés jusqu'en XXX puis taille sévère en XXX et ????
+
+
+### Variables suivies
+
+A chaque récolte, tous les arbres du verger sont suivis individuellement. La production du verger est caractérisée par trois variables mesurées sur les fruits arrivés à maturité. 
+
+- **Masse de fruits** : masse totale des mangues produites par arbre et par an (en kg)
+- **Nombre de fruits** : nombre de mangues produites par arbre et par an
+- **Masse moyenne d'un fruit** : masse moyenne d'une mangue par arbre et par an (en g)
 
 <p class="center">
   <img src="verger-test.jpg" class="inbox-img">

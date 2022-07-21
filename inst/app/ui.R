@@ -221,7 +221,7 @@ function(req) {
                          radioGroupButtons(
                            "taille_multi",
                            individual = TRUE,
-                           textesUI[textesUI$id == "variete_temps_label", lang],
+                           textesUI[textesUI$id == "taille_temps_label", lang],
                            choices = c("all", levels(taille$Taille)) %>% setNames(textesUI[textesUI$id %in% c(levels(taille$Taille), "all"), lang]) # Attention à l'ordre
                          ),
                          girafeOutput("taille_temporel") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)

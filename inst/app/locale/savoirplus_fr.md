@@ -1,42 +1,25 @@
-
 ## Nous contacter
 
-Si vous avez des suggestions des remarques ou autres dierses question, n'hésitez pas à nous contacter à [mangoviz@cirad.fr](mailto:mangoviz@cirad.fr).
+Si vous avez des questions, remarques ou suggestions diverses, n'hésitez pas à nous contacter à [mangoviz@cirad.fr](mailto:mangoviz@cirad.fr).
 <!-- à créer -->
 
 <br>
 
-## Ressources pour aller plus loin
+## Idées de ressources/vulgarisation pour en savoir plus sur les manguiers
 
-### Vulgarisation 
-
-
-
-
-### Sites institutionnels
-
-
-
-### Bibliographie scientifique
-
-
-
+XXX
 
 <br>
 
 ## Remerciements
 
+La **conception et le suivi des essais** ont été réalisés par Frédéric Normand, avec l'appui technique de Doralice Vaillant, Muriel Sinatamby et Gilles Maillot (Cirad, UPR HortSys).
 
+La **conception, la création et la réalisation de l’interface web** ont été coordonnées par Isabelle Grechi (Cirad, UPR HortSys) et Anna Doizy ([DoAna - Statistiques Réunion](https://doana-r.com)).
 
-La **conception et la réalisation des expériences** a été réalisée par XXX.
+L'hébergement et la maintenance de l'application sont assurées par XXX et Anna Doizy.
 
-...
-
-La **conception, la création et la réalisation de l’interface web** ont été coordonnées par Anna Doizy ([DoAna - Statistiques Réunion](https://doana-r.com)).
-
-L'**hébergement et la maintenance** de l'application sont assurées par XXX et Anna Doizy.
-
-La **traduction en anglais** a été assurée par Anna Doizy et corrigée par XXX.
+La traduction en anglais et en espagnol a été assurée par XXX.
 
 Merci aux bêta-testeurs de l'application : XXX.
 

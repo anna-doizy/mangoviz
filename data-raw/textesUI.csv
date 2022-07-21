@@ -1,16 +1,17 @@
 id,fr,en
 accueil,Accueil,Home
 taille,Essai taille,Pruning test
-variete,Evaluation variétale,Cultivar test
-presentation,Le verger,The orchard
-resultats, Suivi,Follow-up
-bilan, Bilan,Review
-pres_box,Description de l'expérience,Description of the experiment
+variete,Essai variétal,Cultivar test
+presentation,Présentation,The orchard
+resultats,Résultats,Follow-up
+bilan,Fiches synthétiques,Review
+savoirplus,A propos,About
+pres_box,Description de l'essai,Description of the experiment
 plan_box,Plan du verger,Map of the orchard
-variete_var_box,Présentation des variétés,Presentation of the cultivars
+variete_var_box,Description des variétés,Presentation of the cultivars
 taille_cycle_box,Présentation des cycles de taille,Presentation of the pruning cycles
 caro,"[REUNION]<br>La variété **Caro** provient d'un semis de chez Mr. André Caro à la Rivière Saint Louis. Sa qualité gustative ressemble à celle des fruits de José.","[REUNION]<br>The cultivar **Caro** comes from a seedling of Mr. André Caro in Rivière Saint Louis. Its taste quality is similar to that of José's fruits."
-cogshall,"[FLORIDE]<br>La variété **Cogshall** est aussi appelée « mangue américaine » ou « mangue qui dévisse ». L'apparition d'un point jaune sur l'apex du fruit est une astuce pour le récolter au stade optimal.","[FLORIDA]<br>The **Cogshall** cultivar is also known in French as the "American mango" or "unscrewing mango". The appearance of a yellow dot on the apex of the fruit is a trick to harvest it at the optimal stage."
+cogshall,"[FLORIDE]<br>La variété **Cogshall** est aussi appelée « mangue américaine » ou « mangue qui dévisse ». L'apparition d'un point jaune sur l'apex du fruit est une astuce pour le récolter au stade optimal.","[FLORIDA]<br>The **Cogshall** cultivar is also known in French as the ""American mango"" or ""unscrewing mango"". The appearance of a yellow dot on the apex of the fruit is a trick to harvest it at the optimal stage."
 heidi,"[AFRIQUE DU SUD]<br>La variété **Heidi** est issue d'un croisement entre les variété Kent et Sensation.","[SOUTH AFRICA]<br>The **Heidi** cultivar is the result of a cross between the Kent and Sensation cultivars."
 irwin,"[FLORIDE]<br>La variété **Irwin** est internationalement connue et commercialisée (Taïwan, Guadeloupe, Costa Rica, Espagne, ...)","[FLORIDA]<br>The cultivar **Irwin** is internationally known and marketed (Taiwan, Guadeloupe, Costa Rica, Spain, ...)"
 jose,"[REUNION]<br>A l'origine, la variété **José** s'appelait Joseph. Son nom a évolué suite à son introduction à l'île Maurice. José représente 50 % de la production réunionnaise.","[REUNION]<br>Originally, the cultivar **José** was called Joseph. Its name evolved following its introduction in Mauritius. José represents 50% of the production of Reunion."
@@ -19,6 +20,12 @@ kent,"[FLORIDE]<br>La variété **Kent** est une des variétés les plus export�
 nam_doc_mai,"[THAILANDE]<br>La **Nam Doc Maï** est une mangue polyembryonnée qui se consomme généralement verte en Thaïlande (en salade, séchée, ...)","[THAILAND]<br>The **Nam Doc Maï** is a polyembryonic mango which is generally consumed green in Thailand (in salad, dried, ...)"
 sensation,"[FLORIDE]<br>La variété **Sensation** est très cultivée en Afrique du Sud et au Mexique.","[FLORIDA]<br>The **Sensation** cultivar is widely grown in South Africa and Mexico."
 tommy_atkins,"[FLORIDE]<br>La variété **Tommy Atkins** est cultivée en Afrique du Sud et en Amérique Latine pour l'exportation.","[FLORIDA]<br>The **Tommy Atkins** cultivar is grown in South Africa and Latin America for export."
+cultivar,Variété,Cultivar
+global_mean,Moyenne globale :,Global mean:
+masse,Masse de fruits (kg),Mass of fruits (kg)
+nbfruit,Nombre de fruits,Number of fruits
+masse_fruit,Masse moyenne d'un fruit (g),Average mass of a fruit (g)
+all,Tout sélectionner,Select all
 variete_mesure_label,Choix de la variable,Choice of the variable
 variete_comp_box,Comparaison des variétés,Cultivar comparison
 variete_comp_label,Choix d'une ou plusieurs années,Choice of one or more years
@@ -26,16 +33,9 @@ variete_temps_box,Suivi temporel,Temporal follow-up
 variete_all_label, Tout sélectionner, Select all
 variete_temps_label,Choix d'une ou plusieurs variétés,Choice of one or more cultivars
 variete_spatial_box,Suivi spatial,Spatial follow-up
-timeviz_global_switch,Visualisation par année ou globale,Per year or global visualisation
-variete_bilan_box,Récapitulatif par variété,Summary by cultivar
+timeviz_global_switch,Visualisation par année / globale,Through time/global visualisation
+variete_bilan_box,Fiche synthétique par variété,Summary by cultivar
 variete_bilan_label,Choix de la variété,Choice of the cultivar
-savoirplus,A propos,About
-cultivar,Variété,Cultivar
-global_mean,Moyenne globale :,Global mean:
-masse,Masse (kg),Mass (kg)
-nbfruit,Nombre de fruits,Number of fruits
-masse_fruit,Masse moyenne d'un fruit (g),Average weight of a fruit (g)
-all,Tout sélectionner,Select all
 taille_legend,Taille,Pruning
 taille_ete,Taille en été,Summer pruning
 taille_hiver,Taille en hiver,Winter pruning
@@ -44,10 +44,10 @@ pruning_start,Début de la taille,Pruning start
 taille_comp_box,Comparaison des modes de tailles,Pruning comparison
 taille_comp_label,Choix d'une ou plusieurs années,Choice of one or more years
 taille_temps_box,Suivi temporel,Temporal follow-up
-taille_temps_label,Choix du mode de taille,Choice of the pruning method
+taille_temps_label,Choix d'un mode de taille,Choice of the pruning method
 taille_spatial_box,Suivi spatial,Spatial follow-up
-1_croissance_vegetative, Croissance végétative, Vegetative growth
-2_repos, Repos, Resting
-3_floraison, Floraison, Flowering
-4_croissance_fruit, Croissance des fruits, Fruit growth
-5_maturite_fruit, Maturité des fruits, Fruit maturity
+1_croissance_vegetative,Croissance végétative,Vegetative growth
+2_repos,Repos,Resting
+3_floraison,Floraison,Flowering
+4_croissance_fruit,Croissance des fruits,Fruit growth
+5_maturite_fruit,Maturité des fruits,Fruit maturity
