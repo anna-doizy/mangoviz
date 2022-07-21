@@ -10,6 +10,7 @@ suppressPackageStartupMessages({
   library(stringr)
   library(ggplot2)
   library(ggiraph)
+  library(ggimage)
   library(mangoviz)
 })
 
