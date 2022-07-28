@@ -454,57 +454,71 @@ server <- function(input, output, session) {
   
   ## mesures à l'échelle de la parcelle ####
   
-  output$variete_spatial <- renderGirafe({
-    {if(input$variete_all_year) {
-      variete %>% 
-        filter(
-          Mesure == input$variete_mesure, 
-          cultivar %in% if(input$variete_select_var == "all") {levels(variete$cultivar)} else {input$variete_select_var}
-        ) %>% 
-        group_by(X, Y, cultivar) %>% 
-        summarise(Moyenne = mean(Valeur, na.rm = TRUE), n = n()) %>% 
-        suppressMessages() %>% # group message
-        ggplot() +
-        aes(x = X, y = Y, fill = Moyenne, tooltip = paste(cultivar, "<br>", round(Moyenne, 1), "(n=", n, ")"), data_id = cultivar) +
-        geom_tile_interactive(colour = "black") +
-        scale_fill_gradientn(
-          # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
-          colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
-          na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
-        ) +
-        scale_x_discrete(drop = FALSE) +
-        scale_y_discrete(drop = FALSE) +
-        coord_fixed() +
-        labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang], fill = NULL)
-    } else {
-      variete %>% 
-        filter(
-          Mesure == input$variete_mesure, 
-          cultivar %in% if(input$variete_select_var == "all") {levels(variete$cultivar)} else {input$variete_select_var}
-        ) %>%
-        ggplot() +
-        aes(x = X, y = Y, fill = Valeur, tooltip = paste(cultivar, round(Valeur, 1), sep = "<br>"), data_id = cultivar) +
-        geom_tile_interactive(colour = "black") +
-        scale_fill_gradientn(
-          # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
-          colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
-          na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
-        ) +
-        scale_x_discrete(drop = FALSE) +
-        scale_y_discrete(drop = FALSE) +
-        coord_fixed() +
-        labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang], fill = NULL) +
-        facet_wrap(~ Annee, nrow = 1)
-    }}%>%
-      girafe(
-        ggobj = ., width_svg = 16,
-        options = list(
-          opts_hover_inv(css = "opacity:0.2;"),
-          opts_tooltip(use_stroke = TRUE),
-          opts_hover(css = ""),
-          opts_selection(type = "none")
+  # action du bouton "tout sélectionner"
+  observeEvent(input$variete_spatial_all, { 
+    updateSelectInput(
+      session,
+      "variete_spatial_var",
+      selected = levels(variete$cultivar)
+    )
+  })
+  
+  output$variete_spatial_graph <- renderGirafe({
+    
+    if(!is.null(input$variete_spatial_var)) { # if no selected cultivar, no plot
+      {if(input$variete_all_year) {
+        variete %>% 
+          filter(
+            Mesure == input$variete_mesure, 
+            # cultivar %in% if(input$variete_select_var == "all") {levels(variete$cultivar)} else {input$variete_select_var}
+            cultivar %in% input$variete_spatial_var
+          ) %>% 
+          group_by(X, Y, cultivar) %>% 
+          summarise(Moyenne = mean(Valeur, na.rm = TRUE), n = n()) %>% 
+          suppressMessages() %>% # group message
+          ggplot() +
+          aes(x = X, y = Y, fill = Moyenne, tooltip = paste(cultivar, "<br>", round(Moyenne, 1), "(n=", n, ")"), data_id = cultivar) +
+          geom_tile_interactive(colour = "black") +
+          scale_fill_gradientn(
+            # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
+            colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
+            na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
+          ) +
+          scale_x_discrete(drop = FALSE) +
+          scale_y_discrete(drop = FALSE) +
+          coord_fixed() +
+          labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang], fill = NULL)
+      } else {
+        variete %>% 
+          filter(
+            Mesure == input$variete_mesure, 
+            # cultivar %in% if(input$variete_select_var == "all") {levels(variete$cultivar)} else {input$variete_select_var}
+            cultivar %in% input$variete_spatial_var
+          ) %>%
+          ggplot() +
+          aes(x = X, y = Y, fill = Valeur, tooltip = paste(cultivar, round(Valeur, 1), sep = "<br>"), data_id = cultivar) +
+          geom_tile_interactive(colour = "black") +
+          scale_fill_gradientn(
+            # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
+            colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
+            na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
+          ) +
+          scale_x_discrete(drop = FALSE) +
+          scale_y_discrete(drop = FALSE) +
+          coord_fixed() +
+          labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang], fill = NULL) +
+          facet_wrap(~ Annee, nrow = 1)
+      }}%>%
+        girafe(
+          ggobj = ., width_svg = 16,
+          options = list(
+            opts_hover_inv(css = "opacity:0.2;"),
+            opts_tooltip(use_stroke = TRUE),
+            opts_hover(css = ""),
+            opts_selection(type = "none")
+          )
         )
-      )
+      }
 
   })
   

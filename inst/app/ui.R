@@ -414,19 +414,32 @@ function(req) {
               fluidRow(
                 column(2, p(strong(textesUI[textesUI$id == "timeviz_global_switch", lang])),
                   materialSwitch(
-                    inputId = "variete_all_year" #, label = ""
+                    inputId = "variete_all_year"
                   )
                 ),
-                column(10, radioGroupButtons(
-                  "variete_select_var",
-                  individual = TRUE,
-                  textesUI[textesUI$id == "variete_bilan_label", lang],
-                  choices = c("all", levels(variete$cultivar)) %>% setNames(c(textesUI[textesUI$id =="all", lang], levels(variete$cultivar)))
-                  )
-                )
+                # column(10, radioGroupButtons(
+                #   "variete_spatial_var",
+                #   individual = TRUE,
+                #   textesUI[textesUI$id == "variete_label_vars", lang],
+                #   choices = c("all", levels(variete$cultivar)) %>% setNames(c(textesUI[textesUI$id =="all", lang], levels(variete$cultivar)))
+                #   )
+                # ),
+                column(6, selectInput(
+                  "variete_spatial_var",
+                  textesUI[textesUI$id == "variete_label_vars", lang],
+                  choices = levels(variete$cultivar),
+                  selected = "Caro",
+                  multiple = TRUE
+                )),
+                
+                column(4, p(), actionBttn(
+                  inputId = "variete_spatial_all",
+                  label = textesUI[textesUI$id == "all", lang],
+                  style = "material-flat"
+                ))
               ),
               
-              girafeOutput("variete_spatial") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
+              girafeOutput("variete_spatial_graph") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
             )
           )
         )

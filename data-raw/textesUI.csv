@@ -34,7 +34,6 @@ variete_label_vars,Choix d'une ou plusieurs variétés,Choice of one or more cul
 variete_spatial_box,Suivi spatial,Spatial follow-up
 timeviz_global_switch,Visualisation par année / globale,Through time/global visualisation
 variete_bilan_box,Fiche synthétique par variété,Summary by cultivar
-variete_bilan_label,Choix de la variété,Choice of the cultivar
 taille_legend,Taille,Pruning
 taille_ete,Taille en été,Summer pruning
 taille_hiver,Taille en hiver,Winter pruning
