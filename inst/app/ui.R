@@ -6,6 +6,7 @@ suppressPackageStartupMessages({
   library(shinyWidgets)
   library(shinycssloaders)
   library(shinyhelper)
+  library(leaflet)
   library(dplyr)
   library(stringr)
   library(ggplot2)
@@ -135,7 +136,8 @@ function(req) {
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              includeMarkdown(sprintf("locale/verger-taille_%s.md", lang))
+              includeMarkdown(sprintf("locale/verger-taille_%s.md", lang)),
+              leafletOutput("pruning_orchard_map", width = "80%")
             )
           ),
           column(
@@ -284,7 +286,8 @@ function(req) {
               width = 12, #height = 570,
               status = "success",
               solidHeader = TRUE,
-              includeMarkdown(sprintf("locale/verger-variete_%s.md", lang))
+              includeMarkdown(sprintf("locale/verger-variete_%s.md", lang)),
+              leafletOutput("cultivar_orchard_map", width = "80%")
             )
           ),
           column(
@@ -301,21 +304,6 @@ function(req) {
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              # test sur une figure
-              # HTML('<figure>
-              #   <img src="logo-eu.jpg" alt="Image 1">
-              #   <figcaption>Image 1</figcaption>
-              # </figure>'),
-              
-              # A FAIRE : mettre en radio buttons...
-              # apply(cultivar_desc,1, function(var) {
-              #   paste0('<figure>
-              #     <img src="varietes/', var["cultivar"],'.JPG" alt="', var[paste0("desc_", lang)],'">
-              #     <figcaption>', var[paste0("desc_", lang)],'</figcaption>
-              #     </figure>') 
-              #   }) %>% 
-              #   paste(collapse = "\n") %>% 
-              #   HTML()
               
               radioButtons(
                 inputId = "variete_radio_desc",
@@ -329,7 +317,6 @@ function(req) {
               
               uiOutput("variete_ui_desc"),
               imageOutput("variete_img_desc", height = "auto"),
-               # A FAIRE : centrer l'image ?
             )
           )
         )

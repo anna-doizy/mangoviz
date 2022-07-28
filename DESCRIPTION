@@ -18,6 +18,7 @@ Imports:
     shinyWidgets,
     shinycssloaders,
     shinyhelper,
+    leaflet,
     markdown,
     dplyr,
     stringr,

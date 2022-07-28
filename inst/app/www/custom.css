@@ -135,8 +135,14 @@ hr {
   margin: 5px;
 }
 
+/* center images */
 .center, .shiny-image-output{
   text-align: center;
+}
+
+/* center leaflet maps  */
+.leaflet-container {
+  margin: auto;
 }
 
 #variete_img_desc img{

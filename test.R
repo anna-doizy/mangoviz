@@ -637,7 +637,11 @@ ggplot(cycle) +
 
 
 
+# Carte RUN ---------------------------------------------------------------
 
+library(leaflet)
+
+leaflet() %>% addTiles() %>% addMarkers(55.489, -21.3216)
 
 
 
