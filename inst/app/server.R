@@ -24,42 +24,58 @@ server <- function(input, output, session) {
   })
   
   
-  ## Plat themes ####
+  ## Plot themes ####
   
   theme_update(text = element_text(family = "sans"))
+  
+  ## Orchards map ####
+  
+  output$pruning_orchard_map <- renderLeaflet({
+    leaflet() %>% addTiles() %>% addMarkers(55.489, -21.3216)
+  })
+  
+  output$cultivar_orchard_map <- renderLeaflet({
+    leaflet() %>% addTiles() %>% addMarkers(55.489, -21.3216)
+  })
   
   
   
 # Essai taille ------------------------------------------------------------
   
   # couleur des différents types de taille
-  coul_taille <- c(`taille_ete` = "darkgreen", `taille_hiver` = "darkblue", `taille_sans` = "darkred")
+  coul_taille <- c(`taille_ete` = "darkgreen", `taille_hiver` = "darkblue", `taille_sans` = "darkred", bordure = "#0300000C")
   
   ## Plan de la parcelle ####
   
   output$taille_parcelle <- renderGirafe({
-    # représentation des bordures à valider
-    # expliquer les bloc
-    # traduire label des bloc
     
     taille %>% 
       distinct(X, Y, arbre, bloc, Taille) %>%
+      bind_rows(
+        tibble(
+          arbre = textesUI[textesUI$id == "bordure", lang],
+          bloc = "bordure",
+          Taille = "bordure",
+          X = rep(LETTERS[9:1], each = 2),
+          Y = rep(c(1,17), times = 9) %>% factor()
+        )
+      ) %>%
       {ggplot(.) +
           aes(x = X, y = Y, fill = Taille, data_id = Taille, tooltip = arbre) +
           # geom_tile_interactive(color = "black", aes(label = arbre, tooltip = paste(..label.., textesUI[textesUI$id == "taille_ete", lang], sep = "<br>"))) + # ne marche pas
           geom_tile_interactive(color = "black") +
           scale_fill_manual(
-            values = coul_taille, labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille)),
+            values = coul_taille, labels = textesUI[textesUI$id %in% c(levels(taille$Taille), "bordure"), lang] %>% setNames(c(levels(taille$Taille), "bordure")),
             guide = guide_legend(byrow = TRUE)
           ) +
           # scale_x_discrete(drop = FALSE) +
           scale_y_discrete(drop = FALSE) +
           coord_fixed() +
-          labs(x = NULL, y = NULL, fill = textesUI[textesUI$id == "taille_legend", lang])} %>% 
+          labs(x = NULL, y = NULL, fill = textesUI[textesUI$id == "taille_legend", lang])} %>%  
       girafe(
         ggobj = ., height_svg = 4, width_svg = 4,
         options = list(
-          opts_hover_inv(css = "opacity:0.4;"),
+          opts_hover_inv(css = "opacity:0.2;"),
           opts_tooltip(use_fill = TRUE),
           opts_hover(css = "fill:black;opacity:0.8;"),
           opts_selection(type = "none")
@@ -67,7 +83,7 @@ server <- function(input, output, session) {
       )
   })
   
-  ## Description du cycle des tailles
+  ## Description du cycle des tailles ####
   
   output$cycles_taille <- renderPlot({
     ggplot(cycle) +
@@ -113,7 +129,7 @@ server <- function(input, output, session) {
           ggplot() +
           aes(x = Taille, y = Valeur, fill = Taille, label = arbre) +
           geom_violin(alpha = 0.3, color = "transparent", scale = "count") +
-          geom_jitter_interactive(alpha = 0.3, width = 0.2, height = 0) + #, aes(tooltip = paste(..label.., round(..y.., 1), sep = "<br>"), data_id = bloc)) +
+          geom_jitter_interactive(alpha = 0.3, width = 0.2, height = 0, aes(tooltip = paste(..label.., round(..y.., 1), sep = "<br>"), data_id = arbre)) +
           geom_point(stat = "summary", fun = mean, size = 4, color = "white") +
           geom_point_interactive(
             stat = "summary", 
@@ -173,13 +189,13 @@ server <- function(input, output, session) {
           filter(Mesure == input$taille_mesure) %>%
           group_by(Annee, Taille) %>% 
           summarise(
-            Moyenne = mean(Valeur, na.rm = TRUE)
+            Moyenne = mean(Valeur, na.rm = TRUE), n = n()
           ) %>%
           suppressMessages() %>% # group message
           rowwise() %>% 
           mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
           ggplot() +
-          aes(x = Annee, y = Moyenne, colour = Taille, tooltip = paste(Taille_trad, round(Moyenne, 1), sep = "<br>"), data_id = Taille) +
+          aes(x = Annee, y = Moyenne, colour = Taille, tooltip = paste(Taille_trad, "<br>", round(Moyenne, 1), "(n=", n, ")"), data_id = Taille) +
           geom_vline_interactive(xintercept = 2010.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) + # ou 2011.5 ??
           geom_line(aes(group = Taille)) +
           geom_point_interactive() +
@@ -215,34 +231,6 @@ server <- function(input, output, session) {
     # une ou deux lignes ?
     # comment montrer l'année où on a commencé à tailler ? -> l'ajouter dans le texte ?
     
-    # taille %>% 
-    #   filter(Mesure == input$taille_mesure) %>%
-    #   rowwise() %>% 
-    #   mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
-    #   {ggplot(.) +
-    #       aes(x = X, y = Y, fill = Valeur, tooltip = paste(Taille_trad, round(Valeur, 1), sep = "<br>"), data_id = Taille) +
-    #       geom_tile_interactive(colour = "black") +
-    #       scale_fill_gradientn(
-    #         # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
-    #         colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
-    #         na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
-    #       ) +
-    #       # scale_x_discrete(drop = FALSE) +
-    #       scale_y_discrete(drop = FALSE) +
-    #       coord_fixed() +
-    #       labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang], fill = NULL) +
-    #       facet_wrap(~ Annee, nrow = 2)} %>% 
-    #   girafe(
-    #     ggobj = ., width_svg = 12,
-    #     options = list(
-    #       opts_hover_inv(css = "opacity:0.2;"),
-    #       opts_tooltip(use_stroke = TRUE),
-    #       opts_hover(css = ""),
-    #       opts_selection(type = "none")
-    #     )
-    #   )
-    
-    
     {if(input$taille_all_year) {
       taille %>% 
         filter(
@@ -250,12 +238,12 @@ server <- function(input, output, session) {
           Taille %in% if(input$taille_select == "all") {levels(taille$Taille)} else {input$taille_select}
         ) %>% 
         group_by(X, Y, Taille) %>% 
-        summarise(Moyenne = mean(Valeur, na.rm = TRUE)) %>% 
+        summarise(Moyenne = mean(Valeur, na.rm = TRUE), n = n()) %>% 
         suppressMessages() %>% # group message
         rowwise() %>% 
         mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
         ggplot() +
-        aes(x = X, y = Y, fill = Moyenne, tooltip = paste(Taille_trad, round(Moyenne, 1), sep = "<br>"), data_id = Taille) +
+        aes(x = X, y = Y, fill = Moyenne, tooltip = paste(Taille_trad, "<br>", round(Moyenne, 1), "(n=", n, ")"), data_id = Taille) +
         geom_tile_interactive(colour = "black") +
         scale_fill_gradientn(
           # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
@@ -326,19 +314,29 @@ server <- function(input, output, session) {
   
   
   # Couleur des variétés
-  coul_var <- c("#CAB2D6", "#FB9A99", "#1F78B4", "#A6CEE3", "#B2DF8A", "#FDBF6F", "#FF7F00", "#6A3D9A", "#33A02C", "#E31A1C") %>% 
-    setNames(levels(variete$cultivar))
+  coul_var <- c("#b94137", "#0080b4", "#008355", "#7f4ecc", "#ce7e26", "#8aa543", "#56423e", "#be4b7f", "#a5af98", "#00c1ff", "#0300000C") %>% 
+    setNames(c(levels(variete$cultivar), "bordure"))
   
   ## Plan de la parcelle ####
 
   output$variete_parcelle <- renderGirafe({
     variete %>% 
       distinct(X, Y, cultivar) %>%
-      # arrange(cultivar) %>% # legend order
+      bind_rows(
+        tibble(
+          cultivar = "bordure",
+          X = c(rep("K",17), rep(LETTERS[10:2], each = 2), rep("A",17)),
+          Y = c(1:17, rep(c(1,17), times = 9), 1:17) %>% factor()
+        )
+      ) %>%
+      mutate(cultivar_trad = ifelse(cultivar == "bordure", textesUI[textesUI$id == "bordure", lang], cultivar)) %>% 
       {ggplot(.) +
-          aes(x = X, y = Y, fill = cultivar, tooltip = cultivar, data_id = cultivar) +
+          aes(x = X, y = Y, fill = cultivar, tooltip = cultivar_trad, data_id = cultivar) +
           geom_tile_interactive(color = "black") +
-          scale_fill_manual(values = coul_var, guide = guide_legend(byrow = TRUE)) +
+          annotate(geom = "point", x = "F", y = "12", shape = 4, size = 5) +
+          scale_fill_manual(
+            values = coul_var, labels = c(bordure = textesUI[textesUI$id == "bordure", lang]),
+            guide = guide_legend(byrow = TRUE)) +
           scale_x_discrete(drop = FALSE) +
           scale_y_discrete(drop = FALSE) +
           coord_fixed() +
@@ -346,7 +344,7 @@ server <- function(input, output, session) {
       girafe(
         ggobj = ., height_svg = 4, width_svg = 4,
         options = list(
-          opts_hover_inv(css = "opacity:0.4;"),
+          opts_hover_inv(css = "opacity:0.2;"),
           opts_tooltip(use_fill = TRUE),
           opts_hover(css = "fill:black;opacity:0.8;"),
           opts_selection(type = "none")
@@ -364,9 +362,9 @@ server <- function(input, output, session) {
       {variete %>% 
         filter(Mesure == input$variete_mesure, Annee %in% input$variete_checkbox_year, !is.na(Valeur)) %>% 
         ggplot() +
-        aes(x = cultivar, y = Valeur, fill = cultivar) +
+        aes(x = cultivar, y = Valeur, fill = cultivar, label = arbre) +
         geom_violin(alpha = 0.3, color = "transparent", scale = "count") +
-        geom_jitter(alpha = 0.3, width = 0.2, height = 0) +
+          geom_jitter_interactive(alpha = 0.3, width = 0.2, height = 0, aes(tooltip = paste(..label.., round(..y.., 1), sep = "<br>"), data_id = arbre)) +
         geom_point(stat = "summary", fun = mean, size = 4, color = "white") +
         geom_point_interactive(
           stat = "summary", 
@@ -433,11 +431,11 @@ server <- function(input, output, session) {
           filter(Mesure == input$variete_mesure, cultivar %in% input$variete_multi_var) %>%
           group_by(Annee, cultivar) %>% 
           summarise(
-            Moyenne = mean(Valeur, na.rm = TRUE)
+            Moyenne = mean(Valeur, na.rm = TRUE), n = n()
           ) %>%
           suppressMessages() %>% # group message
           ggplot() +
-          aes(x = Annee, y = Moyenne, colour = cultivar, tooltip = paste(cultivar, round(Moyenne, 1), sep = "<br>"), data_id = cultivar) +
+          aes(x = Annee, y = Moyenne, colour = cultivar, tooltip = paste(cultivar, "<br>", round(Moyenne, 1), "(n=", n, ")"), data_id = cultivar) +
           geom_line(aes(group = cultivar)) +
           geom_point_interactive() +
           scale_color_manual(values = coul_var[input$variete_multi_var]) +
@@ -471,10 +469,10 @@ server <- function(input, output, session) {
           cultivar %in% if(input$variete_select_var == "all") {levels(variete$cultivar)} else {input$variete_select_var}
         ) %>% 
         group_by(X, Y, cultivar) %>% 
-        summarise(Moyenne = mean(Valeur, na.rm = TRUE)) %>% 
+        summarise(Moyenne = mean(Valeur, na.rm = TRUE), n = n()) %>% 
         suppressMessages() %>% # group message
         ggplot() +
-        aes(x = X, y = Y, fill = Moyenne, tooltip = paste(cultivar, round(Moyenne, 1), sep = "<br>"), data_id = cultivar) +
+        aes(x = X, y = Y, fill = Moyenne, tooltip = paste(cultivar, "<br>", round(Moyenne, 1), "(n=", n, ")"), data_id = cultivar) +
         geom_tile_interactive(colour = "black") +
         scale_fill_gradientn(
           # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 

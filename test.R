@@ -1,56 +1,73 @@
 
 # A FAIRE ####
 
-# pondéréer les moyennes par le nb de fruits par arbre NON
-# mettre en label le nombre de fruits qui ont permis de calculer les moyennes ? Ou juste expliquer qqpart
+# en questionnement/attente
+
+# est-ce que cette erreur persiste : This Font Awesome icon ('question-circle') does not exist:
+# * if providing a custom `html_dependency` these `name` checks can 
+# be deactivated with `verify_fa = FALSE`
+
+# Warning: stack imbalance in 'NextMethod', 360 then 361
 
 # ajouter les données jusqu'en 2021 (attente de Fred)
+# MAJ des fiches variétales
+# photo des vergers
 # clarifier les labels des années ? 2016-2017
-# ajouter carte réunion avec un point et les coordonnées des vergers
-# préciser que les rangées 17 et 1 : plants de bordure
-# police des graphes ?
-# plan du verger : ajouter carrés gris pour figurer les arbres de bordure (les ajouter en code)
-# mettre une croix en F12 (essai taille) ?
-# pourquoi dans les plans la sélection ne garde pas la couleur comme dans suivi spatial ?
-# ajouter boite modalité de taille avec calendrier des tailles des récoltes dans un graphique
+
+# - anglais presque OK + espagnol
+
+
+# à traiter
+
 
 # élargir dimensions graphe suivi temporel
+# - responsive : image width + ratio des graphiques (taille de police des labels des axes) A VOIR, tester renderPlot(res = ?)
+# ajout phrase ctrl + ou - pour ajuster les tailles des graphiques
+
+# mettre le logo dans la navbar (cf zagrumes974)
+# dashboardHeader(disable = TRUE) ?
+# ou plutôt mettre l'accueil et à propos dans des boîtes et enlever mon css foireux (pour la prochaine appli plutôt !)
 
 # faire un script pour Isabelle choix des couleurs
 
-
-
 # TAILLE
 # début de la taille plus marqué et visible (rectangle ?)
-# "Les arbres ont été taillés tous les deux ans à partir de 2012"
-
-# une ou deux lignes de sous-graphes ? automatique ?
+# graphique taille à mettre plus grand
 # comment montrer l'année où on a commencé à tailler ? -> l'ajouter dans le texte ?
 
-# 1er graphique : interaction sur les points noirs avec dataid : arbre
+# une ou deux lignes de sous-graphes ? automatique ? comment rendre responsive ?
+# s'inspirer de : https://mastering-shiny.org/action-graphics.html#dynamic-height-and-width
+# ui <- fluidPage(
+#   sliderInput("height", "height", min = 100, max = 500, value = 250),
+#   sliderInput("width", "width", min = 100, max = 500, value = 250),
+#   plotOutput("plot", width = 250, height = 250)
+# )
+# server <- function(input, output, session) {
+#   output$plot <- renderPlot(
+#     width = function() input$width,
+#     height = function() input$height,
+#     res = 96,
+#     {
+#       plot(rnorm(20), rnorm(20))
+#     }
+#   )
+# }
+
+# 1er graphique : interaction sur les points noirs avec dataid : arbre A VERIFIER
 
 # temp : texte choix d'une ou plusieurs var
 
+# ATTENTION BUG : surement pb entre coul_taille et le bouton tout sélectionner !! / présence de bordure dans la légende...
 
 # VARIETE
 # changer format du bouton (temp) pour faire comme pour cultivar (temp et spatial) -> tous les boutons comme suivi temp dans éval var !!
 # couleur du bouton "tout sélectionner"
 
 
-# AUTRE
-
-# - anglais presque OK + espagnol
-# - mode d'emploi dans l'accueil
-
-# - responsive : image width + ratio des graphiques (taille de police des labels des axes) A VOIR
-# ajout phrase ctrl + ou - pour ajuster les tailles des graphiques
-# - MAJ des fiches variétales
 
 
-# - garder en tete possible ajout des valeurs brix pH etc. (données au niveau du fruit)
 
-
-# - PUBLICATION
+# PUBLICATION
 # format de citation de l'appli à réfléchir
 # les données dans un datapaper -> mettre le dépôt en public à ce moment
 # symposium mangue oct-nov 2023 Espagne
@@ -59,10 +76,11 @@
 
 # Guillaume : est-ce qu'on peut mettre l'appli en open et les données en privé ? Sinon tout en privé
 
-# mettre en doc (README) la structure des données qu'il faut
+# mettre en doc (README) la structure des données qu'il faut, s'inspirer de data.R
 
 # si demande du code source alors donner qu'une partie des données (quelques arbres et 2 ans et 2 modalités (taille ou var)) -> minimum fonctionnel
 
+# - garder en tete possible ajout des valeurs brix pH etc. (données au niveau du fruit)
 
 # obj : bêta tests d'ici la fin de l'année
 # textes avec traduction : d'ici le 14 juillet
@@ -122,21 +140,33 @@
 # traduire tooltip OK
 
 # 2022-07-19
-# - logo : attendre photo de Fred ? (choix de la première police OK)
+# logo : attendre photo de Fred ? (choix de la première police OK)
 # faire un graphique spatial global comme pour cultivar OK
 # vérifier valeurs extrêmes de poids moyen de fruit OK
 # Confirmer les années de taille des arbres OK
-# mettre les sécateurs à la bonne échelle OK
-# aligner les sécateurs sur le cycle de taille OK
-# marquer le passage des années OK
-# mettre les années au niveau du milieu de l'année OK
-# remplacer les années par N, N+1, etc. OK
-# intégrer le graphique cycle des tailles dans l'appli
+# ajouter boite modalité de taille avec calendrier des tailles des récoltes dans un graphique OK
+# - mettre les sécateurs à la bonne échelle OK
+# - aligner les sécateurs sur le cycle de taille OK
+# - marquer le passage des années OK
+# - mettre les années au niveau du milieu de l'année OK
+# - remplacer les années par N, N+1, etc. OK
+# - intégrer le graphique cycle des tailles dans l'appli
 # 2022-07-20
 # intégrer les corrections textesUI, locale d'Isabelle
 # déboguer les labels du graphe taille temporel
 # 2022-07-21 
-# - intégrer les corrections des helpfiles d'Isabelle
+# intégrer les corrections des helpfiles d'Isabelle
+# mettre en label le nombre de fruits qui ont permis de calculer les moyennes OK
+# ajouter carte réunion avec un point et les coordonnées des vergers OK
+# 2022-07-26
+# Ajouter les arbres de bordure sur les plans OK
+# mettre une croix en F12 sur le plan de l'essai taille OK
+
+
+
+
+
+
 
 
 # server ####
@@ -158,25 +188,36 @@ input <- list(
   # variete_mesure = "masse_fruit",
   variete_checkbox_year = 2010:2015,
   # variete_checkbox_year = 2016,
-  # variete_multi_var = c("Heidi", "Irwin", "José")
-  variete_multi_var = "Heidi", # plusieurs pour temp
+  variete_multi_var = c("Heidi", "Irwin", "José"),
+  # variete_multi_var = "Heidi", # plusieurs pour temp
   variete_select_var = "all",
   # variete_select_var = "Heidi", # une seule pour spatial
   variete_all_year = TRUE # switch
 )
 
 
-coul_var <- c("#b94137", "#0080b4", "#008355", "#7f4ecc", "#ce7e26", "#8aa543", "#56423e", "#be4b7f", "#a5af98", "#00c1ff") %>% setNames(unique(variete$cultivar))
+coul_var <- c("#b94137", "#0080b4", "#008355", "#7f4ecc", "#ce7e26", "#8aa543", "#56423e", "#be4b7f", "#a5af98", "#00c1ff", "#0300000C") %>% setNames(c(levels(variete$cultivar), "bordure"))
 
 
 ## Plan de la parcelle ####
 
 variete %>% 
   distinct(X, Y, cultivar) %>%
+  bind_rows(
+    tibble(
+      cultivar = "bordure",
+      X = c(rep("K",17), rep(LETTERS[10:2], each = 2), rep("A",17)),
+      Y = c(1:17, rep(c(1,17), times = 9), 1:17) %>% factor()
+    )
+  ) %>%
+  mutate(cultivar_trad = ifelse(cultivar == "bordure", textesUI[textesUI$id == "bordure", lang], cultivar)) %>% 
   {ggplot(.) +
-      aes(x = X, y = Y, fill = cultivar, tooltip = cultivar, data_id = cultivar) +
+      aes(x = X, y = Y, fill = cultivar, tooltip = cultivar_trad, data_id = cultivar) +
       geom_tile_interactive(color = "black") +
-      scale_fill_manual(values = coul_var, guide = guide_legend(byrow = TRUE)) +
+      annotate(geom = "point", x = "F", y = "12", shape = 4, size = 10) +
+      scale_fill_manual(
+        values = coul_var, labels = c(bordure = textesUI[textesUI$id == "bordure", lang]),
+        guide = guide_legend(byrow = TRUE)) +
       scale_x_discrete(drop = FALSE) +
       scale_y_discrete(drop = FALSE) +
       coord_fixed() +
@@ -184,12 +225,14 @@ variete %>%
   girafe(
     ggobj = ., height_svg = 8,
     options = list(
-      opts_hover_inv(css = "opacity:0.4;"),
+      opts_hover_inv(css = "opacity:0.2;"),
       opts_tooltip(use_fill = TRUE),
       opts_hover(css = "fill:black;opacity:0.8;"),
       opts_selection(type = "none")
     )
   )
+
+
 
 
 
@@ -200,9 +243,9 @@ if(!is.null(input$variete_checkbox_year)) { # if no selected date, no plot
   {variete %>% 
       filter(Mesure == input$variete_mesure, Annee %in% input$variete_checkbox_year, !is.na(Valeur)) %>% 
       ggplot() +
-      aes(x = cultivar, y = Valeur, fill = cultivar) +
+      aes(x = cultivar, y = Valeur, fill = cultivar, label = arbre) +
       geom_violin(alpha = 0.3, color = "transparent", scale = "count") +
-      geom_jitter(alpha = 0.3, width = 0.2, height = 0) +
+      geom_jitter_interactive(alpha = 0.3, width = 0.2, height = 0, aes(tooltip = paste(..label.., round(..y.., 1), sep = "<br>"), data_id = arbre)) +
       geom_point(stat = "summary", fun = mean, size = 4, color = "white") +
       geom_point_interactive(
         stat = "summary", 
@@ -250,12 +293,12 @@ if(!is.null(input$variete_multi_var)) # if no selected cultivar, no plot
       filter(Mesure == input$variete_mesure, cultivar %in% input$variete_multi_var) %>%
       group_by(Annee, cultivar) %>% 
       summarise(
-        Moyenne = mean(Valeur, na.rm = TRUE)
+        Moyenne = mean(Valeur, na.rm = TRUE), n = n()
       ) %>%
       suppressMessages() %>% # group message
       # suppressWarnings() %>% # NA & NaN values
       ggplot() +
-      aes(x = Annee, y = Moyenne, colour = cultivar, tooltip = paste(cultivar, round(Moyenne, 1), sep = "<br>"), data_id = cultivar) +
+      aes(x = Annee, y = Moyenne, colour = cultivar, tooltip = paste(cultivar, "<br>", round(Moyenne, 1), "(n=", n, ")"), data_id = cultivar) +
       geom_line(aes(group = cultivar)) +
       geom_point_interactive() +
       scale_color_manual(values = coul_var[input$variete_multi_var]) +
@@ -285,10 +328,10 @@ if(!is.null(input$variete_multi_var)) # if no selected cultivar, no plot
       cultivar %in% if(input$variete_select_var == "all") {levels(variete$cultivar)} else {input$variete_select_var}
     ) %>% 
     group_by(X, Y, cultivar) %>% 
-    summarise(Moyenne = mean(Valeur, na.rm = TRUE)) %>% 
+    summarise(Moyenne = mean(Valeur, na.rm = TRUE), n = n()) %>% 
     suppressMessages() %>% # group message
     ggplot() +
-      aes(x = X, y = Y, fill = Moyenne, tooltip = paste(cultivar, round(Moyenne, 1), sep = "<br>"), data_id = cultivar) +
+      aes(x = X, y = Y, fill = Moyenne, tooltip = paste(cultivar, "<br>", round(Moyenne, 1), "(n=", n, ")"), data_id = cultivar) +
       geom_tile_interactive(colour = "black") +
       scale_fill_gradientn(
         # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
@@ -341,7 +384,7 @@ if(!is.null(input$variete_multi_var)) # if no selected cultivar, no plot
 
 
 
-coul_taille <- c(`taille_ete` = "darkgreen", `taille_hiver` = "darkblue", `taille_sans` = "darkred")
+coul_taille <- c(`taille_ete` = "darkgreen", `taille_hiver` = "darkblue", `taille_sans` = "darkred", bordure = "#0300000C")
 
 input <- list(
   # taille_mesure = "masse",
@@ -368,12 +411,21 @@ input <- list(
 
 taille %>% 
   distinct(X, Y, arbre, bloc, Taille) %>%
+  bind_rows(
+    tibble(
+      arbre = textesUI[textesUI$id == "bordure", lang],
+      bloc = "bordure",
+      Taille = "bordure",
+      X = rep(LETTERS[9:1], each = 2),
+      Y = rep(c(1,17), times = 9) %>% factor()
+    )
+  ) %>%
   {ggplot(.) +
       aes(x = X, y = Y, fill = Taille, data_id = Taille, tooltip = arbre) +
       # geom_tile_interactive(color = "black", aes(label = arbre, tooltip = paste(..label.., textesUI[textesUI$id == "taille_ete", lang], sep = "<br>"))) + # ne marche pas
       geom_tile_interactive(color = "black") +
       scale_fill_manual(
-        values = coul_taille, labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille)),
+        values = coul_taille, labels = textesUI[textesUI$id %in% c(levels(taille$Taille), "bordure"), lang] %>% setNames(c(levels(taille$Taille), "bordure")),
         guide = guide_legend(byrow = TRUE)
       ) +
       # scale_x_discrete(drop = FALSE) +
@@ -383,7 +435,7 @@ taille %>%
   girafe(
     ggobj = ., 
     options = list(
-      opts_hover_inv(css = "opacity:0.4;"),
+      opts_hover_inv(css = "opacity:0.2;"),
       opts_tooltip(use_fill = TRUE),
       opts_hover(css = "fill:black;opacity:0.8;")
     )
@@ -401,7 +453,7 @@ if(!is.null(input$taille_checkbox_year)) { # if no selected date, no plot
       ggplot() +
       aes(x = Taille, y = Valeur, fill = Taille, label = arbre) +
       geom_violin(alpha = 0.3, color = "transparent", scale = "count") +
-      geom_jitter_interactive(alpha = 0.3, width = 0.2, height = 0) + #, aes(tooltip = paste(..label.., round(..y.., 1), sep = "<br>"), data_id = bloc)) +
+      geom_jitter_interactive(alpha = 0.3, width = 0.2, height = 0, aes(tooltip = paste(..label.., round(..y.., 1), sep = "<br>"), data_id = arbre)) +
       geom_point(stat = "summary", fun = mean, size = 4, color = "white") +
       geom_point_interactive(
         stat = "summary", 
