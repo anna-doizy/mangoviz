@@ -377,21 +377,21 @@ function(req) {
               
               fluidRow(
                 column(8, selectInput(
-                 "variete_multi_var",
-                 textesUI[textesUI$id == "variete_temps_label", lang],
+                 "variete_temp_var",
+                 textesUI[textesUI$id == "variete_label_vars", lang],
                  choices = levels(variete$cultivar),
                  selected = "Caro",
                  multiple = TRUE
                 )),
                 
                 column(4, p(), actionBttn(
-                  inputId = "variete_all_var",
-                  label = textesUI[textesUI$id == "variete_all_label", lang],
+                  inputId = "variete_temp_all",
+                  label = textesUI[textesUI$id == "all", lang],
                   style = "material-flat"
                 ))
               ),
               
-              girafeOutput("variete_temporel") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
+              girafeOutput("variete_temp_graph") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
             )
           )
         

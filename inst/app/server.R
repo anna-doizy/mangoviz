@@ -389,30 +389,23 @@ server <- function(input, output, session) {
   
   ## comparaison des années (suivi temporel) ####
   
-  observeEvent(input$variete_all_var, { 
-    # action du bouton "tout sélectionner"
-    # if(input$variete_all_var){
+  # action du bouton "tout sélectionner"
+  observeEvent(input$variete_temp_all, { 
       updateSelectInput(
         session,
-        "variete_multi_var",
+        "variete_temp_var",
         selected = levels(variete$cultivar)
       )
-    # }
-    # si on réenlève des variétés -> décoche le bouton
-    # if(length(input$variete_multi_var) < 10){
-    #   updateMaterialSwitch(session, "variete_all_var", value = FALSE)
-    # }
-    
   })
   
  
-  output$variete_temporel <- renderGirafe({
+  output$variete_temp_graph <- renderGirafe({
 
-    if(!is.null(input$variete_multi_var)) # if no selected cultivar, no plot
+    if(!is.null(input$variete_temp_var)) # if no selected cultivar, no plot
     {
-      {if(length(input$variete_multi_var) == 1) { # if one selected cultivar
+      {if(length(input$variete_temp_var) == 1) { # if one selected cultivar
         variete %>% 
-          filter(Mesure == input$variete_mesure, cultivar == input$variete_multi_var, !is.na(Valeur)) %>%
+          filter(Mesure == input$variete_mesure, cultivar == input$variete_temp_var, !is.na(Valeur)) %>%
           ggplot() +
           aes(x = Annee, y = Valeur) +
           geom_line_interactive(aes(group = arbre, data_id = arbre, tooltip = arbre, hover_css = "fill:none"), alpha = 0.1) +
@@ -420,7 +413,7 @@ server <- function(input, output, session) {
           geom_smooth_interactive(method = "lm", formula = "y~1", se = FALSE, color = "black", linetype = 2, aes(tooltip = paste(textesUI[textesUI$id == "global_mean", lang], round(..y.., 1), sep = "<br>"))) +
           geom_line(stat = "summary", fun = mean, aes(colour = cultivar)) +
           geom_point_interactive(stat = "summary", fun = mean, size = 3, aes(colour = cultivar, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"))) +
-          scale_color_manual(values = coul_var[input$variete_multi_var]) +
+          scale_color_manual(values = coul_var[input$variete_temp_var]) +
           labs(
             x = NULL, y = NULL, 
             title = textesUI[textesUI$id == input$variete_mesure, lang],
@@ -428,7 +421,7 @@ server <- function(input, output, session) {
           )
       } else { # if several selected cultivars
         variete %>% 
-          filter(Mesure == input$variete_mesure, cultivar %in% input$variete_multi_var) %>%
+          filter(Mesure == input$variete_mesure, cultivar %in% input$variete_temp_var) %>%
           group_by(Annee, cultivar) %>% 
           summarise(
             Moyenne = mean(Valeur, na.rm = TRUE), n = n()
@@ -438,7 +431,7 @@ server <- function(input, output, session) {
           aes(x = Annee, y = Moyenne, colour = cultivar, tooltip = paste(cultivar, "<br>", round(Moyenne, 1), "(n=", n, ")"), data_id = cultivar) +
           geom_line(aes(group = cultivar)) +
           geom_point_interactive() +
-          scale_color_manual(values = coul_var[input$variete_multi_var]) +
+          scale_color_manual(values = coul_var[input$variete_temp_var]) +
           labs(
             x = NULL, y = NULL, 
             title = textesUI[textesUI$id == input$variete_mesure, lang],

@@ -30,8 +30,7 @@ variete_mesure_label,Choix de la variable,Choice of the variable
 variete_comp_box,Comparaison des variétés,Cultivar comparison
 variete_comp_label,Choix d'une ou plusieurs années,Choice of one or more years
 variete_temps_box,Suivi temporel,Temporal follow-up
-variete_all_label, Tout sélectionner, Select all
-variete_temps_label,Choix d'une ou plusieurs variétés,Choice of one or more cultivars
+variete_label_vars,Choix d'une ou plusieurs variétés,Choice of one or more cultivars
 variete_spatial_box,Suivi spatial,Spatial follow-up
 timeviz_global_switch,Visualisation par année / globale,Through time/global visualisation
 variete_bilan_box,Fiche synthétique par variété,Summary by cultivar
