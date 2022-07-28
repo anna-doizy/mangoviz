@@ -16,24 +16,24 @@
 
 # - anglais presque OK + espagnol
 
+# dashboardHeader(disable = TRUE) ?
+# ou plutôt mettre l'accueil et à propos dans des boîtes et enlever mon css foireux (pour la prochaine appli plutôt !)
 
-# à traiter
+
+# à TRAITER
 
 
 # élargir dimensions graphe suivi temporel
 # - responsive : image width + ratio des graphiques (taille de police des labels des axes) A VOIR, tester renderPlot(res = ?)
 # ajout phrase ctrl + ou - pour ajuster les tailles des graphiques
 
-# mettre le logo dans la navbar (cf zagrumes974)
-# dashboardHeader(disable = TRUE) ?
-# ou plutôt mettre l'accueil et à propos dans des boîtes et enlever mon css foireux (pour la prochaine appli plutôt !)
+
 
 # faire un script pour Isabelle choix des couleurs
 
 # TAILLE
-# début de la taille plus marqué et visible (rectangle ?)
+
 # graphique taille à mettre plus grand
-# comment montrer l'année où on a commencé à tailler ? -> l'ajouter dans le texte ?
 
 # une ou deux lignes de sous-graphes ? automatique ? comment rendre responsive ?
 # s'inspirer de : https://mastering-shiny.org/action-graphics.html#dynamic-height-and-width
@@ -53,17 +53,11 @@
 #   )
 # }
 
-# 1er graphique : interaction sur les points noirs avec dataid : arbre A VERIFIER
 
-# temp : texte choix d'une ou plusieurs var
-
-# ATTENTION BUG : surement pb entre coul_taille et le bouton tout sélectionner !! / présence de bordure dans la légende...
 
 # VARIETE
-# changer format du bouton (temp) pour faire comme pour cultivar (temp et spatial) -> tous les boutons comme suivi temp dans éval var !!
+
 # couleur du bouton "tout sélectionner"
-
-
 
 
 
@@ -156,12 +150,15 @@
 # déboguer les labels du graphe taille temporel
 # 2022-07-21 
 # intégrer les corrections des helpfiles d'Isabelle
+# 1er graphique : interaction sur les points noirs avec dataid : arbre OK
 # mettre en label le nombre de fruits qui ont permis de calculer les moyennes OK
 # ajouter carte réunion avec un point et les coordonnées des vergers OK
 # 2022-07-26
 # Ajouter les arbres de bordure sur les plans OK
 # mettre une croix en F12 sur le plan de l'essai taille OK
-
+# 2022-07-28 
+# mettre le logo dans la navbar OK
+# passer en selectInput pour tout les graphes temp et spatial plutôt qu'en radio OK
 
 
 
