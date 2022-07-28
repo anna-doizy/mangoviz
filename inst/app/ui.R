@@ -29,7 +29,7 @@ function(req) {
 
   # TITLE -------------------------------------------------------------------
 
-  header <- dashboardHeader(title = "MangoViz")
+  header <- dashboardHeader(title = a(href = paste0("./?lang=", lang), img(src="title-mangoviz.png", width = 190)))
 
 
   # SIDEBAR -----------------------------------------------------------------
