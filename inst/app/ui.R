@@ -215,7 +215,7 @@ function(req) {
                          solidHeader = TRUE,
                          selectInput(
                            "taille_temps_multi",
-                           textesUI[textesUI$id == "taille_temps_label", lang],
+                           textesUI[textesUI$id == "taille_multi_label", lang],
                            choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
                            multiple = TRUE,
                            selected = "taille_sans"
@@ -244,26 +244,26 @@ function(req) {
                          width = 12,
                          status = "success",
                          solidHeader = TRUE,
-                         # p(em(textesUI[textesUI$id == "variete_spatial_text", lang])),
-                         # selectInput(
-                         # "variete_select_var",
-                         # "Choix de la variété",
-                         # choices = levels(variete$cultivar),
-                         # selected = "Caro"
-                         # ),
                          
                          fluidRow(
                            column(2, p(strong(textesUI[textesUI$id == "timeviz_global_switch", lang])),
                                   materialSwitch(
-                                    inputId = "taille_all_year" #, label = ""
+                                    inputId = "taille_all_year"
                                   )
                            ),
-                           column(10, radioGroupButtons(
-                             "taille_select",
-                             individual = TRUE,
-                             textesUI[textesUI$id == "taille_temps_label", lang],
-                             choices = c("all", levels(taille$Taille)) %>% setNames(textesUI[textesUI$id %in% c(levels(taille$Taille), "all"), lang])
-                           )
+                           column(10, selectInput(
+                             "taille_spatial_multi",
+                             textesUI[textesUI$id == "taille_multi_label", lang],
+                             choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
+                             multiple = TRUE,
+                             selected = "taille_sans"
+                             ),
+                           # column(10, radioGroupButtons(
+                           #   "taille_select",
+                           #   individual = TRUE,
+                           #   textesUI[textesUI$id == "taille_temps_label", lang],
+                           #   choices = c("all", levels(taille$Taille)) %>% setNames(textesUI[textesUI$id %in% c(levels(taille$Taille), "all"), lang])
+                           # )
                            )
                          ),
                          

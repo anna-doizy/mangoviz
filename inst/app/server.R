@@ -226,65 +226,65 @@ server <- function(input, output, session) {
   ## mesures à l'échelle de la parcelle ####
   
   output$taille_spatial <- renderGirafe({
-    # traduire tooltip OK
-    # vérifier valeurs extrêmes de poids moyen de fruit
-    # une ou deux lignes ?
-    # comment montrer l'année où on a commencé à tailler ? -> l'ajouter dans le texte ?
     
-    {if(input$taille_all_year) {
-      taille %>% 
-        filter(
-          Mesure == input$taille_mesure, 
-          Taille %in% if(input$taille_select == "all") {levels(taille$Taille)} else {input$taille_select}
-        ) %>% 
-        group_by(X, Y, Taille) %>% 
-        summarise(Moyenne = mean(Valeur, na.rm = TRUE), n = n()) %>% 
-        suppressMessages() %>% # group message
-        rowwise() %>% 
-        mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
-        ggplot() +
-        aes(x = X, y = Y, fill = Moyenne, tooltip = paste(Taille_trad, "<br>", round(Moyenne, 1), "(n=", n, ")"), data_id = Taille) +
-        geom_tile_interactive(colour = "black") +
-        scale_fill_gradientn(
-          # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
-          colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
-          na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
-        ) +
-        scale_x_discrete(drop = FALSE) +
-        scale_y_discrete(drop = FALSE) +
-        coord_fixed() +
-        labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$taille_mesure, lang], fill = NULL)
-    } else {
-      taille %>% 
-        filter(
-          Mesure == input$taille_mesure, 
-          Taille %in% if(input$taille_select == "all") {levels(taille$Taille)} else {input$taille_select}
-        ) %>%
-        rowwise() %>% 
-        mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
-        ggplot() +
-        aes(x = X, y = Y, fill = Valeur, tooltip = paste(Taille_trad, round(Valeur, 1), sep = "<br>"), data_id = Taille) +
-        geom_tile_interactive(colour = "black") +
-        scale_fill_gradientn(
-          # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
-          colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
-          na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
-        ) +
-        scale_x_discrete(drop = FALSE) +
-        scale_y_discrete(drop = FALSE) +
-        coord_fixed() +
-        labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$taille_mesure, lang], fill = NULL) +
-        facet_wrap(~ Annee, nrow = 2)
-    }}%>%
-      girafe(
-        ggobj = ., width_svg = 16,
-        options = list(
-          opts_hover_inv(css = "opacity:0.2;"),
-          opts_tooltip(use_stroke = TRUE),
-          opts_hover(css = ""),
-          opts_selection(type = "none")
+    if(!is.null(input$taille_spatial_multi)) { # if no selected taille, no plot
+      {if(input$taille_all_year) {
+        taille %>% 
+          filter(
+            Mesure == input$taille_mesure, 
+            # Taille %in% if(input$taille_select == "all") {levels(taille$Taille)} else {input$taille_select}
+            Taille %in% input$taille_spatial_multi
+          ) %>% 
+          group_by(X, Y, Taille) %>% 
+          summarise(Moyenne = mean(Valeur, na.rm = TRUE), n = n()) %>% 
+          suppressMessages() %>% # group message
+          rowwise() %>% 
+          mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
+          ggplot() +
+          aes(x = X, y = Y, fill = Moyenne, tooltip = paste(Taille_trad, "<br>", round(Moyenne, 1), "(n=", n, ")"), data_id = Taille) +
+          geom_tile_interactive(colour = "black") +
+          scale_fill_gradientn(
+            # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
+            colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
+            na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
+          ) +
+          scale_x_discrete(drop = FALSE) +
+          scale_y_discrete(drop = FALSE) +
+          coord_fixed() +
+          labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$taille_mesure, lang], fill = NULL)
+      } else {
+        taille %>% 
+          filter(
+            Mesure == input$taille_mesure, 
+            # Taille %in% if(input$taille_select == "all") {levels(taille$Taille)} else {input$taille_select}
+            Taille%in% input$taille_spatial_multi
+          ) %>%
+          rowwise() %>% 
+          mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
+          ggplot() +
+          aes(x = X, y = Y, fill = Valeur, tooltip = paste(Taille_trad, round(Valeur, 1), sep = "<br>"), data_id = Taille) +
+          geom_tile_interactive(colour = "black") +
+          scale_fill_gradientn(
+            # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"), 
+            colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
+            na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
+          ) +
+          scale_x_discrete(drop = FALSE) +
+          scale_y_discrete(drop = FALSE) +
+          coord_fixed() +
+          labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$taille_mesure, lang], fill = NULL) +
+          facet_wrap(~ Annee, nrow = 2)
+      }}%>%
+        girafe(
+          ggobj = ., width_svg = 16,
+          options = list(
+            opts_hover_inv(css = "opacity:0.2;"),
+            opts_tooltip(use_stroke = TRUE),
+            opts_hover(css = ""),
+            opts_selection(type = "none")
+          )
         )
-      )
+    }
     
   })
   
