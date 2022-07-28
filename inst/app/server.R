@@ -158,23 +158,23 @@ server <- function(input, output, session) {
   
   output$taille_temporel <- renderGirafe({
     
-    # if(!is.null(input$taille_multi)) { # if no selected taille, no plot
-      # {if(length(input$taille_multi) == 1) { # if one selected taille
-      {if(input$taille_multi != "all") { # if one selected taille
+    if(!is.null(input$taille_temps_multi)) { # if no selected taille, no plot
+      {if(length(input$taille_temps_multi) == 1) { # if one selected taille
+      # {if(input$taille_temps_multi != "all") { # if one selected taille
         taille %>% 
-          filter(Mesure == input$taille_mesure, Taille == input$taille_multi, !is.na(Valeur)) %>%
+          filter(Mesure == input$taille_mesure, Taille == input$taille_temps_multi, !is.na(Valeur)) %>%
           rowwise() %>% 
           mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
           ggplot() +
           aes(x = Annee, y = Valeur) +
-          geom_vline_interactive(xintercept = 2010.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) + # ou 2011.5 ??
+          # geom_vline_interactive(xintercept = 2010.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) + # ou 2011.5 ??
           geom_line_interactive(aes(group = arbre, data_id = arbre, tooltip = arbre, hover_css = "fill:none"), alpha = 0.1) +
           geom_point_interactive(alpha = 0.3, aes(data_id = arbre, tooltip = arbre)) +
           geom_line(stat = "summary", fun = mean, aes(colour = Taille_trad)) +
           geom_point_interactive(stat = "summary", fun = mean, size = 3, aes(colour = Taille_trad, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"))) +
           geom_smooth_interactive(method = "lm", formula = "y~1", se = FALSE, color = "black", linetype = 2, aes(tooltip = paste(textesUI[textesUI$id == "global_mean", lang], round(..y.., 1), sep = "<br>"))) +
           scale_color_manual(
-            values = coul_taille[input$taille_multi] %>% unname() # car aes color : Taille_trad
+            values = coul_taille[input$taille_temps_multi] %>% unname() # car aes color : Taille_trad
             # labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))
             ) +
           scale_x_continuous(breaks = seq(2008, 2018, by = 2)) +
@@ -185,8 +185,8 @@ server <- function(input, output, session) {
           )
       } else { # if several/all selected taille
         taille %>% 
-          # filter(Mesure == input$taille_mesure, Taille %in% input$taille_multi) %>%
-          filter(Mesure == input$taille_mesure) %>%
+          filter(Mesure == input$taille_mesure, Taille %in% input$taille_temps_multi) %>%
+          # filter(Mesure == input$taille_mesure) %>%
           group_by(Annee, Taille) %>% 
           summarise(
             Moyenne = mean(Valeur, na.rm = TRUE), n = n()
@@ -196,11 +196,11 @@ server <- function(input, output, session) {
           mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
           ggplot() +
           aes(x = Annee, y = Moyenne, colour = Taille, tooltip = paste(Taille_trad, "<br>", round(Moyenne, 1), "(n=", n, ")"), data_id = Taille) +
-          geom_vline_interactive(xintercept = 2010.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) + # ou 2011.5 ??
+          # geom_vline_interactive(xintercept = 2010.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) + # ou 2011.5 ??
           geom_line(aes(group = Taille)) +
           geom_point_interactive() +
-          # scale_color_manual(values = coul_taille[input$taille_multi], labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))) +
-          scale_color_manual(values = coul_taille, labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))) +
+          scale_color_manual(values = coul_taille[input$taille_temps_multi], labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))) +
+          # scale_color_manual(values = coul_taille, labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))) +
           scale_x_continuous(breaks = seq(2008, 2018, by = 2)) +
           labs(
             x = NULL, y = NULL, 
@@ -218,7 +218,7 @@ server <- function(input, output, session) {
             opts_selection(type = "none")
           )
         )
-    # }
+    }
     
     
   })

@@ -213,19 +213,19 @@ function(req) {
                          width = 12,
                          status = "success",
                          solidHeader = TRUE,
-                         # selectInput(
-                         #   "taille_multi",
-                         #   textesUI[textesUI$id == "variete_temps_label", lang],
-                         #   choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
-                         #   multiple = TRUE,
-                         #   selected = "taille_sans"
-                         # ),
-                         radioGroupButtons(
-                           "taille_multi",
-                           individual = TRUE,
+                         selectInput(
+                           "taille_temps_multi",
                            textesUI[textesUI$id == "taille_temps_label", lang],
-                           choices = c("all", levels(taille$Taille)) %>% setNames(textesUI[textesUI$id %in% c(levels(taille$Taille), "all"), lang]) # Attention à l'ordre
+                           choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
+                           multiple = TRUE,
+                           selected = "taille_sans"
                          ),
+                         # radioGroupButtons(
+                         #   "taille_multi",
+                         #   individual = TRUE,
+                         #   textesUI[textesUI$id == "taille_temps_label", lang],
+                         #   choices = c("all", levels(taille$Taille)) %>% setNames(textesUI[textesUI$id %in% c(levels(taille$Taille), "all"), lang]) # Attention à l'ordre
+                         # ),
                          girafeOutput("taille_temporel") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
                        )
                 )

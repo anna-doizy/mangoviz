@@ -42,7 +42,7 @@ pruning_start,Début de la taille,Pruning start
 taille_comp_box,Comparaison des modes de tailles,Pruning comparison
 taille_comp_label,Choix d'une ou plusieurs années,Choice of one or more years
 taille_temps_box,Suivi temporel,Temporal follow-up
-taille_temps_label,Choix d'un mode de taille,Choice of the pruning method
+taille_temps_label,Choix d'un ou plusieurs modes de taille,Choice of the pruning methods
 taille_spatial_box,Suivi spatial,Spatial follow-up
 1_croissance_vegetative,Croissance végétative,Vegetative growth
 2_repos,Repos,Resting
