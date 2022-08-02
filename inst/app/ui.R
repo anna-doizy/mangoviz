@@ -65,13 +65,13 @@ function(req) {
         tabName = "taille",
         menuSubItem(
           text = textesUI[textesUI$id == "presentation", lang],
-          tabName = "taille_presentation"
+          tabName = "taille_presentation", icon = icon("angles-right")
         ),
         menuSubItem(
           text = textesUI[textesUI$id == "resultats", lang],
-          tabName = "taille_resultats"
+          tabName = "taille_resultats", icon = icon("angles-right")
         ),
-        icon = icon("cut")
+        icon = icon("scissors")
       ),
       
       menuItem(
@@ -79,15 +79,15 @@ function(req) {
         tabName = "variete",
         menuSubItem(
           text = textesUI[textesUI$id == "presentation", lang],
-          tabName = "var_presentation"
+          tabName = "var_presentation", icon = icon("angles-right")
         ),
         menuSubItem(
           text = textesUI[textesUI$id == "resultats", lang],
-          tabName = "var_resultats"
+          tabName = "var_resultats", icon = icon("angles-right")
         ),
         menuSubItem(
           text = textesUI[textesUI$id == "bilan", lang],
-          tabName = "var_bilan"
+          tabName = "var_bilan", icon = icon("angles-right")
         ),
         icon = icon("dna")
       ),
@@ -186,7 +186,7 @@ function(req) {
                            helper(
                              content = paste("taille_comp_text", lang, sep = "_"),
                              buttonLabel = "OK",
-                             size = "l", class = "shinyhelper-container2"
+                             size = "l", class = "shinyhelper-container2", icon = "circle-question"
                            ),
                          width = 12,
                          status = "success",
@@ -208,7 +208,7 @@ function(req) {
                            helper(
                              content = paste("taille_temps_text", lang, sep = "_"),
                              buttonLabel = "OK",
-                             size = "l", class = "shinyhelper-container2"
+                             size = "l", class = "shinyhelper-container2", icon = "circle-question"
                            ),
                          width = 12,
                          status = "success",
@@ -239,7 +239,7 @@ function(req) {
                            helper(
                              content = paste("taille_spatial_text", lang, sep = "_"),
                              buttonLabel = "OK",
-                             size = "l", class = "shinyhelper-container2"
+                             size = "l", class = "shinyhelper-container2", icon = "circle-question"
                            ),
                          width = 12,
                          status = "success",
@@ -348,7 +348,7 @@ function(req) {
                 helper(
                   content = paste("variete_comp_text", lang, sep = "_"),
                   buttonLabel = "OK",
-                  size = "l", class = "shinyhelper-container2"
+                  size = "l", class = "shinyhelper-container2", icon = "circle-question"
                 ),
               width = 12,
               status = "success",
@@ -369,7 +369,7 @@ function(req) {
                 helper(
                   content = paste("variete_temps_text", lang, sep = "_"),
                   buttonLabel = "OK",
-                  size = "l", class = "shinyhelper-container2"
+                  size = "l", class = "shinyhelper-container2", icon = "circle-question"
                 ),
               width = 12,
               status = "success",
@@ -404,7 +404,7 @@ function(req) {
                 helper(
                   content = paste("variete_spatial_text", lang, sep = "_"),
                   buttonLabel = "OK",
-                  size = "l", class = "shinyhelper-container2"
+                  size = "l", class = "shinyhelper-container2", icon = "circle-question"
                 ),
               width = 12,
               status = "success",

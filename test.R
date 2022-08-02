@@ -8,6 +8,8 @@
 # be deactivated with `verify_fa = FALSE`
 
 # Warning: stack imbalance in 'NextMethod', 360 then 361
+# https://github.com/davidgohel/ggiraph/issues/224
+# Attendre prochaine version de R ! (problème dans R 4.2)
 
 # ajouter les données jusqu'en 2021 (attente de Fred)
 # MAJ des fiches variétales
@@ -53,11 +55,6 @@
 #   )
 # }
 
-
-
-# VARIETE
-
-# couleur du bouton "tout sélectionner"
 
 
 
@@ -159,7 +156,7 @@
 # 2022-07-28 
 # mettre le logo dans la navbar OK
 # passer en selectInput pour tout les graphes temp et spatial plutôt qu'en radio OK
-
+# Améliorer couleur du bouton "tout sélectionner" OK
 
 
 
@@ -185,8 +182,8 @@ input <- list(
   # variete_mesure = "masse_fruit",
   variete_checkbox_year = 2010:2015,
   # variete_checkbox_year = 2016,
-  variete_multi_var = c("Heidi", "Irwin", "José"),
-  # variete_multi_var = "Heidi", # plusieurs pour temp
+  # variete_multi_var = c("Heidi", "Irwin", "José"),
+  variete_multi_var = "Heidi", # plusieurs pour temp
   variete_select_var = "all",
   # variete_select_var = "Heidi", # une seule pour spatial
   variete_all_year = TRUE # switch
@@ -315,6 +312,9 @@ if(!is.null(input$variete_multi_var)) # if no selected cultivar, no plot
       )
     )
 }
+
+
+
 
 
 ## mesures à l'échelle de la parcelle ####
