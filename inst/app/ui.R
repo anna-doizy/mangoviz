@@ -130,25 +130,32 @@ function(req) {
         tabName = "taille_presentation", 
         fluidRow(
           column(
-            6, 
+            12, 
             box(
               title = textesUI[textesUI$id == "pres_box", lang], 
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              includeMarkdown(sprintf("locale/verger-taille_%s.md", lang)),
-              leafletOutput("pruning_orchard_map", width = "80%")
+              column(7, includeMarkdown(sprintf("locale/verger-taille_%s.md", lang))),
+              column(5, img(src = "verger-test.jpg", class = "inbox-img"), style = "text-align:center;")
             )
-          ),
+          )),
+        fluidRow(
           column(
-            6, 
+            12, 
             box(
               title = textesUI[textesUI$id == "plan_box", lang],
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              girafeOutput("taille_parcelle", height = "auto", width = "90%")
-            ),
+              column(6, girafeOutput("taille_parcelle", height = "400px", width = "90%")),
+              column(6, leafletOutput("pruning_orchard_map", width = "80%"))
+              
+            )
+          )),
+        fluidRow(
+          column(
+            12,
             box(
               title = textesUI[textesUI$id == "taille_cycle_box", lang],
               width = 12,
@@ -199,7 +206,7 @@ function(req) {
                            choices = unique(taille$Annee),
                            selected = 2011:2018 # par défaut, à partir de la première année de taille
                          ),
-                         girafeOutput("taille_taille") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
+                         girafeOutput("taille_taille", height = "400px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
                        )
                 ),
                 column(6,
@@ -226,7 +233,7 @@ function(req) {
                          #   textesUI[textesUI$id == "taille_temps_label", lang],
                          #   choices = c("all", levels(taille$Taille)) %>% setNames(textesUI[textesUI$id %in% c(levels(taille$Taille), "all"), lang]) # Attention à l'ordre
                          # ),
-                         girafeOutput("taille_temporel") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
+                         girafeOutput("taille_temporel", height = "400px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
                        )
                 )
                 
@@ -267,7 +274,7 @@ function(req) {
                            )
                          ),
                          
-                         girafeOutput("taille_spatial") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
+                         girafeOutput("taille_spatial", height = "600px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
                        )
                 )
               )
@@ -360,7 +367,7 @@ function(req) {
                 choices = unique(variete$Annee),
                 selected = unique(variete$Annee) # toutes les années sélectionées par défaut
               ),
-              girafeOutput("variete_var") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
+              girafeOutput("variete_var", height = "400px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
             )
           ),
           column(6,
@@ -387,11 +394,12 @@ function(req) {
                 column(4, p(), actionBttn(
                   inputId = "variete_temp_all",
                   label = textesUI[textesUI$id == "all", lang],
-                  style = "material-flat"
+                  style = "material-flat",
+                  size = "sm"
                 ))
               ),
               
-              girafeOutput("variete_temp_graph") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
+              girafeOutput("variete_temp_graph", height = "400px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
             )
           )
         
@@ -435,11 +443,12 @@ function(req) {
                 column(4, p(), actionBttn(
                   inputId = "variete_spatial_all",
                   label = textesUI[textesUI$id == "all", lang],
-                  style = "material-flat"
+                  style = "material-flat",
+                  size = "sm"
                 ))
               ),
               
-              girafeOutput("variete_spatial_graph") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
+              girafeOutput("variete_spatial_graph", height = "600px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
             )
           )
         )

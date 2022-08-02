@@ -3,10 +3,6 @@
 
 # en questionnement/attente
 
-# est-ce que cette erreur persiste : This Font Awesome icon ('question-circle') does not exist:
-# * if providing a custom `html_dependency` these `name` checks can 
-# be deactivated with `verify_fa = FALSE`
-
 # Warning: stack imbalance in 'NextMethod', 360 then 361
 # https://github.com/davidgohel/ggiraph/issues/224
 # Attendre prochaine version de R ! (problème dans R 4.2)
@@ -24,37 +20,7 @@
 
 # à TRAITER
 
-
-# élargir dimensions graphe suivi temporel
-# - responsive : image width + ratio des graphiques (taille de police des labels des axes) A VOIR, tester renderPlot(res = ?)
-# ajout phrase ctrl + ou - pour ajuster les tailles des graphiques
-
-
-
 # faire un script pour Isabelle choix des couleurs
-
-# TAILLE
-
-# graphique taille à mettre plus grand
-
-# une ou deux lignes de sous-graphes ? automatique ? comment rendre responsive ?
-# s'inspirer de : https://mastering-shiny.org/action-graphics.html#dynamic-height-and-width
-# ui <- fluidPage(
-#   sliderInput("height", "height", min = 100, max = 500, value = 250),
-#   sliderInput("width", "width", min = 100, max = 500, value = 250),
-#   plotOutput("plot", width = 250, height = 250)
-# )
-# server <- function(input, output, session) {
-#   output$plot <- renderPlot(
-#     width = function() input$width,
-#     height = function() input$height,
-#     res = 96,
-#     {
-#       plot(rnorm(20), rnorm(20))
-#     }
-#   )
-# }
-
 
 
 
@@ -157,7 +123,9 @@
 # mettre le logo dans la navbar OK
 # passer en selectInput pour tout les graphes temp et spatial plutôt qu'en radio OK
 # Améliorer couleur du bouton "tout sélectionner" OK
-
+# 2022-08-02
+# Mise à jour des noms des Font Awesome icons (+2 issues sur github) OK
+# Responsiveness : régler l'emplacement des éléments de l'ui et la taille du texte des graphiques à partir d'une résolution d'écran de 1280 x 720 (recommandé par les dev ; ctrl + maj + M, vue adaptative dans mozilla)
 
 
 

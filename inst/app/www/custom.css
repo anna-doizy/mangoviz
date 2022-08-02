@@ -148,7 +148,7 @@ hr {
   margin-right: auto;
 }
 
-/* helpers position when it is in a box header  */
+/* helpers position when it is in a box header */
 .shinyhelper-container.shinyhelper-container2 {
   position: relative;
   color: #fff;
@@ -156,3 +156,9 @@ hr {
   right: 0;
   padding-left: 10px;
 }
+
+/* boxes margins, marche pas car boutons dans les boîtes sont décalés...
+.col-sm-6 {
+  padding-right: 5px;
+  padding-left: 5px;
+} */

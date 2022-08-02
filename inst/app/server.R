@@ -85,7 +85,7 @@ server <- function(input, output, session) {
   
   ## Description du cycle des tailles ####
   
-  output$cycles_taille <- renderPlot({
+  output$cycles_taille <- renderPlot(res = 120, {#width = 960, height = 288, {
     ggplot(cycle) +
       aes(x = Debut, y = Cycle) +
       geom_vline(xintercept = seq(as.Date("2016-01-01"), as.Date("2019-01-01"), "year"), size = 2, color = "white") +
@@ -142,7 +142,7 @@ server <- function(input, output, session) {
           theme(legend.position = "none")
       } %>% 
         girafe(
-          ggobj = ., 
+          ggobj = ., height_svg = 4, width_svg = 5,
           options = list(
             opts_hover_inv(css = "opacity:0.4;"),
             opts_tooltip(use_fill = TRUE),
@@ -210,7 +210,7 @@ server <- function(input, output, session) {
       } } %>% 
         suppressWarnings() %>% # geom_vline(): Ignoring `mapping` because `xintercept` was provided.
         girafe(
-          ggobj = ., 
+          ggobj = ., height_svg = 4, width_svg = 5,
           options = list(
             opts_hover_inv(css = "opacity:0;"),
             opts_tooltip(use_fill = TRUE),
@@ -276,7 +276,7 @@ server <- function(input, output, session) {
           facet_wrap(~ Annee, nrow = 2)
       }}%>%
         girafe(
-          ggobj = ., width_svg = 16,
+          ggobj = ., width_svg = 10, height_svg = 5,
           options = list(
             opts_hover_inv(css = "opacity:0.2;"),
             opts_tooltip(use_stroke = TRUE),
@@ -376,7 +376,7 @@ server <- function(input, output, session) {
         theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
       } %>% 
         girafe(
-          ggobj = ., 
+          ggobj = ., height_svg = 4, width_svg = 5,
           options = list(
             opts_hover_inv(css = "opacity:0.4;"),
             opts_tooltip(use_fill = TRUE),
@@ -439,7 +439,7 @@ server <- function(input, output, session) {
           )
       } } %>% 
         girafe(
-          ggobj = ., 
+          ggobj = ., height_svg = 4, width_svg = 5,
           options = list(
             opts_hover_inv(css = "opacity:0;"),
             opts_tooltip(use_fill = TRUE),
@@ -507,10 +507,10 @@ server <- function(input, output, session) {
           scale_y_discrete(drop = FALSE) +
           coord_fixed() +
           labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang], fill = NULL) +
-          facet_wrap(~ Annee, nrow = 1)
+          facet_wrap(~ Annee, nrow = 2)
       }}%>%
         girafe(
-          ggobj = ., width_svg = 16,
+          ggobj = ., width_svg = 10, height_svg = 5,
           options = list(
             opts_hover_inv(css = "opacity:0.2;"),
             opts_tooltip(use_stroke = TRUE),
