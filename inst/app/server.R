@@ -26,16 +26,23 @@ server <- function(input, output, session) {
   
   ## Plot themes ####
   
-  theme_update(text = element_text(family = "sans"))
+  theme_update(text = element_text(family = "sans-serif"))
   
   ## Orchards map ####
   
   output$pruning_orchard_map <- renderLeaflet({
-    leaflet() %>% addTiles() %>% addMarkers(55.489, -21.3216)
+    leaflet() %>% 
+      setView(55.4884, -21.32264, zoom = 18) %>% 
+      addProviderTiles("Esri.WorldImagery") %>% 
+      addMarkers(55.4884, -21.32264)
   })
   
+  #-21.322763, 55.490350
   output$cultivar_orchard_map <- renderLeaflet({
-    leaflet() %>% addTiles() %>% addMarkers(55.489, -21.3216)
+    leaflet() %>% 
+      setView(55.49035, -21.32276, zoom = 18) %>% 
+      addProviderTiles("Esri.WorldImagery") %>% 
+      addMarkers(55.49035, -21.32276)
   })
   
   
@@ -43,7 +50,7 @@ server <- function(input, output, session) {
 # Essai taille ------------------------------------------------------------
   
   # couleur des différents types de taille
-  coul_taille <- c(`taille_ete` = "darkgreen", `taille_hiver` = "darkblue", `taille_sans` = "darkred", bordure = "#0300000C")
+  coul_taille <- c(`taille_ete` = "#5acc56", `taille_hiver` = "#009eff", `taille_sans` = "#fb7017", bordure = "#0300000C")
   
   ## Plan de la parcelle ####
   
