@@ -167,7 +167,7 @@ server <- function(input, output, session) {
           mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
           ggplot() +
           aes(x = Annee, y = Valeur) +
-          # geom_vline_interactive(xintercept = 2010.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) + # ou 2011.5 ??
+          geom_vline_interactive(xintercept = 2011.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) +
           geom_line_interactive(aes(group = arbre, data_id = arbre, tooltip = arbre, hover_css = "fill:none"), alpha = 0.1) +
           geom_point_interactive(alpha = 0.3, aes(data_id = arbre, tooltip = arbre)) +
           geom_line(stat = "summary", fun = mean, aes(colour = Taille_trad)) +
@@ -196,7 +196,7 @@ server <- function(input, output, session) {
           mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
           ggplot() +
           aes(x = Annee, y = Moyenne, colour = Taille, tooltip = paste(Taille_trad, "<br>", round(Moyenne, 1), "(n=", n, ")"), data_id = Taille) +
-          # geom_vline_interactive(xintercept = 2010.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) + # ou 2011.5 ??
+          geom_vline_interactive(xintercept = 2011.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) +
           geom_line(aes(group = Taille)) +
           geom_point_interactive() +
           scale_color_manual(values = coul_taille[input$taille_temps_multi], labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))) +
