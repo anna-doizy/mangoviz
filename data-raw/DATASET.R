@@ -63,16 +63,6 @@ devtools::document()
 
 library(tidyverse)
 library(lubridate)
-library(ggimage)
-
-date_taille <- tibble(
-  Taille = rep(c("taille_hiver", "taille_ete"), times = 2),
-  Date_taille = c("2016-08-01", "2016-02-01", "2018-08-01", "2018-02-01") %>% as.Date(),
-  Depart = c(4, 4, 2, 2), # sens et position de la flèche
-  Pointe = Depart - 0.6,
-  pos_img = Depart + 0.5,
-  img = "www/shears_ratio.png"
-)
 
 cycle <- tribble(
   ~Debut,    ~Fin,                  ~Etape,
@@ -99,11 +89,5 @@ cycle <- tribble(
     Etape = paste(rep(1:5, times = 3), Etape, sep = "_") %>% factor()
   )
 
-date_labels <- tibble(
-  pas = seq(as.Date("2015-06-01"), as.Date("2019-04-01"), "month"),
-  annee = paste0("N", year(pas) - 2015),
-  etiquette = ifelse(month(pas) == 7, paste(format(pas, "%m"), annee, sep = "\n"), format(pas, "%m"))
-)
-
-usethis::use_data(date_taille, cycle, date_labels, overwrite = TRUE)
+usethis::use_data(cycle, overwrite = TRUE)
 devtools::document()

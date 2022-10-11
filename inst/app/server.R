@@ -75,7 +75,6 @@ server <- function(input, output, session) {
             values = coul_taille, labels = textesUI[textesUI$id %in% c(levels(taille$Taille), "bordure"), lang] %>% setNames(c(levels(taille$Taille), "bordure")),
             guide = guide_legend(byrow = TRUE)
           ) +
-          # scale_x_discrete(drop = FALSE) +
           scale_y_discrete(drop = FALSE) +
           coord_fixed() +
           labs(x = NULL, y = NULL, fill = textesUI[textesUI$id == "taille_legend", lang])} %>%  
@@ -93,6 +92,59 @@ server <- function(input, output, session) {
   ## Description du cycle des tailles ####
   
   output$cycles_taille <- renderPlot(res = 120, {#width = 960, height = 288, {
+    
+    #' Data for pruning cycle graph: Pruning dates
+    #'
+    #' @format A data frame of 4 x 6
+    #' 
+    #' \describe{
+    #'   \item{Taille}{Type of pruning}
+    #'   \item{Date_taille}{Pruning date}
+    #'   \item{Depart}{Beginning of the arrow}
+    #'   \item{Pointe}{End of the arrow}
+    #'   \item{pos_img}{Position of the shears image}
+    #'   \item{img}{Path to the shears image}
+    #'   }
+    date_taille <- tibble(
+      Taille = rep(c("taille_hiver", "taille_ete"), times = 2),
+      Date_taille = c("2016-08-01", "2016-02-01", "2018-08-01", "2018-02-01") %>% as.Date(),
+      Depart = c(4, 4, 2, 2), # sens et position de la flèche
+      Pointe = Depart - 0.6,
+      pos_img = Depart + 0.5,
+      img = "www/shears_ratio.png"
+    ) %>% 
+      rowwise() %>% 
+      mutate(
+        Taille = textesUI[textesUI$id == Taille, lang]
+      )
+    
+    #' Data for pruning cycle graph: Date labels for the x axis
+    #'
+    #' @format A data frame of 47 x 3
+    #' 
+    #' \describe{
+    #'   \item{pas}{date break}
+    #'   \item{pas_label}{first letter of the month}
+    #'   \item{annee}{turn the year into a general identifier}
+    #'   \item{etiquette}{date label, with a month format + the year id once per year}
+    #'   }
+    date_labels <- tibble(
+      pas = seq(as.Date("2015-06-01"), as.Date("2019-04-01"), "month"),
+      pas_label = ifelse(
+        lang == "sp" & month(pas) == 1, 
+        "E",  # "enero" in spanish
+        month(pas, label = TRUE, locale = "C") %>% as.character() %>% str_sub(end = 1) %>% str_to_upper()
+      ),
+      annee = paste(textesUI[textesUI$id == "annee", lang], year(pas) - 2015),
+      # etiquette = ifelse(month(pas) == 7, paste(format(pas, "%m"), annee, sep = "\n"), format(pas, "%m"))
+      etiquette = case_when(
+        month(pas) == 7 ~ paste(pas_label, annee, sep = "\n"),
+        month(pas) == 1 ~ paste(pas_label, "|", sep = "\n"),
+        TRUE ~ pas_label
+      )
+    )
+    
+    
     ggplot(cycle) +
       aes(x = Debut, y = Cycle) +
       geom_vline(xintercept = seq(as.Date("2016-01-01"), as.Date("2019-01-01"), "year"), size = 2, color = "white") +
@@ -111,6 +163,10 @@ server <- function(input, output, session) {
         mapping = aes(x = Date_taille, y = pos_img, image = img), 
         size = 0.05
       ) +
+      geom_text(
+        data = date_taille, 
+        mapping = aes(x = Date_taille, y = pos_img + 0.8, label = Taille)
+      ) +
       scale_color_manual(
         labels = textesUI[textesUI$id %in% levels(cycle$Etape), lang] %>% setNames(levels(cycle$Etape)),
         values = c("#007510", "#47CBFF", "#FFC038", "#FF8800", "#DE3800") %>% setNames(levels(cycle$Etape))
@@ -121,7 +177,7 @@ server <- function(input, output, session) {
         minor_breaks = NULL, 
         labels = date_labels$etiquette
       ) +
-      coord_fixed(70, ylim = c(0.8, 4.5)) +
+      coord_fixed(70, ylim = c(0.8, 5.2)) +
       labs(x = NULL, y = "", colour = "") +
       theme(legend.position = "bottom", axis.text.x = element_text(face = "bold"))
   })

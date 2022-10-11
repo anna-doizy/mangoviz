@@ -8,6 +8,7 @@ suppressPackageStartupMessages({
   library(shinyhelper)
   library(leaflet)
   library(dplyr)
+  library(lubridate)
   library(stringr)
   library(ggplot2)
   library(ggiraph)
@@ -22,7 +23,7 @@ function(req) {
   # Get language
   lang <- try(parseQueryString(req$QUERY_STRING)$lang)
 
-  if (is.null(lang) || !(lang %in% c("fr", "en"))) {
+  if (is.null(lang) || !(lang %in% c("fr", "en"))) { # sp
     lang <- "fr"
   }
 

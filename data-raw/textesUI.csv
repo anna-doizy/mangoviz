@@ -44,6 +44,7 @@ taille_comp_label,Choix d'une ou plusieurs années,Choice of one or more years
 taille_temps_box,Suivi temporel,Temporal follow-up
 taille_multi_label,Choix d'un ou plusieurs modes de taille,Choice of the pruning methods
 taille_spatial_box,Suivi spatial,Spatial follow-up
+annee,Année,Year
 1_croissance_vegetative,Croissance végétative,Vegetative growth
 2_repos,Repos,Resting
 3_floraison,Floraison,Flowering

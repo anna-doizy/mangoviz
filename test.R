@@ -10,7 +10,6 @@
 # ajouter les données jusqu'en 2021 (attente de Fred)
 # MAJ des fiches variétales
 # photo des vergers
-# clarifier les labels des années ? 2016-2017
 
 # - anglais presque OK + espagnol
 
@@ -41,6 +40,16 @@
 
 # obj : bêta tests d'ici la fin de l'année
 # textes avec traduction : d'ici le 14 juillet
+
+
+
+
+# RDV 2022-09-26
+
+# police sans serif par défault A VERIFIER avec Isabelle
+# téléchargement graphique svg ou png bonne qualité ou eps ! POUR L'INSTANT NON
+# incorporer dernières données de Fred EN ATTENTE
+# essai taille : passer les 2 première boites en layout vertical ou bien faire le même layout que pour essai variétal ? A VOIR AVEC LES TEXTES ET IMAGES DE FRED
 
 
 
@@ -126,6 +135,22 @@
 # 2022-08-02
 # Mise à jour des noms des Font Awesome icons (+2 issues sur github) OK
 # Responsiveness : régler l'emplacement des éléments de l'ui et la taille du texte des graphiques à partir d'une résolution d'écran de 1280 x 720 (recommandé par les dev ; ctrl + maj + M, vue adaptative dans mozilla)
+
+# 2022-10-11
+# présentation : inverser axe I -> A pour les 2 essais OK
+# plan satelite et mise à jour des coordonnées OK
+# pour le graphe cycles de tailles :
+# - remplacer N0 N1 par Année 0 année 1 et les mois par leur initiales ? OK
+# - un petit trait vertical sous 01 ? OK
+# - ajouter mention taille en été/en hiver au-dessus des sécateurs OK
+# changer les couleurs de taille (plus doux) Ok
+# préciser le calcul des visualisations globales (moyenne) dans le titre du bouton : "moyenne sur l'ensemble des années" au lieu de "globale" OK
+# mettre une autre palette de couleurs pour les graphiques globaux pour montrer les différences d'échelle OK
+# taille 2eme graphique : pointillés trait vertical entre 2011 & 2012 pour indiquer le début de la taille. OK Ajouter mention dans l'aide OK
+
+
+
+
 
 
 
@@ -398,7 +423,7 @@ taille %>%
       coord_fixed() +
       labs(x = NULL, y = NULL, fill = textesUI[textesUI$id == "taille_legend", lang])} %>% 
   girafe(
-    ggobj = ., 
+    ggobj = ., height_svg = 8, width_svg = 8,
     options = list(
       opts_hover_inv(css = "opacity:0.2;"),
       opts_tooltip(use_fill = TRUE),
@@ -585,7 +610,11 @@ date_taille <- tibble(
   Pointe = Depart - 0.6,
   pos_img = Depart + 0.5,
   img = "inst/app/www/shears_ratio.png"
-)
+) %>% 
+  rowwise() %>% 
+  mutate(
+    Taille = textesUI[textesUI$id == Taille, lang]
+  )
 
 cycle <- tribble(
   ~Debut,    ~Fin,                  ~Etape,
@@ -614,8 +643,18 @@ cycle <- tribble(
 
 date_labels <- tibble(
   pas = seq(as.Date("2015-06-01"), as.Date("2019-04-01"), "month"),
-  annee = paste0("N", year(pas) - 2015),
-  etiquette = ifelse(month(pas) == 7, paste(format(pas, "%m"), annee, sep = "\n"), format(pas, "%m"))
+  pas_label = ifelse(
+    lang == "sp" & month(pas) == 1, 
+    "E",  # "enero" in spanish
+    month(pas, label = TRUE, locale = "C") %>% as.character() %>% str_sub(end = 1) %>% str_to_upper()
+  ),
+  annee = paste(textesUI[textesUI$id == "annee", lang], year(pas) - 2015),
+  # etiquette = ifelse(month(pas) == 7, paste(format(pas, "%m"), annee, sep = "\n"), format(pas, "%m"))
+  etiquette = case_when(
+    month(pas) == 7 ~ paste(pas_label, annee, sep = "\n"),
+    month(pas) == 1 ~ paste(pas_label, "|", sep = "\n"),
+    TRUE ~ pas_label
+  )
 )
 
 
@@ -637,6 +676,10 @@ ggplot(cycle) +
     mapping = aes(x = Date_taille, y = pos_img, image = img), 
     size = 0.05
   ) +
+  geom_text(
+    data = date_taille, 
+    mapping = aes(x = Date_taille, y = pos_img + 0.8, label = Taille)
+  ) +
   scale_color_manual(
     labels = textesUI[textesUI$id %in% levels(cycle$Etape), lang] %>% setNames(levels(cycle$Etape)),
     values = c("#007510", "#47CBFF", "#FFC038", "#FF8800", "#DE3800") %>% setNames(levels(cycle$Etape))
@@ -647,7 +690,7 @@ ggplot(cycle) +
     minor_breaks = NULL, 
     labels = date_labels$etiquette
     ) +
-  coord_fixed(70, ylim = c(0.8, 4.5)) +
+  coord_fixed(70, ylim = c(0.8, 5.2)) +
   labs(x = NULL, y = "", colour = "") +
   theme(legend.position = "bottom", axis.text.x = element_text(face = "bold"))
 
@@ -658,8 +701,12 @@ ggplot(cycle) +
 
 library(leaflet)
 
-leaflet() %>% addTiles() %>% addMarkers(55.489, -21.3216)
-
+leaflet() %>% 
+  setView(55.4884, -21.3226, zoom = 18) %>% 
+  addProviderTiles("Esri.WorldImagery") %>% 
+  addMarkers(55.4884, -21.3226)
+# taille : -21.322638332348824, 55.488400916471825
+# cultivar : -21.322763, 55.490350
 
 
 # Evaluation variétale (VIEUX) ----------------------------------------------------

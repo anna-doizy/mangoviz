@@ -21,6 +21,7 @@ Imports:
     leaflet,
     markdown,
     dplyr,
+    lubridate,
     stringr,
     ggplot2,
     ggiraph,
