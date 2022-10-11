@@ -63,7 +63,7 @@ server <- function(input, output, session) {
           arbre = textesUI[textesUI$id == "bordure", lang],
           bloc = "bordure",
           Taille = "bordure",
-          X = rep(LETTERS[9:1], each = 2),
+          X = rep(LETTERS[9:1], each = 2) %>% factor(),
           Y = rep(c(1,17), times = 9) %>% factor()
         )
       ) %>%
@@ -332,7 +332,7 @@ server <- function(input, output, session) {
       bind_rows(
         tibble(
           cultivar = "bordure",
-          X = c(rep("K",17), rep(LETTERS[10:2], each = 2), rep("A",17)),
+          X = c(rep("K",17), rep(LETTERS[10:2], each = 2), rep("A",17)) %>% factor(),
           Y = c(1:17, rep(c(1,17), times = 9), 1:17) %>% factor()
         )
       ) %>%
