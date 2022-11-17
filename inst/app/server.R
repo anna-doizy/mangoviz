@@ -69,7 +69,7 @@ server <- function(input, output, session) {
       ) %>%
       {ggplot(.) +
           aes(x = X, y = Y, fill = Taille, data_id = Taille, tooltip = arbre) +
-          # geom_tile_interactive(color = "black", aes(label = arbre, tooltip = paste(..label.., textesUI[textesUI$id == "taille_ete", lang], sep = "<br>"))) + # ne marche pas
+          # geom_tile_interactive(color = "black", aes(label = arbre, tooltip = paste(after_stat(label), textesUI[textesUI$id == "taille_ete", lang], sep = "<br>"))) + # ne marche pas
           geom_tile_interactive(color = "black") +
           scale_fill_manual(
             values = coul_taille, labels = textesUI[textesUI$id %in% c(levels(taille$Taille), "bordure"), lang] %>% setNames(c(levels(taille$Taille), "bordure")),
@@ -147,16 +147,16 @@ server <- function(input, output, session) {
     
     ggplot(cycle) +
       aes(x = Debut, y = Cycle) +
-      geom_vline(xintercept = seq(as.Date("2016-01-01"), as.Date("2019-01-01"), "year"), size = 2, color = "white") +
+      geom_vline(xintercept = seq(as.Date("2016-01-01"), as.Date("2019-01-01"), "year"), linewidth = 2, color = "white") +
       geom_segment(
         aes(xend = Fin, yend = Cycle, colour = Etape),
-        size = 8
+        linewidth = 8
       ) +
       geom_segment(
         data = date_taille, 
         mapping = aes(x = Date_taille, xend = Date_taille, y = Depart, yend = Pointe), 
         arrow = arrow(length = unit(0.1, "inches")),
-        size = 1, colour = "black"
+        linewidth = 1, colour = "black"
       ) +
       geom_image(
         data = date_taille, 
@@ -178,7 +178,7 @@ server <- function(input, output, session) {
         labels = date_labels$etiquette
       ) +
       coord_fixed(70, ylim = c(0.8, 5.2)) +
-      labs(x = NULL, y = "", colour = "") +
+      labs(title = textesUI[textesUI$id == "taille_plan_title", lang], x = NULL, y = "", colour = "") +
       theme(legend.position = "bottom", axis.text.x = element_text(face = "bold"))
   })
   
@@ -192,12 +192,12 @@ server <- function(input, output, session) {
           ggplot() +
           aes(x = Taille, y = Valeur, fill = Taille, label = arbre) +
           geom_violin(alpha = 0.3, color = "transparent", scale = "count") +
-          geom_jitter_interactive(alpha = 0.3, width = 0.2, height = 0, aes(tooltip = paste(..label.., round(..y.., 1), sep = "<br>"), data_id = arbre)) +
+          geom_jitter_interactive(alpha = 0.3, width = 0.2, height = 0, aes(tooltip = paste(after_stat(label), round(after_stat(y), 1), sep = "<br>"), data_id = arbre)) +
           geom_point(stat = "summary", fun = mean, size = 4, color = "white") +
           geom_point_interactive(
             stat = "summary", 
             fun = mean, size = 3, 
-            aes(color = Taille, tooltip = round(..y.., 1), data_id = Taille)
+            aes(color = Taille, tooltip = round(after_stat(y), 1), data_id = Taille)
           ) +
           scale_fill_manual(values = coul_taille, aesthetics = c("colour", "fill")) +
           scale_x_discrete(labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))) +
@@ -212,7 +212,8 @@ server <- function(input, output, session) {
             opts_hover(css = "fill:black;"),
             opts_selection(type = "none")
           )
-        )
+        ) %>% 
+        suppressWarnings()
     }
   })
   
@@ -230,12 +231,12 @@ server <- function(input, output, session) {
           mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
           ggplot() +
           aes(x = Annee, y = Valeur) +
-          geom_vline_interactive(xintercept = 2011.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) +
+          geom_vline_interactive(xintercept = 2011.5, color = "white", linewidth = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) +
           geom_line_interactive(aes(group = arbre, data_id = arbre, tooltip = arbre, hover_css = "fill:none"), alpha = 0.1) +
           geom_point_interactive(alpha = 0.3, aes(data_id = arbre, tooltip = arbre)) +
           geom_line(stat = "summary", fun = mean, aes(colour = Taille_trad)) +
-          geom_point_interactive(stat = "summary", fun = mean, size = 3, aes(colour = Taille_trad, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"))) +
-          geom_smooth_interactive(method = "lm", formula = "y~1", se = FALSE, color = "black", linetype = 2, aes(tooltip = paste(textesUI[textesUI$id == "global_mean", lang], round(..y.., 1), sep = "<br>"))) +
+          geom_point_interactive(stat = "summary", fun = mean, size = 3, aes(colour = Taille_trad, tooltip = paste(after_stat(colour), round(after_stat(y), 1), sep = "<br>"))) +
+          geom_smooth_interactive(method = "lm", formula = "y~1", se = FALSE, color = "black", linetype = 2, aes(tooltip = paste(textesUI[textesUI$id == "global_mean", lang], round(after_stat(y), 1), sep = "<br>"))) +
           scale_color_manual(
             values = coul_taille[input$taille_temps_multi] %>% unname() # car aes color : Taille_trad
             # labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))
@@ -259,7 +260,7 @@ server <- function(input, output, session) {
           mutate(Taille_trad = textesUI[textesUI$id == Taille, lang]) %>% 
           ggplot() +
           aes(x = Annee, y = Moyenne, colour = Taille, tooltip = paste(Taille_trad, "<br>", round(Moyenne, 1), "(n=", n, ")"), data_id = Taille) +
-          geom_vline_interactive(xintercept = 2011.5, color = "white", size = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) +
+          geom_vline_interactive(xintercept = 2011.5, color = "white", linewidth = 2, aes(tooltip = textesUI[textesUI$id == "pruning_start", lang])) +
           geom_line(aes(group = Taille)) +
           geom_point_interactive() +
           scale_color_manual(values = coul_taille[input$taille_temps_multi], labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))) +
@@ -427,12 +428,12 @@ server <- function(input, output, session) {
         ggplot() +
         aes(x = cultivar, y = Valeur, fill = cultivar, label = arbre) +
         geom_violin(alpha = 0.3, color = "transparent", scale = "count") +
-          geom_jitter_interactive(alpha = 0.3, width = 0.2, height = 0, aes(tooltip = paste(..label.., round(..y.., 1), sep = "<br>"), data_id = arbre)) +
+          geom_jitter_interactive(alpha = 0.3, width = 0.2, height = 0, aes(tooltip = paste(after_stat(label), round(after_stat(y), 1), sep = "<br>"), data_id = arbre)) +
         geom_point(stat = "summary", fun = mean, size = 4, color = "white") +
         geom_point_interactive(
           stat = "summary", 
           fun = mean, size = 3, 
-          aes(color = cultivar, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"), data_id = cultivar)
+          aes(color = cultivar, tooltip = paste(after_stat(colour), round(after_stat(y), 1), sep = "<br>"), data_id = cultivar)
         ) +
         scale_fill_manual(values = coul_var, aesthetics = c("colour", "fill")) +
         labs(x = NULL, y = NULL, title = textesUI[textesUI$id == input$variete_mesure, lang]) +
@@ -446,7 +447,8 @@ server <- function(input, output, session) {
             opts_hover(css = "fill:black;"),
             opts_selection(type = "none")
           )
-        )
+        ) %>% 
+        suppressWarnings()
     }
   })
   
@@ -473,9 +475,9 @@ server <- function(input, output, session) {
           aes(x = Annee, y = Valeur) +
           geom_line_interactive(aes(group = arbre, data_id = arbre, tooltip = arbre, hover_css = "fill:none"), alpha = 0.1) +
           geom_point_interactive(alpha = 0.3, aes(data_id = arbre, tooltip = arbre)) +
-          geom_smooth_interactive(method = "lm", formula = "y~1", se = FALSE, color = "black", linetype = 2, aes(tooltip = paste(textesUI[textesUI$id == "global_mean", lang], round(..y.., 1), sep = "<br>"))) +
+          geom_smooth_interactive(method = "lm", formula = "y~1", se = FALSE, color = "black", linetype = 2, aes(tooltip = paste(textesUI[textesUI$id == "global_mean", lang], round(after_stat(y), 1), sep = "<br>"))) +
           geom_line(stat = "summary", fun = mean, aes(colour = cultivar)) +
-          geom_point_interactive(stat = "summary", fun = mean, size = 3, aes(colour = cultivar, tooltip = paste(..color.., round(..y.., 1), sep = "<br>"))) +
+          geom_point_interactive(stat = "summary", fun = mean, size = 3, aes(colour = cultivar, tooltip = paste(after_stat(color), round(after_stat(y), 1), sep = "<br>"))) +
           scale_color_manual(values = coul_var[input$variete_temp_var]) +
           labs(
             x = NULL, y = NULL, 

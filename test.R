@@ -462,7 +462,8 @@ if(!is.null(input$taille_checkbox_year)) { # if no selected date, no plot
         opts_hover(css = "fill:black;"),
         opts_selection(type = "none")
       )
-    )
+    ) %>% 
+    suppressWarnings()
 }
 
 

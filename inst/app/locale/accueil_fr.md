@@ -1,6 +1,6 @@
 <img src="mangoviz-logo.png" id="logo"> 
 
-> **MangoViz** est un tableau de bord interactif pour explorer les résultats d'essais agronomiques au long-terme menés sur le manguier (*Mangifera indica* L.), sur la station expérimentale de Bassin Plat à la Réunion, par le CIRAD.
+> **MangoViz** est un tableau de bord interactif pour explorer les résultats d'essais agronomiques de long terme menés sur le manguier (*Mangifera indica* L.), sur la station expérimentale de Bassin Plat à la Réunion, par le CIRAD.
 
 > Deux essais sont présentés: un ***essai taille*** et un ***essai d'évaluation variétale***
 
@@ -29,12 +29,12 @@
 
 *** 
 
-Dernière mise à jour : 2022-10-11
+Dernière mise à jour : 2022-11-17
 
 Logo ©[DoAna](https://doana-r.com)  
 <!-- Photographies © XXX sauf mention contraire -->
 
-Le contenu écrit de cette application est disponible sous [licence CC-BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) et le code sous [licence MIT](https://mit-license.org/) (© [DoAna](https://www.doana-r.com/) 2021) sur demande.
+Le contenu écrit de cette application est sous [licence CC-BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) et le code sous [licence MIT](https://mit-license.org/) (© [DoAna](https://www.doana-r.com/) 2021).
 
 Ce site a été construit avec [R](https://www.r-project.org/) et [shiny](https://shiny.rstudio.com/).
 

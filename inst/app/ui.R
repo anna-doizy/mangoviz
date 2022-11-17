@@ -254,10 +254,16 @@ function(req) {
                          solidHeader = TRUE,
                          
                          fluidRow(
-                           column(2, p(strong(textesUI[textesUI$id == "timeviz_global_switch", lang])),
-                                  materialSwitch(
-                                    inputId = "taille_all_year"
-                                  )
+                           column(2, #p(strong(textesUI[textesUI$id == "timeviz_global_switch", lang])),
+                                  # materialSwitch(
+                                  #   inputId = "taille_all_year"
+                                  # )
+                              radioButtons(
+                                inputId = "taille_all_year",
+                                label = textesUI[textesUI$id == "timeviz_global_switch", lang],
+                                choices = c(FALSE, TRUE) %>% 
+                                  setNames(textesUI[textesUI$id %in% c("timeviz_global_switch_f", "timeviz_global_switch_t"), lang])
+                                  ),
                            ),
                            column(10, selectInput(
                              "taille_spatial_multi",
@@ -421,10 +427,16 @@ function(req) {
               
               
               fluidRow(
-                column(2, p(strong(textesUI[textesUI$id == "timeviz_global_switch", lang])),
-                  materialSwitch(
-                    inputId = "variete_all_year"
-                  )
+                column(2, #p(strong(textesUI[textesUI$id == "timeviz_global_switch", lang])),
+                  # materialSwitch(
+                  #   inputId = "variete_all_year"
+                  # )
+                  radioButtons(
+                    inputId = "variete_all_year",
+                    label = textesUI[textesUI$id == "timeviz_global_switch", lang],
+                    choices = c(FALSE, TRUE) %>% 
+                      setNames(textesUI[textesUI$id %in% c("timeviz_global_switch_f", "timeviz_global_switch_t"), lang])
+                  ),
                 ),
                 # column(10, radioGroupButtons(
                 #   "variete_spatial_var",
