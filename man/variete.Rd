@@ -3,9 +3,9 @@
 \docType{data}
 \name{variete}
 \alias{variete}
-\title{Varietal essay}
+\title{Varietal essay, from 2010 to 2021}
 \format{
-A data frame of 2 814 x 7
+A data frame of 4 824 x 7
 
 \describe{
 \item{arbre}{tree identifier}
@@ -19,6 +19,6 @@ A data frame of 2 814 x 7
 variete
 }
 \description{
-Varietal essay
+Varietal essay, from 2010 to 2021
 }
 \keyword{datasets}

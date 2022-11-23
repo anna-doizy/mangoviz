@@ -205,7 +205,7 @@ function(req) {
                            textesUI[textesUI$id == "variete_comp_label", lang],
                            # status = "danger",
                            choices = unique(taille$Annee),
-                           selected = 2011:2018 # par défaut, à partir de la première année de taille
+                           selected = 2011:2021 # par défaut, à partir de la première année de taille
                          ),
                          girafeOutput("taille_taille", height = "400px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
                        )

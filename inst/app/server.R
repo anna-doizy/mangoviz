@@ -241,7 +241,7 @@ server <- function(input, output, session) {
             values = coul_taille[input$taille_temps_multi] %>% unname() # car aes color : Taille_trad
             # labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))
             ) +
-          scale_x_continuous(breaks = seq(2008, 2018, by = 2)) +
+          scale_x_continuous(breaks = seq(2008, 2022, by = 2)) +
           labs(
             x = NULL, y = NULL, 
             title = textesUI[textesUI$id == input$taille_mesure, lang],
@@ -265,7 +265,7 @@ server <- function(input, output, session) {
           geom_point_interactive() +
           scale_color_manual(values = coul_taille[input$taille_temps_multi], labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))) +
           # scale_color_manual(values = coul_taille, labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))) +
-          scale_x_continuous(breaks = seq(2008, 2018, by = 2)) +
+          scale_x_continuous(breaks = seq(2008, 2022, by = 2)) +
           labs(
             x = NULL, y = NULL, 
             title = textesUI[textesUI$id == input$taille_mesure, lang],

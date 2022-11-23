@@ -1,6 +1,6 @@
-#' Varietal essay
+#' Varietal essay, from 2010 to 2021
 #'
-#' @format A data frame of 2 814 x 7
+#' @format A data frame of 4 824 x 7
 #' 
 #' \describe{
 #'   \item{arbre}{tree identifier}
@@ -11,9 +11,9 @@
 #'   }
 "variete"
 
-#' Pruning essay
+#' Pruning essay, from 2007 to 2021
 #'
-#' @format A data frame of 4 860 x 8
+#' @format A data frame of 6 063 x 8
 #' 
 #' \describe{
 #'   \item{arbre}{tree identifier}

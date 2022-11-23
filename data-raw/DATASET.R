@@ -19,7 +19,7 @@ library(stringr)
 library(forcats)
 
 
-variete <- read_delim("data-raw/MA02.txt", locale = locale(encoding = "ISO-8859-1", decimal_mark = ",", grouping_mark = "")) %>%
+variete <- read_csv2("data-raw/MA02 up to 2022.csv", locale = locale(encoding = "ISO-8859-1")) %>%
   rename(Annee = annee) %>% 
   group_by(arbre, cultivar, Annee) %>% 
   summarise(
@@ -35,7 +35,7 @@ variete <- read_delim("data-raw/MA02.txt", locale = locale(encoding = "ISO-8859-
   ) %>% 
   tidyr::pivot_longer(masse:masse_fruit, names_to = "Mesure", values_to = "Valeur")
 
-taille <- read_delim("data-raw/MA05.txt", locale = locale(encoding = "ISO-8859-1", decimal_mark = ",", grouping_mark = "")) %>%
+taille <- read_csv2("data-raw/MA05 up to 2022.csv", locale = locale(encoding = "ISO-8859-1")) %>%
   filter(taille != "bordure") %>% 
   group_by(arbre, bloc, annee, taille) %>% 
   summarise(

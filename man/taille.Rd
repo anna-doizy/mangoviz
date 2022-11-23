@@ -3,9 +3,9 @@
 \docType{data}
 \name{taille}
 \alias{taille}
-\title{Pruning essay}
+\title{Pruning essay, from 2007 to 2021}
 \format{
-A data frame of 4 860 x 8
+A data frame of 6 063 x 8
 
 \describe{
 \item{arbre}{tree identifier}
@@ -20,6 +20,6 @@ A data frame of 4 860 x 8
 taille
 }
 \description{
-Pruning essay
+Pruning essay, from 2007 to 2021
 }
 \keyword{datasets}
