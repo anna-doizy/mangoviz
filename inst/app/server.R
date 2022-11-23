@@ -368,7 +368,7 @@ server <- function(input, output, session) {
   })
   
   output$variete_img_desc <- renderImage({
-    list(src = paste0("./www/varietes/", input$variete_radio_desc, ".JPG"))
+    list(src = paste0("./www/varietes/", input$variete_radio_desc, ".jpg"))
   }, deleteFile = FALSE)
   
   # Bilan : fiches variétales
