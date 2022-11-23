@@ -1,12 +1,12 @@
-#' Run APPNAME application
+#' Run MANGOVIZ application
 #'
 #' Warning: beware of launching the app in a web browser and not in the RStudio viewer
 #'
-#' @param lang interface langage : english (en) or french (fr)
+#' @param lang interface langage : english (en), french (fr) or spanish (sp)
 #'
 #' @export
 run_app <- function(lang="fr") {
-  if(!lang %in% c("en","fr")) {
+  if(!lang %in% c("en", "fr", "sp")) {
     message(lang," is not a valid language (en, fr). Reverting to French!")
     lang <- "fr"
   }

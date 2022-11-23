@@ -17,7 +17,7 @@ server <- function(input, output, session) {
   observe(priority = 1000, {
     lang <<- isolate(getQueryString()$lang)
 
-    if (is.null(lang) || !(lang %in% c("fr", "en"))) {
+    if (is.null(lang) || !(lang %in% c("fr", "en", "sp"))) {
       lang <<- "fr"
     }
 

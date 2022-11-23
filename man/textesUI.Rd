@@ -5,7 +5,7 @@
 \alias{textesUI}
 \title{Translation texts for the UI}
 \format{
-3 columns for identifier, french and english
+4 columns for identifier, french, english and spanish
 }
 \usage{
 textesUI

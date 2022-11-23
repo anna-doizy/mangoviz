@@ -27,7 +27,7 @@
 
 #' Translation texts for the UI
 #' 
-#' @format 3 columns for identifier, french and english
+#' @format 4 columns for identifier, french, english and spanish
 "textesUI"
 
 #' Data for pruning cycle graph: Mango tree steps (through 3 cycles)

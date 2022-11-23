@@ -23,7 +23,7 @@ function(req) {
   # Get language
   lang <- try(parseQueryString(req$QUERY_STRING)$lang)
 
-  if (is.null(lang) || !(lang %in% c("fr", "en"))) { # sp
+  if (is.null(lang) || !(lang %in% c("fr", "en", "sp"))) {
     lang <- "fr"
   }
 
@@ -43,11 +43,11 @@ function(req) {
       br(),
       if(shiny:::inShinyServer()) { # show langage icons if in server
         tagList(
-          lapply(c("fr", "en"), 
+          lapply(c("fr", "en", "sp"), 
           function(l) {
             a(img(src = paste0("flag_", l, ".png"), height = 30), 
               href = paste0("./?lang=", l), 
-              style = "padding:40px") # 20 pour 3 langues
+              style = "padding:20px") # 40 pour 2 langues
           }),
           hr()
         )

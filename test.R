@@ -1,26 +1,15 @@
-
-# A FAIRE ####
-
-# en questionnement/attente
-
-# Warning: stack imbalance in 'NextMethod', 360 then 361
-# https://github.com/davidgohel/ggiraph/issues/224
-# Attendre prochaine version de R ! (problème dans R 4.2)
-
-# ajouter les données jusqu'en 2021 (attente de Fred)
-# MAJ des fiches variétales
-# photo des vergers
-
-# - anglais presque OK + espagnol
-
+# Note pour plus tard
 # dashboardHeader(disable = TRUE) ?
 # ou plutôt mettre l'accueil et à propos dans des boîtes et enlever mon css foireux (pour la prochaine appli plutôt !)
 
 
-# à TRAITER
+# A FAIRE ####
 
-# faire un script pour Isabelle choix des couleurs
+# en attente
 
+# MAJ des fiches variétales
+# photo deu verger variétés
+# traduction à finaliser
 
 
 # PUBLICATION
@@ -48,7 +37,6 @@
 
 # police sans serif par défault A VERIFIER avec Isabelle
 # téléchargement graphique svg ou png bonne qualité ou eps ! POUR L'INSTANT NON
-# incorporer dernières données de Fred EN ATTENTE
 # essai taille : passer les 2 première boites en layout vertical ou bien faire le même layout que pour essai variétal ? A VOIR AVEC LES TEXTES ET IMAGES DE FRED
 
 
@@ -148,6 +136,15 @@
 # mettre une autre palette de couleurs pour les graphiques globaux pour montrer les différences d'échelle OK
 # taille 2eme graphique : pointillés trait vertical entre 2011 & 2012 pour indiquer le début de la taille. OK Ajouter mention dans l'aide OK
 
+# 2022-11-17 : correction finale du texte en français
+
+# 2022-11-23 :
+# mettre à jour photos des variétés
+# enlever le texte de description des variétés
+# ajouter les données jusqu'en 2021 + vérification des bugs, mise à jour des scripts en fonction
+# remettre palette de couleur cohérente
+# ajouter photo verger taille
+# mettre en place le setup pour la traduction espagnole
 
 
 
@@ -1307,8 +1304,95 @@ ggplot(taille_arbre_annee) +
 
 
 
+# Import données 2022 ####
+
+library(readr)
+library(dplyr)
+library(stringr)
+library(forcats)
 
 
+variete <- read_delim("data-raw/MA02.txt", locale = locale(encoding = "ISO-8859-1", decimal_mark = ",", grouping_mark = "")) %>%
+  rename(Annee = annee) %>% 
+  group_by(arbre, cultivar, Annee) %>% 
+  summarise(
+    masse = sum(masse/1000), # kg
+    nbfruit = sum(nbfruit)
+  ) %>% 
+  ungroup() %>% 
+  mutate(
+    masse_fruit = masse / nbfruit * 1000, # g
+    cultivar = cultivar %>% str_to_title() %>% factor(),
+    X = str_sub(arbre, end = 1) %>% factor(levels = LETTERS[11:1]),
+    Y = str_sub(arbre, start = 2) %>% factor(levels = 1:17)
+  ) %>% 
+  tidyr::pivot_longer(masse:masse_fruit, names_to = "Mesure", values_to = "Valeur")
 
 
+variete2022 <- read_csv2("data-raw/MA02 up to 2022.csv", locale = locale(encoding = "ISO-8859-1")) %>%
+  rename(Annee = annee) %>% 
+  group_by(arbre, cultivar, Annee) %>% 
+  summarise(
+    masse = sum(masse/1000), # kg
+    nbfruit = sum(nbfruit)
+  ) %>% 
+  ungroup() %>% 
+  mutate(
+    masse_fruit = masse / nbfruit * 1000, # g
+    cultivar = cultivar %>% str_to_title() %>% factor(),
+    X = str_sub(arbre, end = 1) %>% factor(levels = LETTERS[11:1]),
+    Y = str_sub(arbre, start = 2) %>% factor(levels = 1:17)
+  ) %>% 
+  tidyr::pivot_longer(masse:masse_fruit, names_to = "Mesure", values_to = "Valeur")
+
+
+ftable(Annee ~ cultivar, data = variete)
+ftable(Annee ~ cultivar, data = variete2022)
+
+skimr::skim(variete2022)
+
+
+taille <- read_delim("data-raw/MA05.txt", locale = locale(encoding = "ISO-8859-1", decimal_mark = ",", grouping_mark = "")) %>%
+  filter(taille != "bordure") %>% 
+  group_by(arbre, bloc, annee, taille) %>% 
+  summarise(
+    masse = sum(masse/1000, na.rm = TRUE), # kg
+    nbfruit = sum(nbfruit)
+  ) %>% 
+  ungroup() %>% 
+  mutate(
+    masse_fruit = masse / nbfruit * 1000, # g
+    Annee = str_sub(annee, end = 4) %>% as.numeric(),
+    Taille = taille %>% fct_recode("taille_ete" = "taille02", "taille_hiver" = "taille07" ,"taille_sans" ="tem"),
+    bloc = factor(bloc),
+    X = str_sub(arbre, end = 1) %>% factor(levels = LETTERS[9:1]),
+    Y = str_sub(arbre, start = 2) %>% factor(levels = 1:17)
+  ) %>% 
+  select(-annee, -taille) %>% 
+  tidyr::pivot_longer(masse:masse_fruit, names_to = "Mesure", values_to = "Valeur")
+
+
+taille2022 <- read_csv2("data-raw/MA05 up to 2022.csv", locale = locale(encoding = "ISO-8859-1")) %>%
+  filter(taille != "bordure") %>% 
+  group_by(arbre, bloc, annee, taille) %>% 
+  summarise(
+    masse = sum(masse/1000, na.rm = TRUE), # kg
+    nbfruit = sum(nbfruit)
+  ) %>% 
+  ungroup() %>% 
+  mutate(
+    masse_fruit = masse / nbfruit * 1000, # g
+    Annee = str_sub(annee, end = 4) %>% as.numeric(),
+    Taille = taille %>% fct_recode("taille_ete" = "taille02", "taille_hiver" = "taille07" ,"taille_sans" ="tem"),
+    bloc = factor(bloc),
+    X = str_sub(arbre, end = 1) %>% factor(levels = LETTERS[9:1]),
+    Y = str_sub(arbre, start = 2) %>% factor(levels = 1:17)
+  ) %>% 
+  select(-annee, -taille) %>% 
+  tidyr::pivot_longer(masse:masse_fruit, names_to = "Mesure", values_to = "Valeur")
+
+ftable(Annee ~ bloc + Taille, data = taille)
+ftable(Annee ~ bloc + Taille, data = taille2022)
+
+skimr::skim(taille2022)
 
