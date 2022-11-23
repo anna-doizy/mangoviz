@@ -138,7 +138,7 @@ function(req) {
               status = "success",
               solidHeader = TRUE,
               column(7, includeMarkdown(sprintf("locale/verger-taille_%s.md", lang))),
-              column(5, img(src = "verger-test.jpg", class = "inbox-img"), style = "text-align:center;")
+              column(5, img(src = "verger_MA05.png", class = "inbox-img"), style = "text-align:center;")
             )
           )),
         fluidRow(
