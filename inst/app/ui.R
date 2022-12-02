@@ -486,31 +486,31 @@ function(req) {
       ),
       
       ##le bilan ####
-      tabItem(
-        tabName = "var_bilan", 
-        fluidRow(
-          column(
-            12,
-            box(
-              title = textesUI[textesUI$id == "variete_bilan_box", lang],
-              width = 12, height = 1100,
-              status = "success",
-              solidHeader = TRUE,
-              radioButtons(
-                inputId = "variete_radio_bilan",
-                label = textesUI[textesUI$id == "variete_bilan_label", lang],
-                # choices = unique(variete$cultivar) %>% sort(),
-                choices = levels(variete$cultivar) %>% 
-                  str_to_lower() %>% 
-                  str_replace_all(" ", "_") %>% str_replace("é", "e") %>% 
-                  setNames(levels(variete$cultivar)),
-                inline = TRUE
-              ),
-              imageOutput("variete_img_bilan") # A FAIRE : centrer l'image
-            )
-          )
-        )
-      ),
+      # tabItem(
+      #   tabName = "var_bilan", 
+      #   fluidRow(
+      #     column(
+      #       12,
+      #       box(
+      #         title = textesUI[textesUI$id == "variete_bilan_box", lang],
+      #         width = 12, height = 1100,
+      #         status = "success",
+      #         solidHeader = TRUE,
+      #         radioButtons(
+      #           inputId = "variete_radio_bilan",
+      #           label = textesUI[textesUI$id == "variete_bilan_label", lang],
+      #           # choices = unique(variete$cultivar) %>% sort(),
+      #           choices = levels(variete$cultivar) %>% 
+      #             str_to_lower() %>% 
+      #             str_replace_all(" ", "_") %>% str_replace("é", "e") %>% 
+      #             setNames(levels(variete$cultivar)),
+      #           inline = TRUE
+      #         ),
+      #         imageOutput("variete_img_bilan") # A FAIRE : centrer l'image
+      #       )
+      #     )
+      #   )
+      # ),
       
       # Onglet en savoir plus ####
       tabItem(tabName = "savoirplus", fluidRow(
