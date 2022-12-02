@@ -150,7 +150,7 @@ function(req) {
               status = "success",
               solidHeader = TRUE,
               column(6, girafeOutput("taille_parcelle", height = "400px", width = "90%")),
-              column(6, leafletOutput("pruning_orchard_map", width = "80%"))
+              column(6, img(src = "verger_MA05.png", class = "inbox-img"), style = "text-align:center;")
               
             )
           )),
@@ -199,7 +199,6 @@ function(req) {
                          width = 12,
                          status = "success",
                          solidHeader = TRUE,
-                         # p(em(textesUI[textesUI$id == "variete_comp_text", lang])),
                          checkboxGroupButtons(
                            "taille_checkbox_year",
                            textesUI[textesUI$id == "variete_comp_label", lang],
