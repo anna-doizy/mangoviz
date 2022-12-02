@@ -137,8 +137,8 @@ function(req) {
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              column(7, includeMarkdown(sprintf("locale/verger-taille_%s.md", lang))),
-              column(5, img(src = "verger_MA05.png", class = "inbox-img"), style = "text-align:center;")
+              column(6, includeMarkdown(sprintf("locale/verger-taille_%s.md", lang))),
+              column(6, leafletOutput("pruning_orchard_map", width = "80%"))
             )
           )),
         fluidRow(
