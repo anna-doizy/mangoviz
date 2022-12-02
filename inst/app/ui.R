@@ -220,19 +220,31 @@ function(req) {
                          width = 12,
                          status = "success",
                          solidHeader = TRUE,
-                         selectInput(
-                           "taille_temps_multi",
-                           textesUI[textesUI$id == "taille_multi_label", lang],
-                           choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
-                           multiple = TRUE,
-                           selected = "taille_sans"
-                         ),
-                         # radioGroupButtons(
-                         #   "taille_multi",
-                         #   individual = TRUE,
-                         #   textesUI[textesUI$id == "taille_temps_label", lang],
-                         #   choices = c("all", levels(taille$Taille)) %>% setNames(textesUI[textesUI$id %in% c(levels(taille$Taille), "all"), lang]) # Attention à l'ordre
+                         # selectInput(
+                         #   "taille_temps_multi",
+                         #   textesUI[textesUI$id == "taille_multi_label", lang],
+                         #   choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
+                         #   multiple = TRUE,
+                         #   selected = "taille_sans"
                          # ),
+                         
+                         fluidRow(
+                           column(8, selectInput(
+                             "taille_temps_multi",
+                             textesUI[textesUI$id == "taille_multi_label", lang],
+                             choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
+                             selected = "taille_sans",
+                             multiple = TRUE
+                           )),
+                           
+                           column(4, p(), actionBttn(
+                             inputId = "taille_temp_all",
+                             label = textesUI[textesUI$id == "all", lang],
+                             style = "material-flat",
+                             size = "sm"
+                           ))
+                         ),
+                         
                          girafeOutput("taille_temporel", height = "400px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
                        )
                 )
@@ -264,7 +276,7 @@ function(req) {
                                   setNames(textesUI[textesUI$id %in% c("timeviz_global_switch_f", "timeviz_global_switch_t"), lang])
                                   ),
                            ),
-                           column(10, selectInput(
+                           column(6, selectInput(
                              "taille_spatial_multi",
                              textesUI[textesUI$id == "taille_multi_label", lang],
                              choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
@@ -277,7 +289,14 @@ function(req) {
                            #   textesUI[textesUI$id == "taille_temps_label", lang],
                            #   choices = c("all", levels(taille$Taille)) %>% setNames(textesUI[textesUI$id %in% c(levels(taille$Taille), "all"), lang])
                            # )
-                           )
+                           ),
+                           
+                           column(4, p(), actionBttn(
+                             inputId = "taille_spatial_all",
+                             label = textesUI[textesUI$id == "all", lang],
+                             style = "material-flat",
+                             size = "sm"
+                           ))
                          ),
                          
                          girafeOutput("taille_spatial", height = "600px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)

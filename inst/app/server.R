@@ -220,6 +220,15 @@ server <- function(input, output, session) {
   
   ## comparaison des années (suivi temporel) ####
   
+  # action du bouton "tout sélectionner"
+  observeEvent(input$taille_temp_all, { 
+    updateSelectInput(
+      session,
+      "taille_temps_multi",
+      selected = levels(taille$Taille)
+    )
+  })
+  
   output$taille_temporel <- renderGirafe({
     
     if(!is.null(input$taille_temps_multi)) { # if no selected taille, no plot
@@ -288,6 +297,15 @@ server <- function(input, output, session) {
   })
   
   ## mesures à l'échelle de la parcelle ####
+  
+  # action du bouton "tout sélectionner"
+  observeEvent(input$taille_spatial_all, { 
+    updateSelectInput(
+      session,
+      "taille_spatial_multi",
+      selected = levels(taille$Taille)
+    )
+  })
   
   output$taille_spatial <- renderGirafe({
     
