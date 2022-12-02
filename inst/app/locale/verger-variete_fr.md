@@ -28,9 +28,6 @@ A chaque récolte, tous les arbres du verger sont suivis individuellement. La pr
 - **Masse de fruits** : masse totale des mangues produites par arbre et par an (en kg)
 - **Masse moyenne d'un fruit** : masse moyenne d'une mangue par arbre et par an (en g)
 
-<p class="center">
-  <img src="verger-test.jpg" class="inbox-img">
-</p>
 
 
 
