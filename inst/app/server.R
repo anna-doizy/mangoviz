@@ -262,7 +262,9 @@ server <- function(input, output, session) {
           # filter(Mesure == input$taille_mesure) %>%
           group_by(Annee, Taille) %>% 
           summarise(
-            Moyenne = mean(Valeur, na.rm = TRUE), n = n()
+            Moyenne = mean(Valeur, na.rm = TRUE), 
+            # n = n()
+            n = length(na.omit(Valeur))
           ) %>%
           suppressMessages() %>% # group message
           rowwise() %>% 
@@ -509,7 +511,9 @@ server <- function(input, output, session) {
           filter(Mesure == input$variete_mesure, cultivar %in% input$variete_temp_var) %>%
           group_by(Annee, cultivar) %>% 
           summarise(
-            Moyenne = mean(Valeur, na.rm = TRUE), n = n()
+            Moyenne = mean(Valeur, na.rm = TRUE), 
+            # n = n()
+            n = length(na.omit(Valeur))
           ) %>%
           suppressMessages() %>% # group message
           ggplot() +
