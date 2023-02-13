@@ -5,12 +5,23 @@
 
 # A FAIRE ####
 
+# 2023-02-13
+
+# alléger et intégrer les nouvelles fiches variétales
+# ajouter des données (0) des arbres manquants 
+# harmoniser mise en page présentation des essais
+# Modifier le graphique 'Comparaison des modalités de taille' en enlevant 2011 dans les dates sélectionnées par défaut
+# Corriger le calcul du nombre de fruits pris en compte dans les calculs dans les 2 graphiques 'Suivi temporel' + préciser signification de n dans l'aide
+# Ajout de photos sur la page d'accueil
+# penser à enlever verger_MA05.png
+
+
+
 # en attente
 
-# MAJ des fiches variétales
-# photo deu verger variétés
-# traduction à finaliser
 
+# traduction à finaliser
+# ménage des commentaires et des fichiers devenus inutiles
 
 # PUBLICATION
 # format de citation de l'appli à réfléchir

@@ -143,20 +143,20 @@ function(req) {
           )),
         fluidRow(
           column(
-            12, 
+            5, 
             box(
               title = textesUI[textesUI$id == "plan_box", lang],
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              column(6, girafeOutput("taille_parcelle", height = "400px", width = "90%")),
-              column(6, img(src = "verger_MA05.png", class = "inbox-img"), style = "text-align:center;")
+              column(12, girafeOutput("taille_parcelle", height = "400px", width = "90%")),
+              # column(6, img(src = "verger_MA05.png", class = "inbox-img"), style = "text-align:center;")
               
-            )
+            # )
           )),
-        fluidRow(
+        # fluidRow(
           column(
-            12,
+            7,
             box(
               title = textesUI[textesUI$id == "taille_cycle_box", lang],
               width = 12,
@@ -310,18 +310,31 @@ function(req) {
       ## Le verger ####
       tabItem(
         tabName = "var_presentation", 
+        
         fluidRow(
           column(
-            6, 
+            12, 
             box(
               title = textesUI[textesUI$id == "pres_box", lang], 
-              width = 12, #height = 570,
+              width = 12,
               status = "success",
               solidHeader = TRUE,
-              includeMarkdown(sprintf("locale/verger-variete_%s.md", lang)),
-              leafletOutput("cultivar_orchard_map", width = "80%")
+              column(6, includeMarkdown(sprintf("locale/verger-variete_%s.md", lang))),
+              column(6, leafletOutput("cultivar_orchard_map", width = "80%"))
             )
-          ),
+          )),
+        fluidRow(
+          # column(
+          #   6, 
+          #   box(
+          #     title = textesUI[textesUI$id == "pres_box", lang], 
+          #     width = 12, #height = 570,
+          #     status = "success",
+          #     solidHeader = TRUE,
+          #     includeMarkdown(sprintf("locale/verger-variete_%s.md", lang)),
+          #     leafletOutput("cultivar_orchard_map", width = "80%")
+          #   )
+          # ),
           column(
             6, 
             box(
@@ -330,7 +343,10 @@ function(req) {
               status = "success",
               solidHeader = TRUE,
               girafeOutput("variete_parcelle", height = "auto", width = "90%")
+            )
             ),
+          column(
+            6,
             box(
               title = textesUI[textesUI$id == "variete_var_box", lang],
               width = 12,
