@@ -91,7 +91,7 @@ server <- function(input, output, session) {
   
   ## Description du cycle des tailles ####
   
-  output$cycles_taille <- renderPlot(res = 120, {#width = 960, height = 288, {
+  output$cycles_taille <- renderPlot(res = 90, { # width = 960, height = 288, {
     
     #' Data for pruning cycle graph: Pruning dates
     #'
