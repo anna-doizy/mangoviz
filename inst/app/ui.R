@@ -114,7 +114,8 @@ function(req) {
     
     tags$head(
       tags$link(rel = "shortcut icon", href = "favicon.png"),
-      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
+      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
+      tags$script(src = "https://plausible.io/js/script.js", `data-domain` = "doana-r.shinyapps.io/mangoviz") # tracking
       ),
     
     tabItems(
