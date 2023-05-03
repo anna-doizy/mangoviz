@@ -9,21 +9,13 @@
 ***
 
 <p class="center">
-  <a href="https://www.cirad.fr/">
+  <span>
     <img src="logo-cirad.jpg" class="logo-10">
-  </a>
-  <a href="https://www.gouvernement.fr/">
     <img src="logo-republique-francaise.png" class="logo-10">
-  </a>
-  <a href="https://regionreunion.com/">
     <img src="logo-region-reunion.jpg" class="logo-10">
-  </a>
-  <a href="https://www.europe-en-france.gouv.fr/fr">
     <img src="logo-feder.jpg" class="logo-10">
-  </a>
-  <a href="https://europa.eu/european-union/index_en">
     <img src="logo-eu.jpg" class="logo-10">
-  </a>
+  </span>
 </p>
 
 
@@ -31,12 +23,14 @@
 
 Dernière mise à jour : 2023-02-13
 
-Logo ©[DoAna](https://doana-r.com)  
+
+
+Conception : <a href="https://www.cirad.fr/" target="_blank">CIRAD</a> et © <a href="https://doana-r.com" target="_blank">DoAna</a>
 <!-- Photographies © XXX sauf mention contraire -->
 
-Le contenu écrit de cette application est sous [licence CC-BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) et le code sous [licence MIT](https://mit-license.org/) (© [DoAna](https://www.doana-r.com/) 2021).
+Le contenu écrit de cette application est sous <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">licence CC-BY-SA 4.0</a> et le code sous <a href="https://mit-license.org/" target="_blank">licence MIT</a> (© <a href="https://doana-r.com" target="_blank">DoAna</a>).
 
-Ce site a été construit avec [R](https://www.r-project.org/) et [shiny](https://shiny.rstudio.com/).
+Ce site a été construit avec <a href="https://www.r-project.org/" target="_blank">R</a> et <a href="https://shiny.rstudio.com/" target="_blank">shiny</a>.
 
 <!--Code source : https://gitlab.com/cirad-apps/mangoviz-->
 
