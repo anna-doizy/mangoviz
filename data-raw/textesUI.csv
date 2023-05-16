@@ -25,7 +25,6 @@ global_mean,Moyenne globale :,Global mean:,Moyenne globale :
 masse,Masse de fruits (kg),Mass of fruits (kg),Masse de fruits (kg)
 nbfruit,Nombre de fruits,Number of fruits,Nombre de fruits
 masse_fruit,Masse moyenne d'un fruit (g),Average mass of a fruit (g),Masse moyenne d'un fruit (g)
-all,Tout sélectionner,Select all,Tout sélectionner
 variete_mesure_label,Choix de la variable,Choice of the variable,Choix de la variable
 variete_comp_box,Comparaison des variétés,Cultivar comparison,Comparaison des variétés
 variete_comp_label,Choix d'une ou plusieurs années,Choice of one or more years,Choix d'une ou plusieurs années

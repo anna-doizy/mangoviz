@@ -34,7 +34,18 @@ body {
 .bttn-material-flat.bttn-default {
   background: #e4e4e4;
   color: #000;
+  background-color: #a1cdeb;
 }
+
+/* checkbuttons colors */
+.btn.checkbtn.btn-default.active{
+  background-color: #a1cdeb;
+}
+
+.btn.checkbtn.btn-default.active:hover{
+  background-color: #3498db;
+}
+
 
 .skin-green .sidebar-menu > li.active > a, .skin-green .sidebar-menu > li:hover > a {
     color: #ce7e26;
@@ -158,8 +169,12 @@ hr {
   padding-left: 10px;
 }
 
-/* boxes margins, marche pas car boutons dans les boîtes sont décalés...
-.col-sm-6 {
-  padding-right: 5px;
-  padding-left: 5px;
-} */
+/* buttons margins */
+.bttn-material-flat.bttn-sm {
+  margin-right: 2px;
+  margin-left: 2px;
+} 
+
+.bttn-material-flat.bttn-sm:hover {
+  background-color: #3498db;
+} 

@@ -229,22 +229,50 @@ function(req) {
                          #   selected = "taille_sans"
                          # ),
                          
+                         # fluidRow(
+                         #   column(8, selectInput(
+                         #     "taille_temps_multi",
+                         #     textesUI[textesUI$id == "taille_multi_label", lang],
+                         #     choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
+                         #     selected = "taille_sans",
+                         #     multiple = TRUE
+                         #   )),
+                         #   
+                         #   column(4, p(), actionBttn(
+                         #     inputId = "taille_temp_all",
+                         #     label = textesUI[textesUI$id == "all", lang],
+                         #     style = "material-flat",
+                         #     size = "sm"
+                         #   ))
+                         # ),
+                         
                          fluidRow(
-                           column(8, selectInput(
-                             "taille_temps_multi",
-                             textesUI[textesUI$id == "taille_multi_label", lang],
-                             choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
-                             selected = "taille_sans",
-                             multiple = TRUE
-                           )),
+                           column(9,
+                              checkboxGroupButtons(
+                                "taille_temps_multi",
+                                textesUI[textesUI$id == "taille_multi_label", lang],
+                                choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
+                                selected = "taille_sans",
+                                individual = TRUE
+                              )
+                           ),
                            
-                           column(4, p(), actionBttn(
-                             inputId = "taille_temp_all",
-                             label = textesUI[textesUI$id == "all", lang],
-                             style = "material-flat",
-                             size = "sm"
-                           ))
-                         ),
+                           column(
+                             3, p(), 
+                             actionBttn( # bouton tout désélectionner
+                               inputId = "taille_temp_none",
+                               icon = icon("delete-left"),
+                               style = "material-flat",
+                               size = "sm"
+                             ),
+                             actionBttn( # bouton tout sélectionner
+                               inputId = "taille_temp_all",
+                               icon = icon("check-double"),
+                               style = "material-flat",
+                               size = "sm"
+                             )
+                           )
+                         ), # end of fluidrow
                          
                          girafeOutput("taille_temporel", height = "400px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
                        )
@@ -277,28 +305,54 @@ function(req) {
                                   setNames(textesUI[textesUI$id %in% c("timeviz_global_switch_f", "timeviz_global_switch_t"), lang])
                                   ),
                            ),
-                           column(6, selectInput(
-                             "taille_spatial_multi",
-                             textesUI[textesUI$id == "taille_multi_label", lang],
-                             choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
-                             multiple = TRUE,
-                             selected = "taille_sans"
-                             ),
-                           # column(10, radioGroupButtons(
-                           #   "taille_select",
-                           #   individual = TRUE,
-                           #   textesUI[textesUI$id == "taille_temps_label", lang],
-                           #   choices = c("all", levels(taille$Taille)) %>% setNames(textesUI[textesUI$id %in% c(levels(taille$Taille), "all"), lang])
-                           # )
-                           ),
-                           
-                           column(4, p(), actionBttn(
-                             inputId = "taille_spatial_all",
-                             label = textesUI[textesUI$id == "all", lang],
+                         #   column(6, selectInput(
+                         #     "taille_spatial_multi",
+                         #     textesUI[textesUI$id == "taille_multi_label", lang],
+                         #     choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
+                         #     multiple = TRUE,
+                         #     selected = "taille_sans"
+                         #     ),
+                         #   # column(10, radioGroupButtons(
+                         #   #   "taille_select",
+                         #   #   individual = TRUE,
+                         #   #   textesUI[textesUI$id == "taille_temps_label", lang],
+                         #   #   choices = c("all", levels(taille$Taille)) %>% setNames(textesUI[textesUI$id %in% c(levels(taille$Taille), "all"), lang])
+                         #   # )
+                         #   ),
+                         #   
+                         #   column(4, p(), actionBttn(
+                         #     inputId = "taille_spatial_all",
+                         #     label = textesUI[textesUI$id == "all", lang],
+                         #     style = "material-flat",
+                         #     size = "sm"
+                         #   ))
+                         # ),
+                         
+                         column(8,
+                            checkboxGroupButtons(
+                              "taille_spatial_multi",
+                              textesUI[textesUI$id == "taille_multi_label", lang],
+                              choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
+                              selected = "taille_sans",
+                              individual = TRUE
+                            )
+                         ),
+                         column(
+                           2, p(), 
+                           actionBttn( # bouton tout désélectionner
+                             inputId = "taille_spatial_none",
+                             icon = icon("delete-left"),
                              style = "material-flat",
                              size = "sm"
-                           ))
-                         ),
+                           ),
+                           actionBttn( # bouton tout sélectionner
+                             inputId = "taille_spatial_all",
+                             icon = icon("check-double"),
+                             style = "material-flat",
+                             size = "sm"
+                           )
+                         )
+                       ), # end of fluidRow
                          
                          girafeOutput("taille_spatial", height = "600px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
                        )
@@ -425,22 +479,40 @@ function(req) {
               solidHeader = TRUE,
               
               fluidRow(
-                column(8, selectInput(
-                  "variete_temp_var",
-                  textesUI[textesUI$id == "variete_label_vars", lang],
-                  choices = levels(variete$cultivar),
-                 selected = "Caro",
-                 multiple = TRUE
-                )),
+                column(9, 
+                 # selectInput(
+                 #  "variete_temp_var",
+                 #  textesUI[textesUI$id == "variete_label_vars", lang],
+                 #  choices = levels(variete$cultivar),
+                 #  selected = "Caro",
+                 #  multiple = TRUE
+                 # )
+                 checkboxGroupButtons(
+                   "variete_temp_var",
+                   textesUI[textesUI$id == "variete_label_vars", lang],
+                   choices = levels(variete$cultivar),
+                   selected = "Caro",
+                   individual = TRUE
+                 )
+                ),
                 
-                column(4, p(), actionBttn(
-                  inputId = "variete_temp_all",
-                  label = textesUI[textesUI$id == "all", lang],
-                  style = "material-flat",
-                  size = "sm"
-                ))
-              ),
-              
+                column(
+                  3, p(), 
+                  actionBttn( # bouton tout désélectionner
+                    inputId = "variete_temp_none",
+                    icon = icon("delete-left"),
+                    style = "material-flat",
+                    size = "sm"
+                  ),
+                  actionBttn( # bouton tout sélectionner
+                    inputId = "variete_temp_all",
+                    icon = icon("check-double"),
+                    style = "material-flat",
+                    size = "sm"
+                  )
+                )
+              ), # end of fluidrow
+
               girafeOutput("variete_temp_graph", height = "400px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
             )
           )
@@ -480,20 +552,41 @@ function(req) {
                 #   choices = c("all", levels(variete$cultivar)) %>% setNames(c(textesUI[textesUI$id =="all", lang], levels(variete$cultivar)))
                 #   )
                 # ),
-                column(6, selectInput(
-                  "variete_spatial_var",
-                  textesUI[textesUI$id == "variete_label_vars", lang],
-                  choices = levels(variete$cultivar),
-                  selected = "Caro",
-                  multiple = TRUE
-                )),
+                column(8, 
+                  # selectInput(
+                  # "variete_spatial_var",
+                  # textesUI[textesUI$id == "variete_label_vars", lang],
+                  # choices = levels(variete$cultivar),
+                  # selected = "Caro",
+                  # multiple = TRUE
+                  # )
+                  
+                  checkboxGroupButtons(
+                    "variete_spatial_var",
+                    textesUI[textesUI$id == "variete_label_vars", lang],
+                    choices = levels(variete$cultivar),
+                    selected = "Caro",
+                    individual = TRUE
+                  )
                 
-                column(4, p(), actionBttn(
-                  inputId = "variete_spatial_all",
-                  label = textesUI[textesUI$id == "all", lang],
-                  style = "material-flat",
-                  size = "sm"
-                ))
+                ),
+                
+                
+                column(
+                  2, p(), 
+                  actionBttn( # bouton tout désélectionner
+                    inputId = "variete_spatial_none",
+                    icon = icon("delete-left"),
+                    style = "material-flat",
+                    size = "sm"
+                  ),
+                  actionBttn( # bouton tout sélectionner
+                    inputId = "variete_spatial_all",
+                    icon = icon("check-double"),
+                    style = "material-flat",
+                    size = "sm"
+                  )
+                )
               ),
               
               girafeOutput("variete_spatial_graph", height = "600px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)

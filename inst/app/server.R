@@ -220,9 +220,18 @@ server <- function(input, output, session) {
   
   ## comparaison des années (suivi temporel) ####
   
+  # action du bouton "tout désélectionner"
+  observeEvent(input$taille_temp_none, { 
+    updateCheckboxGroupButtons(
+      session,
+      "taille_temps_multi",
+      selected = NA
+    )
+  })
+  
   # action du bouton "tout sélectionner"
   observeEvent(input$taille_temp_all, { 
-    updateSelectInput(
+    updateCheckboxGroupButtons(
       session,
       "taille_temps_multi",
       selected = levels(taille$Taille)
@@ -300,9 +309,18 @@ server <- function(input, output, session) {
   
   ## mesures à l'échelle de la parcelle ####
   
+  # action du bouton "tout désélectionner"
+  observeEvent(input$taille_spatial_none, { 
+    updateCheckboxGroupButtons(
+      session,
+      "taille_spatial_multi",
+      selected = NA
+    )
+  })
+  
   # action du bouton "tout sélectionner"
   observeEvent(input$taille_spatial_all, { 
-    updateSelectInput(
+    updateCheckboxGroupButtons(
       session,
       "taille_spatial_multi",
       selected = levels(taille$Taille)
@@ -476,13 +494,22 @@ server <- function(input, output, session) {
   
   ## comparaison des années (suivi temporel) ####
   
+  # action du bouton "tout désélectionner"
+  observeEvent(input$variete_temp_none, { 
+    updateCheckboxGroupButtons(
+      session,
+      "variete_temp_var",
+      selected = NA
+    )
+  })
+  
   # action du bouton "tout sélectionner"
   observeEvent(input$variete_temp_all, { 
-      updateSelectInput(
-        session,
-        "variete_temp_var",
-        selected = levels(variete$cultivar)
-      )
+    updateCheckboxGroupButtons(
+      session,
+      "variete_temp_var",
+      selected = levels(variete$cultivar)
+    )
   })
   
  
@@ -543,14 +570,26 @@ server <- function(input, output, session) {
   
   ## mesures à l'échelle de la parcelle ####
   
+  
+  # action du bouton "tout désélectionner"
+  observeEvent(input$variete_spatial_none, { 
+    updateCheckboxGroupButtons(
+      session,
+      "variete_spatial_var",
+      selected = NA
+    )
+  })
+  
   # action du bouton "tout sélectionner"
   observeEvent(input$variete_spatial_all, { 
-    updateSelectInput(
+    updateCheckboxGroupButtons(
       session,
       "variete_spatial_var",
       selected = levels(variete$cultivar)
     )
   })
+
+  
   
   output$variete_spatial_graph <- renderGirafe({
     
@@ -612,15 +651,6 @@ server <- function(input, output, session) {
       }
 
   })
-  
-  
-
-
-  
-  
-  
-  
-  
   
   
   

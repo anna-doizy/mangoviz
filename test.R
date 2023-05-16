@@ -3,27 +3,10 @@
 # ou plutôt mettre l'accueil et à propos dans des boîtes et enlever mon css foireux (pour la prochaine appli plutôt !)
 
 
-# A FAIRE ####
 
-# 2023-02-13
-
-# alléger et intégrer les nouvelles fiches variétales
-# ajouter des données (0) des arbres manquants 
-# harmoniser mise en page présentation des essais
-# Modifier le graphique 'Comparaison des modalités de taille' en enlevant 2011 dans les dates sélectionnées par défaut
-# Corriger le calcul du nombre de fruits pris en compte dans les calculs dans les 2 graphiques 'Suivi temporel' + préciser signification de n dans l'aide
-# Ajout de photos sur la page d'accueil
-# penser à enlever verger_MA05.png
-
-
-
-# en attente
-
-
-# traduction à finaliser
-# ménage des commentaires et des fichiers devenus inutiles
 
 # PUBLICATION
+
 # format de citation de l'appli à réfléchir
 # les données dans un datapaper -> mettre le dépôt en public à ce moment
 # symposium mangue oct-nov 2023 Espagne
@@ -36,12 +19,14 @@
 
 # si demande du code source alors donner qu'une partie des données (quelques arbres et 2 ans et 2 modalités (taille ou var)) -> minimum fonctionnel
 
-# - garder en tete possible ajout des valeurs brix pH etc. (données au niveau du fruit)
+# garder en tete possible ajout des valeurs brix pH etc. (données au niveau du fruit)
 
 # obj : bêta tests d'ici la fin de l'année
 # textes avec traduction : d'ici le 14 juillet
 
 
+
+# SUIVI des modifications ####
 
 
 # RDV 2022-09-26
@@ -163,7 +148,39 @@
 # remettre palette de couleur jaune
 # Ajout de 2 boutons "tout sélectionner" pour les graphiques temp et spatial du verger taille
 
+# 2023-02-13
+# alléger et intégrer les nouvelles fiches variétales
+# ajouter des données (0) des arbres manquants 
+# harmoniser mise en page présentation des essais
+# Modifier le graphique 'Comparaison des modalités de taille' en enlevant 2011 dans les dates sélectionnées par défaut
+# Corriger le calcul du nombre de fruits pris en compte dans les calculs dans les 2 graphiques 'Suivi temporel' + préciser signification de n dans l'aide
 
+
+# 2023-05-03 et 2023-05-16 (intégration des retours des testeurs)
+# bande de logos institutionnels sur fond blanc dans l'accueil, sans lien
+# cliquer sur un lien externe ouvre maintenant un nouvel onglet
+# ajouter un outil de tracking (plausible)
+# mettre un bouton pour télécharger les 10 fiches variété en pdf
+# harmoniser les boutons de sélection des variétés et des modalités de taille (checkboxgroupbutton)
+# Ajouter boutons pour tout sélectionner et déselectionner
+# Modifier couleur pour que ce soit cohérent avec les autres sélections
+
+
+
+
+
+# A faire : 
+
+# Choisir ce qui est sélectionné par défaut (1ère année, 1ère modalité ?)
+# mise en forme des textes d'aide (une fois que le français est validé)
+# en attente d'une plus jolie photo de mangue pour le logo (sans flash)
+# en attente des textes de l'accueil (Fred)
+# ménage des commentaires et des fichiers devenus inutiles
+# publication (code privé d'ici au symposium) sur le serveur du CIRAD
+# mettre le pdf sur un autre dépôt ? demander à Guillaume
+
+
+####
 
 
 # server ####
