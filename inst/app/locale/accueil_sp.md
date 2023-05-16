@@ -9,22 +9,10 @@
 ***
 
 <p class="center">
-  <a href="https://www.cirad.fr/">
-    <img src="logo-cirad.jpg" class="logo-10">
-  </a>
-  <a href="https://www.gouvernement.fr/">
-    <img src="logo-republique-francaise.png" class="logo-10">
-  </a>
-  <a href="https://regionreunion.com/">
-    <img src="logo-region-reunion.jpg" class="logo-10">
-  </a>
-  <a href="https://www.europe-en-france.gouv.fr/fr">
-    <img src="logo-feder.jpg" class="logo-10">
-  </a>
-  <a href="https://europa.eu/european-union/index_en">
-    <img src="logo-eu.jpg" class="logo-10">
-  </a>
-</p>
+  <span>
+    <img src="bande_logos.png" class="logo-10">
+  </span>
+</p>run
 
 
 *** 

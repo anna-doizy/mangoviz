@@ -10,11 +10,7 @@
 
 <p class="center">
   <span>
-    <img src="logo-cirad.jpg" class="logo-10">
-    <img src="logo-republique-francaise.png" class="logo-10">
-    <img src="logo-region-reunion.jpg" class="logo-10">
-    <img src="logo-feder.jpg" class="logo-10">
-    <img src="logo-eu.jpg" class="logo-10">
+    <img src="bande_logos.png" class="logo-10">
   </span>
 </p>
 
