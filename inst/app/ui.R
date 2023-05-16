@@ -426,9 +426,9 @@ function(req) {
               
               fluidRow(
                 column(8, selectInput(
-                 "variete_temp_var",
-                 textesUI[textesUI$id == "variete_label_vars", lang],
-                 choices = levels(variete$cultivar),
+                  "variete_temp_var",
+                  textesUI[textesUI$id == "variete_label_vars", lang],
+                  choices = levels(variete$cultivar),
                  selected = "Caro",
                  multiple = TRUE
                 )),
@@ -513,7 +513,10 @@ function(req) {
               width = 12, height = 1200,
               status = "success",
               solidHeader = TRUE,
-              radioButtons(
+              
+              column(
+                8,
+                radioButtons(
                 inputId = "variete_radio_bilan",
                 label = textesUI[textesUI$id == "variete_bilan_label", lang],
                 # choices = unique(variete$cultivar) %>% sort(),
@@ -522,9 +525,14 @@ function(req) {
                   str_replace_all(" ", "_") %>% str_replace("é", "e") %>%
                   setNames(levels(variete$cultivar)),
                 inline = TRUE
+              )
+                ),
+              column(
+                4,
+                a(href="Fiches varietales.pdf",  HTML(paste(icon(name = "download", class = "fas"), textesUI[textesUI$id == "telecharger_fiches", lang])), download=NA, target="_blank", class="btn btn-default shiny-download-link shiny-bound-output") # c'est un peu tordu, mais ça marche !
               ),
-              imageOutput("variete_img_bilan") # A FAIRE : centrer l'image
-            )
+              imageOutput("variete_img_bilan")
+            ) # end of box
           )
         )
       ),

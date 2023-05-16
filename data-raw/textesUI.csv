@@ -36,6 +36,7 @@ timeviz_global_switch,Mode de visualisation,Visualisation mode,Mode de visualisa
 timeviz_global_switch_f,par année,per year,par année
 timeviz_global_switch_t,moyenne sur l'ensemble des années,average over all years,moyenne sur l'ensemble des années
 variete_bilan_box,Fiche synthétique par variété,Summary by cultivar,Fiche synthétique par variété
+telecharger_fiches,Télécharger les fiches,Download summaries (in french),Télécharger les fiches (en francès)
 taille_legend,Taille,Pruning,Taille
 taille_ete,Taille été,Summer pruning,Taille été
 taille_hiver,Taille hiver,Winter pruning,Taille hiver
