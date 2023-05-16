@@ -2,12 +2,12 @@
 % Please edit documentation in R/run_app.R
 \name{run_app}
 \alias{run_app}
-\title{Run APPNAME application}
+\title{Run MANGOVIZ application}
 \usage{
 run_app(lang = "fr")
 }
 \arguments{
-\item{lang}{interface langage : english (en) or french (fr)}
+\item{lang}{interface langage : english (en), french (fr) or spanish (sp)}
 }
 \description{
 Warning: beware of launching the app in a web browser and not in the RStudio viewer
