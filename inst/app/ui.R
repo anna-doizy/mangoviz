@@ -529,7 +529,7 @@ function(req) {
                 ),
               column(
                 4,
-                a(href="Fiches varietales.pdf",  HTML(paste(icon(name = "download", class = "fas"), textesUI[textesUI$id == "telecharger_fiches", lang])), download=NA, target="_blank", class="btn btn-default shiny-download-link shiny-bound-output") # c'est un peu tordu, mais ça marche !
+                a(href="Fiches_varietales.pdf",  HTML(paste(icon(name = "download"), textesUI[textesUI$id == "telecharger_fiches", lang])), download=NA, target="_blank", class="btn btn-default shiny-download-link shiny-bound-output") # c'est un peu tordu, mais ça marche !
               ),
               imageOutput("variete_img_bilan")
             ) # end of box
