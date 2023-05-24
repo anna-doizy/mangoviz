@@ -2,6 +2,13 @@
 
 > **MangoViz** is an interactive dashboard for exploring long-term experiments on mango by CIRAD research center.
 
+<p class="center">
+  <span>
+    <img src="accueil_taille.png">
+    <img src="accueil_varietes.png">
+    <img src="accueil_graph.png">
+  </span>
+</p>
 
 ***
 
@@ -13,7 +20,7 @@
 
 *** 
 
-Last update : 2023-05-16
+Last update : 2023-05-24
 
 Logo ©[DoAna](https://doana-r.com)  
 <!-- Photographies © Jesper Rasmussen sauf mention contraire -->

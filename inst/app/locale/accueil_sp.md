@@ -4,7 +4,13 @@
 
 > Deux essais sont présentés: un ***essai taille*** et un ***essai d'évaluation variétale***
 
-
+<p class="center">
+  <span>
+    <img src="accueil_taille.png">
+    <img src="accueil_varietes.png">
+    <img src="accueil_graph.png">
+  </span>
+</p>
 
 ***
 
@@ -17,7 +23,7 @@
 
 *** 
 
-Dernière mise à jour : 2023-05-16
+Dernière mise à jour : 2023-05-24
 
 Logo ©[DoAna](https://doana-r.com)  
 <!-- Photographies © XXX sauf mention contraire -->

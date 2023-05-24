@@ -6,6 +6,14 @@
 
 
 
+<p class="center">
+  <span>
+    <img src="accueil_taille.png">
+    <img src="accueil_varietes.png">
+    <img src="accueil_graph.png">
+  </span>
+</p>
+
 ***
 
 <p class="center">
@@ -17,7 +25,7 @@
 
 *** 
 
-Dernière mise à jour : 2023-05-16
+Dernière mise à jour : 2023-05-24
 
 
 
