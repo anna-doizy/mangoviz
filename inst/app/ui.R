@@ -200,13 +200,13 @@ function(req) {
                          width = 12,
                          status = "success",
                          solidHeader = TRUE,
-                         checkboxGroupButtons(
-                           "taille_checkbox_year",
-                           textesUI[textesUI$id == "variete_comp_label", lang],
+                            checkboxGroupButtons(
+                              "taille_checkbox_year",
+                              textesUI[textesUI$id == "variete_comp_label", lang],
                            # status = "danger",
-                           choices = unique(taille$Annee),
-                           selected = 2012:2021 # par défaut, à partir de la première année de taille
-                         ),
+                              choices = unique(taille$Annee),
+                              selected = 2012:2021 # par défaut, à partir de la première année de taille
+                             ),
                          girafeOutput("taille_taille", height = "400px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
                        )
                 ),
@@ -456,13 +456,13 @@ function(req) {
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              checkboxGroupButtons(
-                "variete_checkbox_year",
-                textesUI[textesUI$id == "variete_comp_label", lang],
+                  checkboxGroupButtons(
+                    "variete_checkbox_year",
+                    textesUI[textesUI$id == "variete_comp_label", lang],
                 # status = "danger",
-                choices = unique(variete$Annee),
-                selected = unique(variete$Annee) # toutes les années sélectionées par défaut
-              ),
+                    choices = unique(variete$Annee),
+                    selected = unique(variete$Annee) # toutes les années sélectionées par défaut
+                ),
               girafeOutput("variete_var", height = "400px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
             )
           ),
@@ -607,23 +607,26 @@ function(req) {
               status = "success",
               solidHeader = TRUE,
               
-              column(
-                8,
-                radioButtons(
-                inputId = "variete_radio_bilan",
-                label = textesUI[textesUI$id == "variete_bilan_label", lang],
-                # choices = unique(variete$cultivar) %>% sort(),
-                choices = levels(variete$cultivar) %>%
-                  str_to_lower() %>%
-                  str_replace_all(" ", "_") %>% str_replace("é", "e") %>%
-                  setNames(levels(variete$cultivar)),
-                inline = TRUE
-              )
-                ),
-              column(
-                4,
-                a(href="Fiches_varietales.pdf",  HTML(paste(icon(name = "download"), textesUI[textesUI$id == "telecharger_fiches", lang])), download=NA, target="_blank", class="btn btn-default shiny-download-link shiny-bound-output") # c'est un peu tordu, mais ça marche !
-              ),
+              fluidRow(
+                column(
+                  8,
+                  radioButtons(
+                  inputId = "variete_radio_bilan",
+                  label = textesUI[textesUI$id == "variete_bilan_label", lang],
+                  # choices = unique(variete$cultivar) %>% sort(),
+                  choices = levels(variete$cultivar) %>%
+                    str_to_lower() %>%
+                    str_replace_all(" ", "_") %>% str_replace("é", "e") %>%
+                    setNames(levels(variete$cultivar)),
+                  inline = TRUE
+                )
+                  ),
+                column(
+                  4,
+                  a(href="Fiches_varietales.pdf",  HTML(paste(icon(name = "download"), textesUI[textesUI$id == "telecharger_fiches", lang])), download=NA, target="_blank", class="btn btn-default shiny-download-link shiny-bound-output") # c'est un peu tordu, mais ça marche !
+                )
+              ), # end of fluidrow
+              
               imageOutput("variete_img_bilan")
             ) # end of box
           )
