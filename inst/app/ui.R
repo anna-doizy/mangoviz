@@ -261,13 +261,13 @@ function(req) {
                              3, p(), 
                              actionBttn( # bouton tout désélectionner
                                inputId = "taille_temp_none",
-                               icon = icon("delete-left"),
+                               icon = icon("trash"),
                                style = "material-flat",
                                size = "sm"
                              ),
                              actionBttn( # bouton tout sélectionner
                                inputId = "taille_temp_all",
-                               icon = icon("check-double"),
+                               icon = icon("square-check"),
                                style = "material-flat",
                                size = "sm"
                              )
@@ -341,13 +341,13 @@ function(req) {
                            2, p(), 
                            actionBttn( # bouton tout désélectionner
                              inputId = "taille_spatial_none",
-                             icon = icon("delete-left"),
+                             icon = icon("trash"),
                              style = "material-flat",
                              size = "sm"
                            ),
                            actionBttn( # bouton tout sélectionner
                              inputId = "taille_spatial_all",
-                             icon = icon("check-double"),
+                             icon = icon("square-check"),
                              style = "material-flat",
                              size = "sm"
                            )
@@ -500,13 +500,13 @@ function(req) {
                   3, p(), 
                   actionBttn( # bouton tout désélectionner
                     inputId = "variete_temp_none",
-                    icon = icon("delete-left"),
+                    icon = icon("trash"),
                     style = "material-flat",
                     size = "sm"
                   ),
                   actionBttn( # bouton tout sélectionner
                     inputId = "variete_temp_all",
-                    icon = icon("check-double"),
+                    icon = icon("square-check"),
                     style = "material-flat",
                     size = "sm"
                   )
@@ -576,13 +576,13 @@ function(req) {
                   2, p(), 
                   actionBttn( # bouton tout désélectionner
                     inputId = "variete_spatial_none",
-                    icon = icon("delete-left"),
+                    icon = icon("trash"),
                     style = "material-flat",
                     size = "sm"
                   ),
                   actionBttn( # bouton tout sélectionner
                     inputId = "variete_spatial_all",
-                    icon = icon("check-double"),
+                    icon = icon("square-check"),
                     style = "material-flat",
                     size = "sm"
                   )
