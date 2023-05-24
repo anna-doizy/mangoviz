@@ -200,13 +200,45 @@ function(req) {
                          width = 12,
                          status = "success",
                          solidHeader = TRUE,
+                         # checkboxGroupButtons(
+                         #   "taille_checkbox_year",
+                         #   textesUI[textesUI$id == "variete_comp_label", lang],
+                         #   # status = "danger",
+                         #   choices = unique(taille$Annee),
+                         #   selected = 2012:2021 # par défaut, à partir de la première année de taille
+                         # ),
+                         
+                         fluidRow(
+                           column(
+                             10,
                             checkboxGroupButtons(
                               "taille_checkbox_year",
                               textesUI[textesUI$id == "variete_comp_label", lang],
-                           # status = "danger",
                               choices = unique(taille$Annee),
                               selected = 2012:2021 # par défaut, à partir de la première année de taille
+                            )
+                           ),
+                           
+                           column(
+                             2, p(), 
+                             actionBttn( # bouton tout désélectionner
+                               inputId = "taille_year_none",
+                               icon = icon("trash"),
+                               style = "material-flat",
+                               size = "sm"
                              ),
+                             actionBttn( # bouton tout sélectionner
+                               inputId = "taille_year_all",
+                               icon = icon("square-check"),
+                               style = "material-flat",
+                               size = "sm"
+                             )
+                           )
+                         ), # end of fluidrow
+                         
+                         
+                         
+                         
                          girafeOutput("taille_taille", height = "400px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
                        )
                 ),
@@ -456,13 +488,45 @@ function(req) {
               width = 12,
               status = "success",
               solidHeader = TRUE,
+              # checkboxGroupButtons(
+              #   "variete_checkbox_year",
+              #   textesUI[textesUI$id == "variete_comp_label", lang],
+              #   # status = "danger",
+              #   choices = unique(variete$Annee),
+              #   selected = unique(variete$Annee) # toutes les années sélectionées par défaut
+              # ),
+              
+              fluidRow(
+                column(
+                  10,
                   checkboxGroupButtons(
                     "variete_checkbox_year",
                     textesUI[textesUI$id == "variete_comp_label", lang],
-                # status = "danger",
                     choices = unique(variete$Annee),
                     selected = unique(variete$Annee) # toutes les années sélectionées par défaut
+                  )
                 ),
+                
+                column(
+                  2, p(), 
+                  actionBttn( # bouton tout désélectionner
+                    inputId = "variete_year_none",
+                    icon = icon("trash"),
+                    style = "material-flat",
+                    size = "sm"
+                  ),
+                  actionBttn( # bouton tout sélectionner
+                    inputId = "variete_year_all",
+                    icon = icon("square-check"),
+                    style = "material-flat",
+                    size = "sm"
+                  )
+                )
+              ), # end of fluidrow
+              
+              
+              
+              
               girafeOutput("variete_var", height = "400px") %>% withSpinner(type = 7, color = "black", hide.ui = FALSE)
             )
           ),

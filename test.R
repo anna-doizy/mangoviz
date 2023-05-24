@@ -3,6 +3,9 @@
 # ou plutôt mettre l'accueil et à propos dans des boîtes et enlever mon css foireux (pour la prochaine appli plutôt !)
 
 
+# ERREUR : Version de l'API graphiques incompatible
+# FIX : update.packages(ask = FALSE, checkBuilt = TRUE) # attention c'est long !
+
 
 
 # PUBLICATION
@@ -692,13 +695,13 @@ ggplot(cycle) +
   geom_vline(xintercept = seq(as.Date("2016-01-01"), as.Date("2019-01-01"), "year"), size = 2, color = "white") +
   geom_segment(
     aes(xend = Fin, yend = Cycle, colour = Etape),
-    size = 8
+    linewidth = 8
   ) +
   geom_segment(
     data = date_taille, 
     mapping = aes(x = Date_taille, xend = Date_taille, y = Depart, yend = Pointe), 
     arrow = arrow(length = unit(0.1, "inches")),
-    size = 1, colour = "black"
+    linewidth = 1, colour = "black"
   ) +
   geom_image(
     data = date_taille, 

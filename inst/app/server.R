@@ -185,6 +185,27 @@ server <- function(input, output, session) {
   
   ## comparaison des tailles ####
   
+  
+  # action du bouton "tout désélectionner"
+  observeEvent(input$taille_year_none, { 
+    updateCheckboxGroupButtons(
+      session,
+      "taille_checkbox_year",
+      selected = NA
+    )
+  })
+  
+  # action du bouton "tout sélectionner"
+  observeEvent(input$taille_year_all, { 
+    updateCheckboxGroupButtons(
+      session,
+      "taille_checkbox_year",
+      selected = unique(taille$Annee)
+    )
+  })
+  
+  
+  
   output$taille_taille <- renderGirafe({
     if(!is.null(input$taille_checkbox_year)) { # if no selected date, no plot
       {taille %>% 
@@ -227,6 +248,10 @@ server <- function(input, output, session) {
       "taille_temps_multi",
       selected = NA
     )
+    # # For empty checkboxGroupInputs (les autres input ça fonctionne)
+    # https://stackoverflow.com/questions/24265980/reset-inputs-button-in-shiny-app
+    # if (is.null(value)) value <- ""
+    # session$sendInputMessage("taille_temps_multi", list(value = ""))
   })
   
   # action du bouton "tout sélectionner"
@@ -238,7 +263,10 @@ server <- function(input, output, session) {
     )
   })
   
+  
   output$taille_temporel <- renderGirafe({
+    
+
     
     if(!is.null(input$taille_temps_multi)) { # if no selected taille, no plot
       {if(length(input$taille_temps_multi) == 1) { # if one selected taille
@@ -460,6 +488,25 @@ server <- function(input, output, session) {
   
   
   ## comparaison des variétés ####
+  
+  
+  # action du bouton "tout désélectionner"
+  observeEvent(input$variete_year_none, { 
+    updateCheckboxGroupButtons(
+      session,
+      "variete_checkbox_year",
+      selected = NA
+    )
+  })
+  
+  # action du bouton "tout sélectionner"
+  observeEvent(input$variete_year_all, { 
+    updateCheckboxGroupButtons(
+      session,
+      "variete_checkbox_year",
+      selected = unique(variete$Annee)
+    )
+  })
   
   output$variete_var <- renderGirafe({
     if(!is.null(input$variete_checkbox_year)) { # if no selected date, no plot
