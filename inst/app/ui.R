@@ -39,7 +39,7 @@ function(req) {
        , a(img(src = "by-nc-sa.eu.svg", height = 30, alt = "Licence Creative Commons")
            , rel = "license"
            , href = "https://creativecommons.org/licenses/by-nc-sa/4.0/"
-           , style = "padding:10px")
+           , style = "padding-right:60px")
     )
 
   # SIDEBAR -----------------------------------------------------------------
@@ -192,7 +192,7 @@ function(req) {
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              column(12, girafeOutput("taille_parcelle", height = "400px", width = "90%")),
+              girafeOutput("taille_parcelle", height = "400px", width = "90%"),
               # column(6, img(src = "verger_MA05.png", class = "inbox-img"), style = "text-align:center;")
               
             # )
