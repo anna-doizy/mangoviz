@@ -1,36 +1,43 @@
 <img src="mangoviz-logo.png" id="logo"> 
 
-> **MangoViz** est un tableau de bord interactif pour explorer les résultats d'essais agronomiques de long terme menés sur le manguier (*Mangifera indica* L.), sur la station expérimentale de Bassin Plat à la Réunion, par le CIRAD.
+> **MangoViz** est un tableau de bord interactif pour explorer les données d’essais agronomiques de moyen et long terme menés sur le manguier (*Mangifera indica* L.).
 
-> Deux essais sont présentés: un ***essai taille*** et un ***essai d'évaluation variétale***
+> Deux essais sont présentés: un ***essai taille*** et un ***essai d'évaluation variétale***, réalisés à la Réunion.
+
 
 
 
 <p class="center">
   <span>
-    <img src="accueil_taille.png">
-    <img src="accueil_varietes.png">
-    <img src="accueil_graph.png">
-  </span>
+    <img src="bande_illustrations.png">
+   </span>
+</p>
+
+
+<p class="center">
+  <span>
+    <img src="bande_illustrations_2.png">
+   </span>
 </p>
 
 ***
 
 <p class="center">
   <span>
-    <img src="bande_logos.png" class="logo-10">
-  </span>
+    <img src="bande_logo.png">
+   </span>
 </p>
 
-
-*** 
-
-Dernière mise à jour : 2023-05-24
+***
 
 
+Dernière mise à jour : 2023-08-04
 
-Conception : <a href="https://www.cirad.fr/" target="_blank">CIRAD</a> et © <a href="https://doana-r.com" target="_blank">DoAna</a>
-<!-- Photographies © XXX sauf mention contraire -->
+
+
+Conception : <a href="https://ur-hortsys.cirad.fr/" target="_blank">CIRAD - UR HortSys</a>  et © <a href="https://doana-r.com" target="_blank">DoAna</a>
+
+Photographies : © Frédéric Normand
 
 Le contenu écrit de cette application est sous <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">licence CC-BY-SA 4.0</a> et le code sous <a href="https://mit-license.org/" target="_blank">licence MIT</a> (© <a href="https://doana-r.com" target="_blank">DoAna</a>).
 

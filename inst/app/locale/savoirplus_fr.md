@@ -1,25 +1,31 @@
 ## Nous contacter
 
-Si vous avez des questions, remarques ou suggestions diverses, n'hésitez pas à nous contacter à [mangoviz@cirad.fr](mailto:mangoviz@cirad.fr).
-<!-- à créer -->
+Si vous avez des questions, remarques ou suggestions diverses, ou encore si vous souhaitez accéder au code de l'application n'hésitez pas à nous contacter à [mangoviz@cirad.fr](mailto:mangoviz@cirad.fr).
+<!-- mettre le lien vers le dépôt du CIRAD ? -->
 
 <br>
 
 
-## Remerciements
+## Contributions et remerciements
 
-La **conception et le suivi des essais** ont été réalisés par Frédéric Normand, avec l'appui technique de Doralice Veillant, Muriel Sinatamby et Gilles Maillot (Cirad, UPR HortSys).
+La **conception et le suivi des essais** ont été réalisés par Frédéric Normand, avec l’appui technique de Doralice Veillant, Muriel Sinatamby et Gilles Maillot (Cirad, UPR HortSys).
 
 La **conception, la création et la réalisation de l’interface web** ont été coordonnées par Isabelle Grechi (Cirad, UPR HortSys) et Anna Doizy (<a href="https://doana-r.com" target="_blank">DoAna - Statistiques Réunion</a>).
 
-L'hébergement et la maintenance de l'application sont assurées par XXX et Anna Doizy.
+L'**hébergement et la maintenance** de l'application sont assurées par Guillaume Cornu (Cirad, UPR Forêts et Sociétés).
 
-La traduction en anglais et en espagnol a été assurée par XXX.
+La **traduction en anglais et en espagnol** a été assurée par Anna Doizy (<a href="https://doana-r.com" target="_blank">DoAna - Statistiques Réunion</a>) et Frédéric Normand (Cirad, UPR HortSys).
 
-Merci aux bêta-testeurs de l'application : XXX.
+Merci aux **bêta-testeurs** de l’application : Frédéric Boudon, Caroline Brunel, Jean-Charles de Cambiaire, Pierre-Éric Lauri, Thierry Michels, Adrien Négrier, Doralice Veillant.
 
 <br>
 
-> *Que toutes les contributrices et tous les contributeurs soient ici remercié(e)s !* 
+## Pour en savoir plus...
 
+Vous trouverez ci-dessous diverses ressources concernant nos recherches sur le manguier :
+
+-  Normand F., Thévenin J-M. 2019. Développer la culture de la mangue. Recherche des variétés adaptées au contexte parasitaire réunionnais. Cirad, RITA, Saint-Pierre, Ile de la Réunion, 2 p. (<a href="https://agritrop.cirad.fr/" target="_blank">Lien</a>)
+-  Persello S., Grechi I., Boudon F., Normand F. 2019. Nature abhors a vacuum: Deciphering the vegetative reaction of the mango tree to pruning. European Journal of Agronomy, 104: 85-96. (<a href="https://agritrop.cirad.fr/590932//" target="_blank">Lien</a>) 
+-  Veillant D., Sinatamby M., Normand F. 2017. Production et qualité de variétés de mangues à la Réunion. Cirad, Saint-Pierre, Ile de la Réunion, poster. (<a href="https://agritrop.cirad.fr/" target="_blank">Lien</a>)
+ 
 
