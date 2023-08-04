@@ -257,7 +257,7 @@ function(req) {
                               "taille_checkbox_year",
                               textesUI[textesUI$id == "variete_comp_label", lang],
                               choices = unique(taille$Annee),
-                              selected = 2012:2021 # par défaut, à partir de la première année de taille
+                              selected = max(taille$Annee) # la dernière année
                             )
                            ),
                            
@@ -267,13 +267,15 @@ function(req) {
                                inputId = "taille_year_none",
                                icon = icon("trash"),
                                style = "material-flat",
-                               size = "sm"
+                               size = "sm",
+                               title = textesUI[textesUI$id == "trash_title", lang]
                              ),
                              actionBttn( # bouton tout sélectionner
                                inputId = "taille_year_all",
                                icon = icon("square-check"),
                                style = "material-flat",
-                               size = "sm"
+                               size = "sm",
+                               title = textesUI[textesUI$id == "squarecheck_title", lang]
                              )
                            )
                          ), # end of fluidrow
@@ -337,13 +339,15 @@ function(req) {
                                inputId = "taille_temp_none",
                                icon = icon("trash"),
                                style = "material-flat",
-                               size = "sm"
+                               size = "sm",
+                               title = textesUI[textesUI$id == "trash_title", lang]
                              ),
                              actionBttn( # bouton tout sélectionner
                                inputId = "taille_temp_all",
                                icon = icon("square-check"),
                                style = "material-flat",
-                               size = "sm"
+                               size = "sm",
+                               title = textesUI[textesUI$id == "squarecheck_title", lang]
                              )
                            )
                          ), # end of fluidrow
@@ -417,13 +421,15 @@ function(req) {
                              inputId = "taille_spatial_none",
                              icon = icon("trash"),
                              style = "material-flat",
-                             size = "sm"
+                             size = "sm",
+                             title = textesUI[textesUI$id == "trash_title", lang]
                            ),
                            actionBttn( # bouton tout sélectionner
                              inputId = "taille_spatial_all",
                              icon = icon("square-check"),
                              style = "material-flat",
-                             size = "sm"
+                             size = "sm",
+                             title = textesUI[textesUI$id == "squarecheck_title", lang]
                            )
                          )
                        ), # end of fluidRow
@@ -471,7 +477,7 @@ function(req) {
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              girafeOutput("variete_parcelle", height = "auto", width = "90%")
+              girafeOutput("variete_parcelle", height = "400px", width = "90%")
             )
             ),
           column(
@@ -545,7 +551,7 @@ function(req) {
                     "variete_checkbox_year",
                     textesUI[textesUI$id == "variete_comp_label", lang],
                     choices = unique(variete$Annee),
-                    selected = unique(variete$Annee) # toutes les années sélectionées par défaut
+                    selected = max(variete$Annee) # la dernière année sélectionée par défaut
                   )
                 ),
                 
@@ -555,13 +561,15 @@ function(req) {
                     inputId = "variete_year_none",
                     icon = icon("trash"),
                     style = "material-flat",
-                    size = "sm"
+                    size = "sm",
+                    title = textesUI[textesUI$id == "trash_title", lang]
                   ),
                   actionBttn( # bouton tout sélectionner
                     inputId = "variete_year_all",
                     icon = icon("square-check"),
                     style = "material-flat",
-                    size = "sm"
+                    size = "sm",
+                    title = textesUI[textesUI$id == "squarecheck_title", lang]
                   )
                 )
               ), # end of fluidrow
@@ -608,13 +616,15 @@ function(req) {
                     inputId = "variete_temp_none",
                     icon = icon("trash"),
                     style = "material-flat",
-                    size = "sm"
+                    size = "sm",
+                    title = textesUI[textesUI$id == "trash_title", lang]
                   ),
                   actionBttn( # bouton tout sélectionner
                     inputId = "variete_temp_all",
                     icon = icon("square-check"),
                     style = "material-flat",
-                    size = "sm"
+                    size = "sm",
+                    title = textesUI[textesUI$id == "squarecheck_title", lang]
                   )
                 )
               ), # end of fluidrow
@@ -684,13 +694,15 @@ function(req) {
                     inputId = "variete_spatial_none",
                     icon = icon("trash"),
                     style = "material-flat",
-                    size = "sm"
+                    size = "sm",
+                    title = textesUI[textesUI$id == "trash_title", lang]
                   ),
                   actionBttn( # bouton tout sélectionner
                     inputId = "variete_spatial_all",
                     icon = icon("square-check"),
                     style = "material-flat",
-                    size = "sm"
+                    size = "sm",
+                    title = textesUI[textesUI$id == "squarecheck_title", lang]
                   )
                 )
               ),

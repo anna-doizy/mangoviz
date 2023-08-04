@@ -13,16 +13,18 @@ pres_box,Description de l'essai,Description of the experiment,Description de l'e
 plan_box,Plan du verger,Map of the orchard,Plan du verger
 variete_var_box,Description des variétés,Presentation of the cultivars,Description des variétés
 taille_cycle_box,Description du calendrier de taille,Presentation of the pruning cycles,Description du calendrier de taille
-caro,[Origine : REUNION. La variété Caro provient d'un semis de chez Mr André CARO à la Rivière Saint-Louis],[Origin: REUNION],[Origine : REUNION]
-"cogshall,[Origine : FLORIDE. La variété Cogshall est aussi appelée ""mangue américaine"" ou ""mangue qui dévisse""],[Origin: FLORIDA],[Origine : FLORIDE]"
-heidi,[Origine : AFRIQUE DU SUD. La variété Heidi est issue d'un croisement entre les variétés Kent et Sensation],[Origin: SOUTH AFRICA],[Origine : AFRIQUE DU SUD]
-irwin,[Origine : FLORIDE. La variété Irwin est internationalement connue et commercialisée (Taïwan, Guadeloupe, Costa Rica, Espagne...],[Origin: FLORIDA],[Origine : FLORIDE]
-jose,[Origine : REUNION. A l'origine, la variété José s'appelait Joseph. Son nom a évolué suite à son introduction à l'île Maurice. Josée représente 50% de la production réunionnaise],[Origin: REUNION],[Origine : REUNION]
-kensington_pride,[Origine : AUSTRALIE. Cette variété polyembryonnée est intnsivement produite en Australie],[Origin: AUSTRALIA],[Origine : AUSTRALIE]
-kent,[Origine : FLORIDE. Kent est une des variétés les plus exportées dans le monde],[Origin: FLORIDA],[Origine : FLORIDE]
-nam_doc_mai,[Origine : THAILANDE. Cette mangue polyembrionnée se consomme généralement verte en Thaïlande (en salade séchée)],[Origin: THAILAND],[Origine : THAILANDE]
-sensation,[Origine : FLORIDE. Sensation est très cultivée en Afrique du Sud et au Mexique],[Origin: FLORIDA],[Origine : FLORIDE]
-tommy_atkins,[Origine : FLORIDE. Tommy Atkins est cultivée en Afrique du Sud et en Amérique Latine pour l'exportation],[Origin: FLORIDA],[Origine : FLORIDE]
+trash_title, Tout désélectionner, Unselect all, Tout désélectionner
+squarecheck_title, Tout sélectionner, Select all, Tout sélectionner
+caro,[Origine : REUNION]<br>La variété Caro provient d'un semis de chez Mr André CARO à la Rivière Saint-Louis,[Origin: REUNION],[Origine : REUNION]
+"cogshall,[Origine : FLORIDE]<br>La variété Cogshall est aussi appelée ""mangue américaine"" ou ""mangue qui dévisse"",[Origin: FLORIDA],[Origine : FLORIDE]"
+heidi,[Origine : AFRIQUE DU SUD]<br>La variété Heidi est issue d'un croisement entre les variétés Kent et Sensation,[Origin: SOUTH AFRICA],[Origine : AFRIQUE DU SUD]
+irwin,[Origine : FLORIDE]<br>La variété Irwin est internationalement connue et commercialisée (Taïwan, Guadeloupe, Costa Rica, Espagne...,[Origin: FLORIDA],[Origine : FLORIDE]
+jose,[Origine : REUNION]<br>A l'origine, la variété José s'appelait Joseph. Son nom a évolué suite à son introduction à l'île Maurice. Josée représente 50% de la production réunionnaise,[Origin: REUNION],[Origine : REUNION]
+kensington_pride,[Origine : AUSTRALIE]<br>Cette variété polyembryonnée est intnsivement produite en Australie,[Origin: AUSTRALIA],[Origine : AUSTRALIE]
+kent,[Origine : FLORIDE]<br>Kent est une des variétés les plus exportées dans le monde,[Origin: FLORIDA],[Origine : FLORIDE]
+nam_doc_mai,[Origine : THAILANDE]<br>Cette mangue polyembrionnée se consomme généralement verte en Thaïlande (en salade séchée),[Origin: THAILAND],[Origine : THAILANDE]
+sensation,[Origine : FLORIDE]<br>Sensation est très cultivée en Afrique du Sud et au Mexique],[Origin: FLORIDA,[Origine : FLORIDE]
+tommy_atkins,[Origine : FLORIDE]<br>Tommy Atkins est cultivée en Afrique du Sud et en Amérique Latine pour l'exportation],[Origin: FLORIDA,[Origine : FLORIDE]
 cultivar,Variété,Cultivar,Variété
 global_mean,Moyenne globale :,Global mean:,Moyenne globale :
 masse,Masse de fruits (kg),Mass of fruits (kg),Masse de fruits (kg)
