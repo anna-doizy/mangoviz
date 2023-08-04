@@ -5,30 +5,17 @@
 > Deux essais sont présentés: un ***essai taille*** et un ***essai d'évaluation variétale***, réalisés à la Réunion.
 
 
-
-
-<p class="center">
-  <span>
-    <img src="bande_illustrations.png">
-   </span>
-</p>
-
-
-<p class="center">
-  <span>
-    <img src="bande_illustrations_2.png">
-   </span>
-</p>
-
 ***
 
 <p class="center">
   <span>
-    <img src="bande_logo.png">
+    <img src="bande_illustrations.png" class="inbox-img">
    </span>
 </p>
 
+
 ***
+
 
 
 Dernière mise à jour : 2023-08-04
@@ -37,9 +24,9 @@ Dernière mise à jour : 2023-08-04
 
 Conception : <a href="https://ur-hortsys.cirad.fr/" target="_blank">CIRAD - UR HortSys</a>  et © <a href="https://doana-r.com" target="_blank">DoAna</a>
 
-Photographies : © Frédéric Normand
+Photographies : © Frédéric Normand et Emma Carrié
 
-Le contenu écrit de cette application est sous <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">licence CC-BY-SA 4.0</a> et le code sous <a href="https://mit-license.org/" target="_blank">licence MIT</a> (© <a href="https://doana-r.com" target="_blank">DoAna</a>).
+Le contenu écrit de cette application est sous <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">licence CC-BY-NC-SA 4.0</a> et le code sous <a href="https://mit-license.org/" target="_blank">licence MIT</a> (© <a href="https://doana-r.com" target="_blank">DoAna</a>).
 
 Ce site a été construit avec <a href="https://www.r-project.org/" target="_blank">R</a> et <a href="https://shiny.rstudio.com/" target="_blank">shiny</a>.
 
