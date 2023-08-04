@@ -32,7 +32,7 @@ server <- function(input, output, session) {
   
   output$pruning_orchard_map <- renderLeaflet({
     leaflet() %>% 
-      setView(55.4884, -21.32264, zoom = 18) %>% 
+      setView(55.4884, -21.32264, zoom = 16) %>% 
       addProviderTiles("Esri.WorldImagery") %>% 
       addMarkers(55.4884, -21.32264)
   })
@@ -40,7 +40,7 @@ server <- function(input, output, session) {
   #-21.322763, 55.490350
   output$cultivar_orchard_map <- renderLeaflet({
     leaflet() %>% 
-      setView(55.49035, -21.32276, zoom = 18) %>% 
+      setView(55.49035, -21.32276, zoom = 16) %>% 
       addProviderTiles("Esri.WorldImagery") %>% 
       addMarkers(55.49035, -21.32276)
   })
