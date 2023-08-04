@@ -8,13 +8,13 @@ Si vous avez des questions, remarques ou suggestions diverses, ou encore si vous
 
 ## Contributions et remerciements
 
-La **conception et le suivi des essais** ont été réalisés par Frédéric Normand, avec l’appui technique de Doralice Veillant, Muriel Sinatamby et Gilles Maillot (Cirad, UPR HortSys).
+La **conception et le suivi des essais** ont été réalisés par Frédéric Normand, avec l’appui technique de Doralice Veillant, Muriel Sinatamby et Gilles Maillot (Cirad, UR HortSys).
 
-La **conception, la création et la réalisation de l’interface web** ont été coordonnées par Isabelle Grechi (Cirad, UPR HortSys) et Anna Doizy (<a href="https://doana-r.com" target="_blank">DoAna - Statistiques Réunion</a>).
+La **conception, la création et la réalisation de l’interface web** ont été coordonnées par Isabelle Grechi (Cirad, UR HortSys) et Anna Doizy (<a href="https://doana-r.com" target="_blank">DoAna - Statistiques Réunion</a>).
 
-L'**hébergement et la maintenance** de l'application sont assurées par Guillaume Cornu (Cirad, UPR Forêts et Sociétés).
+L'**hébergement et la maintenance** de l'application sont assurées par Guillaume Cornu (Cirad, UR Forêts et Sociétés).
 
-La **traduction en anglais et en espagnol** a été assurée par Anna Doizy (<a href="https://doana-r.com" target="_blank">DoAna - Statistiques Réunion</a>) et Frédéric Normand (Cirad, UPR HortSys).
+La **traduction en anglais et en espagnol** a été assurée par Anna Doizy (<a href="https://doana-r.com" target="_blank">DoAna - Statistiques Réunion</a>) et Frédéric Normand (Cirad, UR HortSys).
 
 Merci aux **bêta-testeurs** de l’application : Frédéric Boudon, Caroline Brunel, Jean-Charles de Cambiaire, Pierre-Éric Lauri, Thierry Michels, Adrien Négrier, Doralice Veillant.
 
@@ -28,4 +28,13 @@ Vous trouverez ci-dessous diverses ressources concernant nos recherches sur le m
 -  Persello S., Grechi I., Boudon F., Normand F. 2019. Nature abhors a vacuum: Deciphering the vegetative reaction of the mango tree to pruning. European Journal of Agronomy, 104: 85-96. (<a href="https://agritrop.cirad.fr/590932//" target="_blank">Lien</a>) 
 -  Veillant D., Sinatamby M., Normand F. 2017. Production et qualité de variétés de mangues à la Réunion. Cirad, Saint-Pierre, Ile de la Réunion, poster. (<a href="https://agritrop.cirad.fr/" target="_blank">Lien</a>)
  
+ 
+***
 
+<p class="center">
+  <span>
+    <img src="bande_logo.png">
+   </span>
+</p>
+
+***

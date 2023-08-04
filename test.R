@@ -16,6 +16,12 @@
 # quand héberger dans le serveur du CIRAD ?
 # données à déposer dans dataverse CIRAD : à citer (Fred)
 
+
+# accès au code : oui quand il y aura un lien officiel et que ce sera publié
+# RGPD : c'est mieux de demander l'accord d'être cité !
+# biblio : validation des sources et du dépôt dans agritrop -> en attente des bons liens, Isa pourra modifier
+
+
 # Guillaume : est-ce qu'on peut mettre l'appli en open et les données en privé ? Sinon tout en privé
 
 # mettre en doc (README) la structure des données qu'il faut, s'inspirer de data.R
@@ -170,35 +176,41 @@
 
 
 
-
 # 2023-08-04
 
-# logo : déclinaison en logo + favicon + titre de l'appli (je reprends le fond et j'adapte ou j'envoie le svg à Isabelle ?)
-# valider pied de page
-# choisir la bande illustration - attention taille des images ! ca ne sert à rien d'avoir plusieurs méga ! - un peu trop de fois le logo du CIRAD ?
-# description des variétés : place des crochets ?
-# validation onglet info
-# accès au code : oui quand il y aura un lien officiel
-# RGPD : c'est mieux de demander l'accord d'être cité !
-# validation des sources et du dépôt dans agritrop
+# modification des textes de l'accueil et du savoir plus OK
+# ajout onglet info OK
+# logo : déclinaison en logo + favicon + titre de l'appli OK
+# valider pied de page - modifier licence OK
+# choisir la bande illustration - bande 1 sans le logo cirad hortsys (crop) OK
+# déplacer les bailleurs dans l'onglet à propos OK
+# description des variétés : place des crochets ? -> je remets comme avant OK
+# Choisir ce qui est sélectionné par défaut (1ère année, 1ère modalité ?) -> la dernière année ! OK
+# mettre les images de l'accueil en responsive OK
+# augmenter taille texte accueil OK
+# ajouter tooltop sur les icones Tout Dé-Sélectionner OK
+# essai taille et variété : bloquer niveau de zoom 2 crans au-dessus OK
+# rendre les bonnes proportions aux sécateurs OK
 
-# renvoyer les derniers textes à jour
-# nombres d'heures à facturer : 
-
+# décaler davantage les logos en haut à droite A VERIFIER
 
 
 
 
 # A faire : 
 
-# Choisir ce qui est sélectionné par défaut (1ère année, 1ère modalité ?)
+# valider texte en français de l'aide (par Fred), puis envoie du dossier des textes à traduire
 # mise en forme des textes d'aide (une fois que le français est validé)
-# en attente des textes de l'accueil (Fred)
 # ménage des commentaires et des fichiers devenus inutiles
-# publication (code privé d'ici au symposium) sur le serveur du CIRAD
-# mettre le pdf sur un autre dépôt ? demander à Guillaume
-# ajouter les lien vers le dépôt des données (agritrop) et du code
+# publication sur le serveur du CIRAD : d'ici à la publi le code est disponible sur demande avec un fichier de données modifiées
+# mettre le pdf (lourd) sur un autre dépôt ? demander à Guillaume
+# ajouter les liens vers le dépôt des données (agritrop) et du code
+# savoir combien de personnes téléchargement et les pays ? - demander à Guillaume , si compliqué accès uniquement par mail à envisager
+# essai taille et variété : ajouter image drone du verger au-dessus du leaflet
 
+
+
+# nombres d'heures supp à facturer : 23-15 = 8h
 
 
 
