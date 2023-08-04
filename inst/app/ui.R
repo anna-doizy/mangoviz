@@ -32,6 +32,15 @@ function(req) {
 
   header <- dashboardHeader(title = a(href = paste0("./?lang=", lang), img(src="title-mangoviz.png", width = 190)))
 
+  header$children[[3]]$children[[3]]$children[[1]]$children[[1]] <- 
+    h4(a(img(src = "logo-cirad.jpg", height = 30, alt = "CIRAD")
+         , href = "https://www.cirad.fr/"
+         , style = "padding:10px")
+       , a(img(src = "by-nc-sa.eu.svg", height = 30, alt = "Licence Creative Commons")
+           , rel = "license"
+           , href = "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+           , style = "padding:10px")
+    )
 
   # SIDEBAR -----------------------------------------------------------------
 
