@@ -161,7 +161,7 @@ server <- function(input, output, session) {
       geom_image(
         data = date_taille, 
         mapping = aes(x = Date_taille, y = pos_img, image = img), 
-        size = 0.05
+        size = 0.1
       ) +
       geom_text(
         data = date_taille, 
