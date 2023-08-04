@@ -48,20 +48,21 @@ body {
 
 
 .skin-green .sidebar-menu > li.active > a, .skin-green .sidebar-menu > li:hover > a {
-    color: #ce7e26;
-    border-left-color: #b94137;
+ color: #ce7e26;
+ border-left-color: #b94137;
 }
 
 a:focus, a:hover {
-  color: #b94137;
+ color: #b94137;
 }
 
 a {
-  color: #ce7e26;
+ color: #ce7e26;
 }
 
 blockquote {
-  border-left: 5px solid #b94137;
+ border-left: 5px solid #b94137;
+ font-size: 24px;
 }
 
 /* fixed header and sidebar */
