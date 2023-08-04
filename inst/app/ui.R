@@ -71,6 +71,12 @@ function(req) {
       ),
       
       menuItem(
+        text = strong(textesUI[textesUI$id == "info", lang]),
+        tabName = "info",
+        icon = icon("circle-info")
+      ),
+      
+      menuItem(
         text = strong(textesUI[textesUI$id == "taille", lang]),
         tabName = "taille",
         menuSubItem(
@@ -134,6 +140,33 @@ function(req) {
       tabItem(tabName = "accueil", fluidRow(
         div(includeMarkdown(sprintf("locale/accueil_%s.md", lang)), class = "markdown-tab")
       )),
+      
+      # Onglet info ####
+      tabItem(
+        tabName = "info", 
+        fluidRow(
+          column(
+            12, 
+            box(
+              title = textesUI[textesUI$id == "pourqui_box", lang], 
+              width = 12,
+              status = "success",
+              solidHeader = TRUE,
+              includeMarkdown(sprintf("locale/pourqui_%s.md", lang))
+            )
+          )),
+        fluidRow(
+          column(
+            12, 
+            box(
+              title = textesUI[textesUI$id == "comment_box", lang],
+              width = 12,
+              status = "success",
+              solidHeader = TRUE,
+              includeMarkdown(sprintf("locale/comment_%s.md", lang))
+            ))
+        )
+      ),
 
       # Onglet essai taille ####
       ## Le verger ####

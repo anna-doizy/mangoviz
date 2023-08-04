@@ -171,16 +171,35 @@
 
 
 
+# 2023-08-04
+
+# logo : déclinaison en logo + favicon + titre de l'appli (je reprends le fond et j'adapte ou j'envoie le svg à Isabelle ?)
+# valider pied de page
+# choisir la bande illustration - attention taille des images ! ca ne sert à rien d'avoir plusieurs méga ! - un peu trop de fois le logo du CIRAD ?
+# description des variétés : place des crochets ?
+# validation onglet info
+# accès au code : oui quand il y aura un lien officiel
+# RGPD : c'est mieux de demander l'accord d'être cité !
+# validation des sources et du dépôt dans agritrop
+
+# renvoyer les derniers textes à jour
+# nombres d'heures à facturer : 
+
+
+
+
 
 # A faire : 
 
 # Choisir ce qui est sélectionné par défaut (1ère année, 1ère modalité ?)
 # mise en forme des textes d'aide (une fois que le français est validé)
-# en attente d'une plus jolie photo de mangue pour le logo (sans flash)
 # en attente des textes de l'accueil (Fred)
 # ménage des commentaires et des fichiers devenus inutiles
 # publication (code privé d'ici au symposium) sur le serveur du CIRAD
 # mettre le pdf sur un autre dépôt ? demander à Guillaume
+# ajouter les lien vers le dépôt des données (agritrop) et du code
+
+
 
 
 ####
