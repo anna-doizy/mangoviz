@@ -2,8 +2,8 @@ Pour chaque essai, MangoViz est structuré en deux onglets principaux : **>> Pr�
 
 L’onglet **>> Présentation** donne des informations sur le verger, le dispositif expérimental et le protocole. Ces informations incluent des photos et des figures. 
 
-L’onglet **>> Résultats** permet de visualiser les données de production, exprimées au choix en masse des fruits, nombre de fruits, ou masse moyenne d’un fruit à travers trois graphiques : 
-- la distribution des données de production par modalité du facteur testé dans l’essai (***comparaison des variétés*** ou ***modalités de taille***)
+L’onglet **>> Résultats** permet de visualiser les données de production, exprimées au choix en masse des fruits, nombre de fruits, ou masse moyenne d’un fruit (à sélectionner en haut de page) à travers trois graphiques : 
+- la distribution des données de production par modalité du facteur testé dans l’essai (***modalités de taille*** ou ***comparaison des variétés***)
 - l’évolution des données de production au cours du temps (***suivi temporel***)
 - la spatialisation des données de production dans le verger expérimental (***suivi spatial***)
 

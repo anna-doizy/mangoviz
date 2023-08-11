@@ -1,4 +1,6 @@
 MangoViz (pour Mango Visualization) est une interface web interactive qui permet d’explorer graphiquement les données d’essais agronomiques de moyen ou long terme menés sur le manguier. MangoViz est destiné à être utilisé par des chercheurs, étudiants, techniciens ou formateurs. Ses applications sont l’exploration de données avant les analyses statistiques, la discussion autour d’un support graphique des données et résultats d’un essai, ou la formation avec un support interactif. 
 
-Les données de production de deux essais menés sur le manguier par l’unité HortSys du Cirad sur la station expérimentale de Bassin-Plat à La Réunion sont présentés: un essai sur la date de taille et un essai d’évaluation variétale. MangoViz peut être adapté aux données d’autres essais par la modification appropriée du code.
+Les données de production de deux essais menés sur le manguier par l’unité HortSys du Cirad sur la station expérimentale de Bassin-Plat à La Réunion sont présentés: un essai sur la taille et un essai d’évaluation variétale. 
+
+MangoViz peut être adapté aux données d’autres essais par la modification appropriée du code.
 
