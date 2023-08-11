@@ -1,33 +1,41 @@
-<img src="mangoviz-logo.png" id="logo"> 
-
-> **MangoViz** is an interactive dashboard for exploring long-term experiments on mango by CIRAD research center.
-
 <p class="center">
   <span>
-    <img src="accueil_taille.png">
-    <img src="accueil_varietes.png">
-    <img src="accueil_graph.png">
+    <img src="mangoviz-logo.png" id="logo"> 
   </span>
 </p>
+
+> **MangoViz** est un tableau de bord interactif pour explorer les données d’essais agronomiques de moyen et long terme menés sur le manguier (*Mangifera indica* L.).
+
+> Deux essais sont présentés: un ***essai taille*** et un ***essai d'évaluation variétale***, réalisés à la Réunion.
+
 
 ***
 
 <p class="center">
   <span>
-    <img src="bande_logos.png" class="logo-10">
-  </span>
+    <img src="bande_illustrations.png" class="inbox-img">
+   </span>
 </p>
 
-*** 
 
-Last update : 2023-08-04
+***
 
-Logo ©[DoAna](https://doana-r.com)  
-<!-- Photographies © Jesper Rasmussen sauf mention contraire -->
 
-The written content of this app is available under the [CC-BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/) and the source code under the [MIT license](https://mit-license.org/) (© [DoAna](https://www.doana-r.com/) 2021) under request.
 
-This website is built with [R](https://www.r-project.org/) and [shiny](https://shiny.rstudio.com/).
+Dernière mise à jour : 2023-08-11
 
-<!--Source code : https://gitlab.com/doana-r/mangoviz-->
-<!-- peut-être à herberger sur le groupe du CIRAD -->
+
+
+Conception : <a href="https://ur-hortsys.cirad.fr/" target="_blank">CIRAD - UR HortSys</a>  et © <a href="https://doana-r.com" target="_blank">DoAna</a>
+
+Photographies : © Frédéric Normand et Emma Carrié
+
+Le contenu écrit de cette application est sous <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">licence CC-BY-NC-SA 4.0</a> et le code sous <a href="https://mit-license.org/" target="_blank">licence MIT</a> (© <a href="https://doana-r.com" target="_blank">DoAna</a>).
+
+Ce site a été construit avec <a href="https://www.r-project.org/" target="_blank">R</a> et <a href="https://shiny.rstudio.com/" target="_blank">shiny</a>.
+
+<!--Code source : https://gitlab.com/cirad-apps/mangoviz-->
+
+
+
+
