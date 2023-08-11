@@ -1,4 +1,8 @@
-<img src="mangoviz-logo.png" id="logo"> 
+<p class="center">
+  <span>
+    <img src="mangoviz-logo.png" id="logo"> 
+  </span>
+</p>
 
 > **MangoViz** est un tableau de bord interactif pour explorer les données d’essais agronomiques de moyen et long terme menés sur le manguier (*Mangifera indica* L.).
 
