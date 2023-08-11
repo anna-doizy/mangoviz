@@ -180,8 +180,15 @@ function(req) {
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              column(6, includeMarkdown(sprintf("locale/verger-taille_%s.md", lang))),
-              column(6, leafletOutput("pruning_orchard_map", width = "80%"))
+              column(6, 
+                includeMarkdown(sprintf("locale/verger-taille_%s.md", lang))
+              ),
+              column(6, 
+                img(src = "verger_taille.jpg", class = "verger-img"), 
+                p(),
+                leafletOutput("pruning_orchard_map", width = "80%"),
+                style = "text-align:center;"
+              )
             )
           )),
         fluidRow(
@@ -192,7 +199,7 @@ function(req) {
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              girafeOutput("taille_parcelle", height = "400px", width = "90%"),
+              girafeOutput("taille_parcelle", height = "400px", width = "90%")
               # column(6, img(src = "verger_MA05.png", class = "inbox-img"), style = "text-align:center;")
               
             # )
@@ -455,7 +462,12 @@ function(req) {
               status = "success",
               solidHeader = TRUE,
               column(6, includeMarkdown(sprintf("locale/verger-variete_%s.md", lang))),
-              column(6, leafletOutput("cultivar_orchard_map", width = "80%"))
+              column(6, 
+                img(src = "verger_variete.jpg", class = "verger-img"), 
+                p(),
+                leafletOutput("cultivar_orchard_map", width = "80%"),
+                style = "text-align:center;"
+              )
             )
           )),
         fluidRow(

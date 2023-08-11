@@ -125,6 +125,10 @@ hr {
   max-height: 400px;
 }
 
+.verger-img {
+  max-width: 80%;
+}
+
 #logo {
   display: block;
   margin-left: auto;
