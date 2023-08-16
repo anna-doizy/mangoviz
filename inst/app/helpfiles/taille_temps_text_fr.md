@@ -2,7 +2,7 @@
 
 Ce graphique permet de visualiser l'**évolution temporelle de la production des arbres du verger pour une ou plusieurs modalités de taille**. 
 
-Les modalités de taille peuvent être sélectionnées (affichage bleu) ou désélectionnées (affichage gris) en cliquant dessus. Les boutons "icones tick" et "icone poubelle" permettent de tout sélectionner ou tout désélectionner, respectivement.
+Les modalités de taille peuvent être sélectionnées (affichage bleu) ou désélectionnées (affichage gris) en cliquant dessus. Les boutons ![](square-check-regular.png) et ![](trash-solid.png) permettent de tout sélectionner ou tout désélectionner, respectivement.
 
 - Dans le cas où une seule modalité de taille est sélectionnée : chaque ligne grise correspond à la trajectoire d'un arbre et la ligne colorée est la trajectoire moyenne de tous les arbres de cette modalité de taille. La ligne horizontale noire en pointillé représente la valeur moyenne calculée pour tous les arbres de la modalité de taille et toutes les années de l'essai.
 

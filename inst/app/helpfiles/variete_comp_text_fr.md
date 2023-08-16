@@ -2,7 +2,7 @@
 
 Ce graphique permet de visualiser la **variabilité de la production des arbres du verger pour chaque variété au cours d'une ou plusieurs années**. 
 
-Les années peuvent être sélectionnées (affichage bleu) ou désélectionnées (affichage gris) en cliquant dessus. Les boutons "icones tick" et "icone poubelle" permettent de tout sélectionner ou tout désélectionner, respectivement.
+Les années peuvent être sélectionnées (affichage bleu) ou désélectionnées (affichage gris) en cliquant dessus. Les boutons ![](square-check-regular.png) et ![](trash-solid.png) permettent de tout sélectionner ou tout désélectionner, respectivement.
 
 Chaque point gris représente un arbre du verger et une année. 
 
