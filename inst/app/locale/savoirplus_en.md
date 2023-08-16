@@ -24,9 +24,9 @@ Merci aux **bêta-testeurs** de l’application : Frédéric Boudon, Caroline Br
 
 Vous trouverez ci-dessous diverses ressources concernant nos recherches sur le manguier :
 
--  Normand F., Thévenin J-M. 2019. Développer la culture de la mangue. Recherche des variétés adaptées au contexte parasitaire réunionnais. Cirad, RITA, Saint-Pierre, Ile de la Réunion, 2 p. (<a href="https://agritrop.cirad.fr/" target="_blank">Lien</a>)
--  Persello S., Grechi I., Boudon F., Normand F. 2019. Nature abhors a vacuum: Deciphering the vegetative reaction of the mango tree to pruning. European Journal of Agronomy, 104: 85-96. (<a href="https://agritrop.cirad.fr/590932//" target="_blank">Lien</a>) 
--  Veillant D., Sinatamby M., Normand F. 2017. Production et qualité de variétés de mangues à la Réunion. Cirad, Saint-Pierre, Ile de la Réunion, poster. (<a href="https://agritrop.cirad.fr/" target="_blank">Lien</a>)
+-  <a href="https://agritrop.cirad.fr/605847/" target="_blank">Normand F., Thévenin J-M. 2019. Développer la culture de la mangue. Recherche des variétés adaptées au contexte parasitaire réunionnais. Cirad, RITA, Saint-Pierre, Ile de la Réunion, 2 p.</a>
+-  <a href="https://agritrop.cirad.fr/590932/" target="_blank">Persello S., Grechi I., Boudon F., Normand F. 2019. Nature abhors a vacuum: Deciphering the vegetative reaction of the mango tree to pruning. European Journal of Agronomy, 104: 85-96.</a>
+-  <a href="https://agritrop.cirad.fr/605848/" target="_blank">Veillant D., Sinatamby M., Normand F. 2017. Production et qualité de variétés de mangues à la Réunion. Cirad, Saint-Pierre, Ile de la Réunion, poster.</a>
 
 
 <br>
