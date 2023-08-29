@@ -1,28 +1,28 @@
-## Nous contacter
+## Contacto
 
-Si vous avez des questions, remarques ou suggestions diverses, ou encore si vous souhaitez accéder au code de l'application n'hésitez pas à nous contacter à [mangoviz@cirad.fr](mailto:mangoviz@cirad.fr).
+Si tiene algunas preguntas, comentarios o sugerencias, o si desea acceder al código de la aplicación, póngase en contacto con nosotros en [mangoviz@cirad.fr](mailto:mangoviz@cirad.fr).
 <!-- mettre le lien vers le dépôt du CIRAD ? -->
 
 <br>
 
 
-## Contributions et remerciements
+## Contribuciones y agradecimientos
 
-La **conception et le suivi des essais** ont été réalisés par Frédéric Normand, avec l’appui technique de Doralice Veillant, Muriel Sinatamby et Gilles Maillot (Cirad, UR HortSys).
+Los **ensayos fueron diseñados y supervisados** por Frédéric Normand, con el apoyo técnico de Doralice Veillant, Muriel Sinatamby y Gilles Maillot (Cirad, UR HortSys).
 
-La **conception, la création et la réalisation de l’interface web** ont été coordonnées par Isabelle Grechi (Cirad, UR HortSys) et Anna Doizy (<a href="https://doana-r.com" target="_blank">DoAna - Statistiques Réunion</a>).
+Las **concepción, creación y realización de la interfaz web** fueron coordinadas por Isabelle Grechi (Cirad, UR HortSys) y Anna Doizy (<a href="https://doana-r.com" target="_blank">DoAna - Statistiques Réunion</a>).
 
-L'**hébergement et la maintenance** de l'application sont assurées par Guillaume Cornu (Cirad, UR Forêts et Sociétés).
+Los **alojamiento y mantenimiento** de la aplicación corren a cargo de Guillaume Cornu (Cirad, UR Forêts et Sociétés).
 
-La **traduction en anglais et en espagnol** a été assurée par Anna Doizy (<a href="https://doana-r.com" target="_blank">DoAna - Statistiques Réunion</a>) et Frédéric Normand (Cirad, UR HortSys).
+La **traducción al inglés y al español** ha corrido a cargo de Anna Doizy (<a href="https://doana-r.com" target="_blank">DoAna - Statistiques Réunion</a>) y Frédéric Normand (Cirad, UR HortSys).
 
-Merci aux **bêta-testeurs** de l’application : Frédéric Boudon, Caroline Brunel, Jean-Charles de Cambiaire, Pierre-Éric Lauri, Thierry Michels, Adrien Négrier, Doralice Veillant.
+Gracias a los **beta testers** de la aplicación : Frédéric Boudon, Caroline Brunel, Jean-Charles de Cambiaire, Pierre-Éric Lauri, Thierry Michels, Adrien Négrier, Doralice Veillant.
 
 <br>
 
-## Pour en savoir plus...
+## Para saber más...
 
-Vous trouverez ci-dessous diverses ressources concernant nos recherches sur le manguier :
+A continuación puede encontrar diversos recursos relacionados con nuestra investigación sobre el mango :
 
 -  <a href="https://agritrop.cirad.fr/605847/" target="_blank">Normand F., Thévenin J-M. 2019. Développer la culture de la mangue. Recherche des variétés adaptées au contexte parasitaire réunionnais. Cirad, RITA, Saint-Pierre, Ile de la Réunion, 2 p.</a>
 -  <a href="https://agritrop.cirad.fr/590932/" target="_blank">Persello S., Grechi I., Boudon F., Normand F. 2019. Nature abhors a vacuum: Deciphering the vegetative reaction of the mango tree to pruning. European Journal of Agronomy, 104: 85-96.</a>

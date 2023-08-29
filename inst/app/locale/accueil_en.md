@@ -4,9 +4,9 @@
   </span>
 </p>
 
-> **MangoViz** est un tableau de bord interactif pour explorer les données d’essais agronomiques de moyen et long terme menés sur le manguier (*Mangifera indica* L.).
+> **MangoViz** is an interactive dashboard for exploring data from medium- and long-term agronomic experiments carried out on mango (*Mangifera indica* L.).
 
-> Deux essais sont présentés: un ***essai taille*** et un ***essai d'évaluation variétale***, réalisés à la Réunion.
+> Two experiments are presented: a ***pruning experiment*** and a ***varietal evaluation experiment***, carried out in Reunion island.
 
 
 ***
@@ -22,17 +22,17 @@
 
 
 
-Dernière mise à jour : 2023-08-16
+Last update : 2023-08-29
 
 
 
-Conception : <a href="https://ur-hortsys.cirad.fr/" target="_blank">CIRAD - UR HortSys</a>  et © <a href="https://doana-r.com" target="_blank">DoAna</a>
+Design : <a href="https://ur-hortsys.cirad.fr/" target="_blank">CIRAD - UR HortSys</a>  and © <a href="https://doana-r.com" target="_blank">DoAna</a>
 
-Photographies : © Frédéric Normand et Emma Carrié
+Photographs : © Frédéric Normand and Emma Carrié
 
-Le contenu écrit de cette application est sous <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">licence CC-BY-NC-SA 4.0</a> et le code sous <a href="https://mit-license.org/" target="_blank">licence MIT</a> (© <a href="https://doana-r.com" target="_blank">DoAna</a>).
+The written content of this application is under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">licence CC-BY-NC-SA 4.0</a> and the code under <a href="https://mit-license.org/" target="_blank">licence MIT</a> (© <a href="https://doana-r.com" target="_blank">DoAna</a>).
 
-Ce site a été construit avec <a href="https://www.r-project.org/" target="_blank">R</a> et <a href="https://shiny.rstudio.com/" target="_blank">shiny</a>.
+This site has been built with <a href="https://www.r-project.org/" target="_blank">R</a> and <a href="https://shiny.rstudio.com/" target="_blank">shiny</a>.
 
 <!--Code source : https://gitlab.com/cirad-apps/mangoviz-->
 

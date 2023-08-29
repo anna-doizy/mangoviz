@@ -1,13 +1,12 @@
-Pour chaque essai, MangoViz est structuré en deux onglets principaux : **Présentation** et **Résultats**.
+Para cada ensayo, MangoViz se estructura en dos pestañas principales: **>> Presentación** y **>> Resultados**.
 
-L’onglet **Présentation** donne des informations sur le verger, le dispositif expérimental et le protocole. Ces informations incluent des photos et des figures. 
+La pestaña **>> Presentación** proporciona información sobre el huerto, el diseño experimental y el protocolo. Esta información incluye fotos y figuras. 
 
-L’onglet **Résultats** permet de visualiser les données de production, exprimées au choix en masse des fruits, nombre de fruits, ou masse moyenne d’un fruit à travers trois graphiques : 
-- la distribution des données de production par modalité du facteur testé dans l’essai (**comparaison des variétés** ou **modalités de taille**)
-- l’évolution des données de production au cours du temps (**suivi temporel**)
-- la spatialisation des données de production dans le verger expérimental (**suivi spatial**)
+La pestaña **>> Resultados** permite visualizar los datos de producción, expresados en masa de frutos, número de frutos o masa media de un fruto (seleccionar en la parte superior de la página), mediante tres gráficos : 
+- la distribución de los datos de producción por nivel del factor probado en el ensayo (**método de poda** o **variedad**)
+- la evolución temporal de los datos de producción (**seguimiento temporal**)
+- la espacialización de los datos de producción en el huerto experimental (**seguimiento espacial**)
 
-L’échelle de base des données de production est l’arbre et l’année. Des options permettent de personnaliser la représentation de chaque graphique. Ces options sont précisées sur chaque graphique en cliquant sur le bouton ![](circle-question-regular.png).
+El nivel básico de los datos de producción es el árbol y el año. Existen opciones para personalizar la representación de cada gráfico. Estas opciones se especifican en cada gráfico haciendo clic en el botón ![](circle-question-regular.png).
 
-D’autres onglets peuvent être présents pour donner des résultats complémentaires (cf. **Fiches synthétiques**).
-
+Para el ensayo de evaluación de variedades, la pestaña **>> Fichas resumen** proporciona resultados adicionales.

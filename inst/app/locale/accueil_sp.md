@@ -4,9 +4,9 @@
   </span>
 </p>
 
-> **MangoViz** est un tableau de bord interactif pour explorer les données d’essais agronomiques de moyen et long terme menés sur le manguier (*Mangifera indica* L.).
+> **MangoViz** es un cuadro de indicadores interactivo para explorar datos de ensayos agronómicos a medio y largo plazo realizados en el mango (*Mangifera indica* L.).
 
-> Deux essais sont présentés: un ***essai taille*** et un ***essai d'évaluation variétale***, réalisés à la Réunion.
+> Se presentan dos ensayos : un ***ensayo de poda*** y un ***ensayo de evaluación de variedades***, realizados en la isla de la Reunión.
 
 
 ***
@@ -22,17 +22,17 @@
 
 
 
-Dernière mise à jour : 2023-08-16
+Ultima actualización : 2023-08-29
 
 
 
-Conception : <a href="https://ur-hortsys.cirad.fr/" target="_blank">CIRAD - UR HortSys</a>  et © <a href="https://doana-r.com" target="_blank">DoAna</a>
+Concepción : <a href="https://ur-hortsys.cirad.fr/" target="_blank">CIRAD - UR HortSys</a> y © <a href="https://doana-r.com" target="_blank">DoAna</a>
 
-Photographies : © Frédéric Normand et Emma Carrié
+Fotografiás : © Frédéric Normand y Emma Carrié
 
-Le contenu écrit de cette application est sous <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">licence CC-BY-NC-SA 4.0</a> et le code sous <a href="https://mit-license.org/" target="_blank">licence MIT</a> (© <a href="https://doana-r.com" target="_blank">DoAna</a>).
+El contenido escrito de esta aplicación tiene <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">licencia CC-BY-NC-SA 4.0</a> y el código tiene <a href="https://mit-license.org/" target="_blank">licencia MIT</a> (© <a href="https://doana-r.com" target="_blank">DoAna</a>).
 
-Ce site a été construit avec <a href="https://www.r-project.org/" target="_blank">R</a> et <a href="https://shiny.rstudio.com/" target="_blank">shiny</a>.
+Este sitio ha sido creado con <a href="https://www.r-project.org/" target="_blank">R</a> y <a href="https://shiny.rstudio.com/" target="_blank">shiny</a>.
 
 <!--Code source : https://gitlab.com/cirad-apps/mangoviz-->
 

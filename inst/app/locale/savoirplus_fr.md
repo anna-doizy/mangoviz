@@ -1,6 +1,6 @@
 ## Nous contacter
 
-Si vous avez des questions, remarques ou suggestions diverses, ou encore si vous souhaitez accéder au code de l'application n'hésitez pas à nous contacter à [mangoviz@cirad.fr](mailto:mangoviz@cirad.fr).
+Si vous avez des questions, remarques ou suggestions diverses, ou si vous souhaitez accéder au code de l'application n'hésitez pas à nous contacter à [mangoviz@cirad.fr](mailto:mangoviz@cirad.fr).
 <!-- mettre le lien vers le dépôt du CIRAD ? -->
 
 <br>

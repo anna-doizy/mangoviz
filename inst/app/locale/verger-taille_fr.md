@@ -27,11 +27,11 @@ Les arbres ont été taillés tous les deux ans à partir de 2012 (arbres non ta
 
 ### Variables suivies
 
-Chaque année, la récolte est suivie individuellement sur tous les arbres du verger. Les fruits arrivés à maturité sont récoltés deux fois par semaine et sont comptés et pesés pour chaque arbre. Les variables qui caractérisent la production du verger sont:  
+Chaque année, la récolte est suivie individuellement sur tous les arbres du verger. Les fruits arrivés à maturité sont récoltés deux fois par semaine et sont comptés et pesés pour chaque arbre. Les variables qui caractérisent la production de fruits sont:  
 
 - **Nombre de fruits** : nombre de mangues produites par arbre et par an
 - **Masse de fruits** : masse totale des mangues produites par arbre et par an (en kg)
 - **Masse moyenne d'un fruit** : masse moyenne d'une mangue par arbre et par an (en g)
 
-La récolte des mangues sur cet essai se déroule de début décembre à début février. L'année N indiquée dans les graphiques correspond à la récolte de décembre de l'année N à mars de l'année N+1.
+La récolte des mangues sur cet essai se déroule de début décembre à début février. L'année N indiquée dans les graphiques correspond à la récolte de décembre de l'année N à février de l'année N+1.
 

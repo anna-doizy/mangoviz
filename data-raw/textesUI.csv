@@ -1,61 +1,61 @@
 id,fr,en,sp
 accueil,Accueil,Home,Inicio
 info, Qu'est-ce que c'est ?,What is it?,¿Qué es?
-pourqui_box, Pour qui et pour quoi ?, For who and for what?,Pour qui et pour quoi ?
-comment_box, Comment ça marche ?, How does it work?, Comment ça marche ?
-taille,Essai taille,Pruning test,Essai taille
-variete,Essai variétal,Cultivar test,Essai variétal
-presentation,Présentation,The orchard,Présentation
-resultats,Résultats,Follow-up,Résultats
-bilan,Fiches synthétiques,Review,Fiches synthétiques
-savoirplus,A propos,About,A propos
-pres_box,Description de l'essai,Description of the experiment,Description de l'essai
-plan_box,Plan du verger,Map of the orchard,Plan du verger
-variete_var_box,Description des variétés,Presentation of the cultivars,Description des variétés
-taille_cycle_box,Description du calendrier de taille,Presentation of the pruning cycles,Description du calendrier de taille
-trash_title, Tout désélectionner, Unselect all, Tout désélectionner
-squarecheck_title, Tout sélectionner, Select all, Tout sélectionner
-caro,[Origine : REUNION]<br>La variété Caro provient d'un semis de chez Mr André CARO à la Rivière Saint-Louis,[Origin: REUNION],[Origine : REUNION]
-"cogshall,[Origine : FLORIDE]<br>La variété Cogshall est aussi appelée ""mangue américaine"" ou ""mangue qui dévisse"",[Origin: FLORIDA],[Origine : FLORIDE]"
-heidi,[Origine : AFRIQUE DU SUD]<br>La variété Heidi est issue d'un croisement entre les variétés Kent et Sensation,[Origin: SOUTH AFRICA],[Origine : AFRIQUE DU SUD]
-irwin,[Origine : FLORIDE]<br>La variété Irwin est internationalement connue et commercialisée (Taïwan, Guadeloupe, Costa Rica, Espagne...,[Origin: FLORIDA],[Origine : FLORIDE]
-jose,[Origine : REUNION]<br>A l'origine, la variété José s'appelait Joseph. Son nom a évolué suite à son introduction à l'île Maurice. Josée représente 50% de la production réunionnaise,[Origin: REUNION],[Origine : REUNION]
-kensington_pride,[Origine : AUSTRALIE]<br>Cette variété polyembryonnée est intnsivement produite en Australie,[Origin: AUSTRALIA],[Origine : AUSTRALIE]
-kent,[Origine : FLORIDE]<br>Kent est une des variétés les plus exportées dans le monde,[Origin: FLORIDA],[Origine : FLORIDE]
-nam_doc_mai,[Origine : THAILANDE]<br>Cette mangue polyembrionnée se consomme généralement verte en Thaïlande (en salade séchée),[Origin: THAILAND],[Origine : THAILANDE]
-sensation,[Origine : FLORIDE]<br>Sensation est très cultivée en Afrique du Sud et au Mexique],[Origin: FLORIDA,[Origine : FLORIDE]
-tommy_atkins,[Origine : FLORIDE]<br>Tommy Atkins est cultivée en Afrique du Sud et en Amérique Latine pour l'exportation],[Origin: FLORIDA,[Origine : FLORIDE]
-cultivar,Variété,Cultivar,Variété
-global_mean,Moyenne globale :,Global mean:,Moyenne globale :
-masse,Masse de fruits (kg),Mass of fruits (kg),Masse de fruits (kg)
-nbfruit,Nombre de fruits,Number of fruits,Nombre de fruits
-masse_fruit,Masse moyenne d'un fruit (g),Average mass of a fruit (g),Masse moyenne d'un fruit (g)
-variete_mesure_label,Choix de la variable,Choice of the variable,Choix de la variable
-variete_comp_box,Comparaison des variétés,Cultivar comparison,Comparaison des variétés
-variete_comp_label,Choix d'une ou plusieurs années,Choice of one or more years,Choix d'une ou plusieurs années
-variete_temps_box,Suivi temporel,Temporal follow-up,Suivi temporel
-variete_label_vars,Choix d'une ou plusieurs variétés,Choice of one or more cultivars,Choix d'une ou plusieurs variétés
-variete_spatial_box,Suivi spatial,Spatial follow-up,Suivi spatial
-timeviz_global_switch,Mode de visualisation,Visualisation mode,Mode de visualisation
-timeviz_global_switch_f,par année,per year,par année
-timeviz_global_switch_t,moyenne sur l'ensemble des années,average over all years,moyenne sur l'ensemble des années
-variete_bilan_box,Fiche synthétique par variété,Summary by cultivar,Fiche synthétique par variété
-telecharger_fiches,Télécharger les fiches,Download summaries (in french),Télécharger les fiches (en francès)
-taille_legend,Taille,Pruning,Taille
-taille_ete,Taille été,Summer pruning,Taille été
-taille_hiver,Taille hiver,Winter pruning,Taille hiver
-taille_sans,Sans taille,No pruning,Sans taille
-pruning_start,Début de la taille,Pruning start,Début de la taille
-taille_comp_box,Comparaison des modalités de taille,Pruning comparison,Comparaison des modalités de taille
-taille_comp_label,Choix d'une ou plusieurs années,Choice of one or more years,Choix d'une ou plusieurs années
-taille_temps_box,Suivi temporel,Temporal follow-up,Suivi temporel
-taille_multi_label,Choix d'une ou plusieurs modalités de taille,Choice of the pruning methods,Choix d'une ou plusieurs modalités de taille
-taille_spatial_box,Suivi spatial,Spatial follow-up,Suivi spatial
-annee,Année,Year,Année
-taille_plan_title,Positionnement des tailles sur les cycles de production du manguier,Positioning of pruning on mango production cycles,Positionnement des tailles sur les cycles de production du manguier
-1_croissance_vegetative,Croissance végétative,Vegetative growth,Croissance végétative
-2_repos,Repos végétatif,Resting,Repos végétatif
-3_floraison,Floraison,Flowering,Floraison
-4_croissance_fruit,Croissance des fruits,Fruit growth,Croissance des fruits
-5_maturite_fruit,Maturité des fruits,Fruit maturity,Maturité des fruits
-bordure,Arbres de bordure,Trees on the edge,Arbres de bordure
+pourqui_box, Pour qui et pour quoi ?, For who and for what?,¿Por quién y para qué?
+comment_box, Comment ça marche ?, How does it work?,¿Cómo se utiliza?
+taille,Essai taille,Pruning experiment,Ensayo de poda
+variete,Essai variétal,Varietal evaluation,Evaluación de variedades
+presentation,Présentation,The experiment,Presentación
+resultats,Résultats,The results,Resultados
+bilan,Fiches synthétiques,Summary sheets,Fichas resumen
+savoirplus,A propos,About,Sobre MangoViz
+pres_box,Description de l'essai,Presentation of the experiment,Presentación del ensayo
+plan_box,Plan du verger,Orchard map,Plan del huerto
+variete_var_box,Description des variétés,Presentation of varieties,Presentación de las variedades
+taille_cycle_box,Description du calendrier de taille,Presentation of pruning cycles,Presentación del calendario de poda
+trash_title, Tout désélectionner, Deselect all,Deseleccionar todo
+squarecheck_title, Tout sélectionner, Select all,Seleccionar todo
+caro,[Origine : REUNION]<br>Caro provient d'un semis de chez Mr André CARO à la Rivière Saint-Louis,[Origin: REUNION]<br>Caro originates from a seedling selected by Mr André CARO at Rivière Saint-Louis ,[Origen : REUNIÓN]<br>Caro procede de un sembrado hecho por el Sr André CARO a Rivière Saint-Louis
+cogshall,"[Origine : FLORIDE]<br>Cogshall est aussi appelée ""mangue américaine"" ou ""mangue qui dévisse"" à la Réunion","[Origin: FLORIDA]<br>Cogshall is also called ""American mango"" or ""unscrewing mango"" in Reunion island","[Origen : FLORIDA]<br>Cogshall se llama tambien ""mango americano"" o ""mango que desatornilla"" en la isla de la Reunión"
+heidi,[Origine : AFRIQUE DU SUD]<br>Heidi est issue d'un croisement entre les variétés Kent et Sensation,[Origin: SOUTH AFRICA]<br>Heidi comes from a cross between the varieties Kent and Sensation,[Origen : SUDÁFRICA]<br>Heidi proviene de un cruce entre las variedades  Kent y Sensation
+irwin,[Origine : FLORIDE]<br>Irwin est internationalement connue et commercialisée,[Origin: FLORIDA]<br>Irwin is known and marketed worldwide,[Origen : FLORIDA]<br> Irwin es conocida y comercializada en todo el mundo
+jose,"[Origine : REUNION]<br>A l'origine, la variété José s'appelait Joseph. Son nom a évolué suite à son introduction à l'île Maurice. José représente 50% de la production réunionnaise",[Origin: REUNION]<br>José was originally named Joseph. Its name changed after it was introduced in Mauritius. José represents 50% of mango production in Reunion island,[Origen : REUNIÓN]<br>José se llamaba originalmente Joseph. Su nombre cambió cuando se introdujo en Mauricio. José representa el 50% de la producción de la isla de la Reunión.
+kensington_pride,[Origine : AUSTRALIE]<br>Cette variété polyembryonnée est intensivement produite en Australie,[Origin: AUSTRALIA]<br>This polyembryonic variety is widely grown in Australia,[Origen : AUSTRALIA]<br>Esta variedad poliembriónica se produce intensivamente en Australia
+kent,[Origine : FLORIDE]<br>Kent est une des variétés les plus exportées dans le monde,[Origin: FLORIDA]<br>Kent is one of the most exported varieties in the world,[Origen : FLORIDA]<br>Kent es una de las variedades más exportadas en el mundo
+nam_doc_mai,[Origine : THAILANDE]<br>Cette mangue polyembryonnée se consomme généralement verte en Thaïlande,[Origin: THAILAND]<br>This polyembryonic variety is generally eaten unripe in Thailand,[Origen : TAILANDIA]<br>Este mango poliembriónico se consume generalmente verde en Tailandia
+sensation,[Origine : FLORIDE]<br>Sensation est très cultivée en Afrique du Sud et au Mexique,[Origin: FLORIDA]<br>Sensation is extensively grown in South Africa and Mexico,[Origen : FLORIDA]<br>Sensation se cultiva mucho en Sudáfrica y México
+tommy_atkins,[Origine : FLORIDE]<br>Tommy Atkins est cultivée en Afrique du Sud et en Amérique Latine pour l'exportation,[Origin: FLORIDA]<br>Tommy Atkins is grown in South Africa and Latin America for export,[Origen : FLORIDA]<br>Tommy Atkins se cultiva en Sudáfrica y América Latina para la exportación
+cultivar,Variété,Variety,Variedad
+global_mean,Moyenne globale :,Overall mean:,Media global :
+masse,Masse de fruits (kg),Fruit mass (kg),Masa de frutos (kg)
+nbfruit,Nombre de fruits,Number of fruit,Número de frutos
+masse_fruit,Masse moyenne d'un fruit (g),Mean individual fruit mass (g),Masa media de un fruto (g)
+variete_mesure_label,Choix de la variable,Variable selection,Elección de la variable
+variete_comp_box,Comparaison des variétés,Comparison of varieties,Comparación de las variedades
+variete_comp_label,Choix d'une ou plusieurs années,Select one or several years,Elección de uno o varios años
+variete_temps_box,Suivi temporel,Temporal monitoring,Seguimiento temporal
+variete_label_vars,Choix d'une ou plusieurs variétés,Select one or several varieties,Elección de una o varias variedades
+variete_spatial_box,Suivi spatial,Spatial monitoring,Seguimiento espacial
+timeviz_global_switch,Mode de visualisation,Display mode,Modo de visualización
+timeviz_global_switch_f,par année,per year,por año
+timeviz_global_switch_t,moyenne sur l'ensemble des années,mean over all years,media de todos los años
+variete_bilan_box,Fiche synthétique par variété,Summary sheet by variety,Ficha resumen por variedad
+telecharger_fiches,Télécharger les fiches,Download summary sheets (in French),Descargar las fichas resumen (en francès)
+taille_legend,Taille,Pruning,Poda
+taille_ete,Taille été,Summer pruning,Poda de verano
+taille_hiver,Taille hiver,Winter pruning,Poda de invierno
+taille_sans,Sans taille,Unpruned,Sin poda
+pruning_start,Début de la taille,Beginning of pruning,Principio de la poda
+taille_comp_box,Comparaison des modalités de taille,Comparison of pruning methods,Comparación de los métodos de poda
+taille_comp_label,Choix d'une ou plusieurs années,Select one or several years,Elección de uno o varios años
+taille_temps_box,Suivi temporel,Temporal monitoring,Seguimiento temporal
+taille_multi_label,Choix d'une ou plusieurs modalités de taille,Select one or several pruning methods,Elección de uno o varios métodos de poda
+taille_spatial_box,Suivi spatial,Spatial monitoring,Seguimiento espacial
+annee,Année,Year,Año
+taille_plan_title,Positionnement des tailles sur les cycles de production du manguier,Positioning of pruning events on mango production cycles,Posicionamiento de las podas en los ciclos de producción del mango
+1_croissance_vegetative,Croissance végétative,Vegetative growth,Crecimiento vegetativo
+2_repos,Repos végétatif,Vegetative rest,Pausa vegetativa
+3_floraison,Floraison,Flowering,Floración
+4_croissance_fruit,Croissance des fruits,Fruit growth,Crecimiento de los frutos
+5_maturite_fruit,Maturité des fruits,Fruit maturity,Madurez de los frutos
+bordure,Arbres de bordure,Guard trees,Árboles de borde

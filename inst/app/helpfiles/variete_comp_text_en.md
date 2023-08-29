@@ -1,4 +1,13 @@
-This graph shows the variability of trees for each cultivar in the orchard. 
-Each black dot represents a tree in the orchard. 
-The big colored points are the average of the selected variable on all the trees of each cultivar. 
-By default, all the years are taken into account, but it is possible, to go a little further, to select one or more years.
+### Graph reading
+
+This graph shows the **variability of tree production in the orchard for each variety over one or more years**. 
+
+Years can be selected (blue display) or deselected (grey display) by clicking on them. The ![](square-check-regular.png) and ![](trash-solid.png) buttons can be used to select or deselect all, respectively.
+
+Each grey dot represents a tree in the orchard and a year. 
+
+For each variety, the coloured point represents the mean of all the trees of this variety and for the selected years. The coloured area represents the distribution of the values of the variable for the selected years.
+
+Move the mouse over the graph to obtain 
+- the tree code in the orchard and the exact value of the variable for the grey dots and
+- the exact value of the mean for the coloured points.

@@ -1,5 +1,13 @@
-This graph shows the temporal evolution of each pruning in the orchard. 
-In the case where only one pruning is selected: each grey line corresponds to the trajectory of a tree in the orchard (identified by its coordinates in the plot) and the colored line is the average trajectory of all trees of this pruning. 
-In the case where several prunings are selected: only the average trajectories per pruning are shown to avoid making the graph too cluttered. 
-Move the mouse (or click on a line if you are on a touch screen) to highlight a given trajectory.
-The vertical line between 2011 and 2012 symbolizes the beginning of the pruning cycles.
+### Lectura del gráfico
+
+Este gráfico representa la **evolución temporal de la producción de los árboles en el huerto para uno o varios métodos de poda**. 
+
+Los métodos de poda pueden seleccionarse (color azul) o deseleccionarse (color gris) cliqueando sobre ellos. Los botones ![](square-check-regular.png) y ![](trash-solid.png) se pueden utilizar para seleccionar o deseleccionar todo, respectivamente.
+
+- Si sólo se selecciona uno método de poda, cada línea gris corresponde a la trayectoria de un árbol y la línea coloreada es la trayectoria media de todos los árboles con ese método de poda. La línea negra horizontal discontinua representa el valor medio calculado para todos los árboles del método de poda y para todos los años del ensayo.
+
+- Si se seleccionan varios métodos de poda, sólo se muestran las trayectorias medias de cada método, para que el gráfico no resulte demasiado recargado. 
+
+Mueva el ratón sobre una línea gris para resaltar la trayectoria de un árbol y conocer su codigo en el huerto. Mueva el ratón sobre los puntos coloreados para obtener el valor exacto de la media (cuando se selecciona uno método de poda) o la media exacta y el número de árboles que se han tenido en cuenta en el cálculo de la media (cuando se seleccionan varios métodos de poda).
+
+La línea vertical blanca entre 2011 y 2012 simboliza el inicio del periodo en el que los árboles se podan cada dos años.
