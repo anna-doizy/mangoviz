@@ -158,10 +158,12 @@ server <- function(input, output, session) {
         arrow = arrow(length = unit(0.1, "inches")),
         linewidth = 1, colour = "black"
       ) +
-      geom_image(
+      geom_point_img(
         data = date_taille, 
-        mapping = aes(x = Date_taille, y = pos_img, image = img), 
-        size = 0.1
+        mapping = aes(x = Date_taille, y = pos_img), 
+        img = list(png::readPNG("www/shears_ratio.png")), # image is the same for all points
+        size = 0.75, 
+        alpha = -1 # to avoid override of native image transparency (cf comment of function ggimg:::fix_img_dims)
       ) +
       geom_text(
         data = date_taille, 

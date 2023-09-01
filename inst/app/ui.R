@@ -1,5 +1,4 @@
 #### UI ####
-
 suppressPackageStartupMessages({
   library(shiny)
   library(shinydashboard)
@@ -12,10 +11,9 @@ suppressPackageStartupMessages({
   library(stringr)
   library(ggplot2)
   library(ggiraph)
-  library(ggimage)
+  library(ggimg)
   library(mangoviz)
 })
-
 
 
 function(req) {
