@@ -22,7 +22,7 @@
 
 
 
-Ultima actualización : 2023-08-29
+Ultima actualización : 2023-09-27
 
 
 
@@ -34,8 +34,10 @@ El contenido escrito de esta aplicación tiene <a href="https://creativecommons.
 
 Este sitio ha sido creado con <a href="https://www.r-project.org/" target="_blank">R</a> y <a href="https://shiny.rstudio.com/" target="_blank">shiny</a>.
 
-<!--Code source : https://gitlab.com/cirad-apps/mangoviz-->
+Responsable de la publicación: Frédéric Normand (CIRAD, UR Hortsys)
 
+Soporte técnico y alojamiento: Guillaume CORNU (CIRAD, UR Forêts et Sociétés) 
 
+Aviso RGPD: No se recogen sus datos personales. El tráfico del sitio es supervisado por Matomo (sin cookies).r
 
 

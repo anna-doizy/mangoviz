@@ -22,7 +22,7 @@
 
 
 
-Last update : 2023-08-29
+Last update : 2023-09-27
 
 
 
@@ -34,8 +34,10 @@ The written content of this application is under <a href="https://creativecommon
 
 This site has been built with <a href="https://www.r-project.org/" target="_blank">R</a> and <a href="https://shiny.rstudio.com/" target="_blank">shiny</a>.
 
-<!--Code source : https://gitlab.com/cirad-apps/mangoviz-->
+Publication manager: Frédéric Normand (CIRAD, UR Hortsys)
 
+Technical support and hosting: Guillaume CORNU (CIRAD, UR Forêts et Sociétés) 
 
+RGPD notice: Your personal data is not collected. Site traffic is monitored by Matomo (no cookies).
 
 
