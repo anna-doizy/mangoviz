@@ -85,22 +85,6 @@ hr {
   border-top: 1px solid #092d01;
 }
 
-/* validate button color 
-#valider{
-  color: #ecf0f5; 
-  background-color: #222d32; 
-  border-color: #222d32; 
-  font-size: 200%
-}
-
-#valider:hover{
-  color: #ce7e26; 
-  background-color: #1e282c; 
-  border-color: #1e282c;
-}*/
-
-
-
 /* markdown tabs and their images */
 .markdown-tab {
   padding-left: 2em;

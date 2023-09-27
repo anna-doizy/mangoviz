@@ -197,9 +197,6 @@ function(req) {
               status = "success",
               solidHeader = TRUE,
               girafeOutput("taille_parcelle", height = "400px", width = "90%")
-              # column(6, img(src = "verger_MA05.png", class = "inbox-img"), style = "text-align:center;")
-              
-            # )
           )),
         # fluidRow(
           column(
@@ -246,14 +243,7 @@ function(req) {
                          width = 12,
                          status = "success",
                          solidHeader = TRUE,
-                         # checkboxGroupButtons(
-                         #   "taille_checkbox_year",
-                         #   textesUI[textesUI$id == "variete_comp_label", lang],
-                         #   # status = "danger",
-                         #   choices = unique(taille$Annee),
-                         #   selected = 2012:2021 # par défaut, à partir de la première année de taille
-                         # ),
-                         
+
                          fluidRow(
                            column(
                              10,
@@ -301,30 +291,6 @@ function(req) {
                          width = 12,
                          status = "success",
                          solidHeader = TRUE,
-                         # selectInput(
-                         #   "taille_temps_multi",
-                         #   textesUI[textesUI$id == "taille_multi_label", lang],
-                         #   choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
-                         #   multiple = TRUE,
-                         #   selected = "taille_sans"
-                         # ),
-                         
-                         # fluidRow(
-                         #   column(8, selectInput(
-                         #     "taille_temps_multi",
-                         #     textesUI[textesUI$id == "taille_multi_label", lang],
-                         #     choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
-                         #     selected = "taille_sans",
-                         #     multiple = TRUE
-                         #   )),
-                         #   
-                         #   column(4, p(), actionBttn(
-                         #     inputId = "taille_temp_all",
-                         #     label = textesUI[textesUI$id == "all", lang],
-                         #     style = "material-flat",
-                         #     size = "sm"
-                         #   ))
-                         # ),
                          
                          fluidRow(
                            column(9,
@@ -376,10 +342,7 @@ function(req) {
                          solidHeader = TRUE,
                          
                          fluidRow(
-                           column(2, #p(strong(textesUI[textesUI$id == "timeviz_global_switch", lang])),
-                                  # materialSwitch(
-                                  #   inputId = "taille_all_year"
-                                  # )
+                           column(2,
                               radioButtons(
                                 inputId = "taille_all_year",
                                 label = textesUI[textesUI$id == "timeviz_global_switch", lang],
@@ -387,29 +350,7 @@ function(req) {
                                   setNames(textesUI[textesUI$id %in% c("timeviz_global_switch_f", "timeviz_global_switch_t"), lang])
                                   ),
                            ),
-                         #   column(6, selectInput(
-                         #     "taille_spatial_multi",
-                         #     textesUI[textesUI$id == "taille_multi_label", lang],
-                         #     choices = levels(taille$Taille) %>% setNames(textesUI[textesUI$id %in% levels(taille$Taille), lang]),
-                         #     multiple = TRUE,
-                         #     selected = "taille_sans"
-                         #     ),
-                         #   # column(10, radioGroupButtons(
-                         #   #   "taille_select",
-                         #   #   individual = TRUE,
-                         #   #   textesUI[textesUI$id == "taille_temps_label", lang],
-                         #   #   choices = c("all", levels(taille$Taille)) %>% setNames(textesUI[textesUI$id %in% c(levels(taille$Taille), "all"), lang])
-                         #   # )
-                         #   ),
-                         #   
-                         #   column(4, p(), actionBttn(
-                         #     inputId = "taille_spatial_all",
-                         #     label = textesUI[textesUI$id == "all", lang],
-                         #     style = "material-flat",
-                         #     size = "sm"
-                         #   ))
-                         # ),
-                         
+
                          column(8,
                             checkboxGroupButtons(
                               "taille_spatial_multi",
@@ -468,17 +409,6 @@ function(req) {
             )
           )),
         fluidRow(
-          # column(
-          #   6, 
-          #   box(
-          #     title = textesUI[textesUI$id == "pres_box", lang], 
-          #     width = 12, #height = 570,
-          #     status = "success",
-          #     solidHeader = TRUE,
-          #     includeMarkdown(sprintf("locale/verger-variete_%s.md", lang)),
-          #     leafletOutput("cultivar_orchard_map", width = "80%")
-          #   )
-          # ),
           column(
             6, 
             box(
@@ -545,14 +475,7 @@ function(req) {
               width = 12,
               status = "success",
               solidHeader = TRUE,
-              # checkboxGroupButtons(
-              #   "variete_checkbox_year",
-              #   textesUI[textesUI$id == "variete_comp_label", lang],
-              #   # status = "danger",
-              #   choices = unique(variete$Annee),
-              #   selected = unique(variete$Annee) # toutes les années sélectionées par défaut
-              # ),
-              
+
               fluidRow(
                 column(
                   10,
@@ -603,13 +526,6 @@ function(req) {
               
               fluidRow(
                 column(9, 
-                 # selectInput(
-                 #  "variete_temp_var",
-                 #  textesUI[textesUI$id == "variete_label_vars", lang],
-                 #  choices = levels(variete$cultivar),
-                 #  selected = "Caro",
-                 #  multiple = TRUE
-                 # )
                  checkboxGroupButtons(
                    "variete_temp_var",
                    textesUI[textesUI$id == "variete_label_vars", lang],
@@ -659,10 +575,7 @@ function(req) {
               
               
               fluidRow(
-                column(2, #p(strong(textesUI[textesUI$id == "timeviz_global_switch", lang])),
-                  # materialSwitch(
-                  #   inputId = "variete_all_year"
-                  # )
+                column(2,
                   radioButtons(
                     inputId = "variete_all_year",
                     label = textesUI[textesUI$id == "timeviz_global_switch", lang],
@@ -670,22 +583,7 @@ function(req) {
                       setNames(textesUI[textesUI$id %in% c("timeviz_global_switch_f", "timeviz_global_switch_t"), lang])
                   ),
                 ),
-                # column(10, radioGroupButtons(
-                #   "variete_spatial_var",
-                #   individual = TRUE,
-                #   textesUI[textesUI$id == "variete_label_vars", lang],
-                #   choices = c("all", levels(variete$cultivar)) %>% setNames(c(textesUI[textesUI$id =="all", lang], levels(variete$cultivar)))
-                #   )
-                # ),
                 column(8, 
-                  # selectInput(
-                  # "variete_spatial_var",
-                  # textesUI[textesUI$id == "variete_label_vars", lang],
-                  # choices = levels(variete$cultivar),
-                  # selected = "Caro",
-                  # multiple = TRUE
-                  # )
-                  
                   checkboxGroupButtons(
                     "variete_spatial_var",
                     textesUI[textesUI$id == "variete_label_vars", lang],
@@ -740,7 +638,6 @@ function(req) {
                   radioButtons(
                   inputId = "variete_radio_bilan",
                   label = textesUI[textesUI$id == "variete_bilan_label", lang],
-                  # choices = unique(variete$cultivar) %>% sort(),
                   choices = levels(variete$cultivar) %>%
                     str_to_lower() %>%
                     str_replace_all(" ", "_") %>% str_replace("é", "e") %>%

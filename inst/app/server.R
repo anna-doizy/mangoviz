@@ -69,7 +69,6 @@ server <- function(input, output, session) {
       ) %>%
       {ggplot(.) +
           aes(x = X, y = Y, fill = Taille, data_id = Taille, tooltip = arbre) +
-          # geom_tile_interactive(color = "black", aes(label = arbre, tooltip = paste(after_stat(label), textesUI[textesUI$id == "taille_ete", lang], sep = "<br>"))) + # ne marche pas
           geom_tile_interactive(color = "black") +
           scale_fill_manual(
             values = coul_taille, labels = textesUI[textesUI$id %in% c(levels(taille$Taille), "bordure"), lang] %>% setNames(c(levels(taille$Taille), "bordure")),
@@ -91,7 +90,7 @@ server <- function(input, output, session) {
   
   ## Description du cycle des tailles ####
   
-  output$cycles_taille <- renderPlot(res = 90, { # width = 960, height = 288, {
+  output$cycles_taille <- renderPlot(res = 90, {
     
     #' Data for pruning cycle graph: Pruning dates
     #'
@@ -250,10 +249,6 @@ server <- function(input, output, session) {
       "taille_temps_multi",
       selected = NA
     )
-    # # For empty checkboxGroupInputs (les autres input ça fonctionne)
-    # https://stackoverflow.com/questions/24265980/reset-inputs-button-in-shiny-app
-    # if (is.null(value)) value <- ""
-    # session$sendInputMessage("taille_temps_multi", list(value = ""))
   })
   
   # action du bouton "tout sélectionner"
@@ -272,7 +267,6 @@ server <- function(input, output, session) {
     
     if(!is.null(input$taille_temps_multi)) { # if no selected taille, no plot
       {if(length(input$taille_temps_multi) == 1) { # if one selected taille
-      # {if(input$taille_temps_multi != "all") { # if one selected taille
         taille %>% 
           filter(Mesure == input$taille_mesure, Taille == input$taille_temps_multi, !is.na(Valeur)) %>%
           rowwise() %>% 
@@ -287,7 +281,6 @@ server <- function(input, output, session) {
           geom_smooth_interactive(method = "lm", formula = "y~1", se = FALSE, color = "black", linetype = 2, aes(tooltip = paste(textesUI[textesUI$id == "global_mean", lang], round(after_stat(y), 1), sep = "<br>"))) +
           scale_color_manual(
             values = coul_taille[input$taille_temps_multi] %>% unname() # car aes color : Taille_trad
-            # labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))
             ) +
           scale_x_continuous(breaks = seq(2008, 2022, by = 2)) +
           labs(
@@ -298,11 +291,9 @@ server <- function(input, output, session) {
       } else { # if several/all selected taille
         taille %>% 
           filter(Mesure == input$taille_mesure, Taille %in% input$taille_temps_multi) %>%
-          # filter(Mesure == input$taille_mesure) %>%
           group_by(Annee, Taille) %>% 
           summarise(
             Moyenne = mean(Valeur, na.rm = TRUE), 
-            # n = n()
             n = length(na.omit(Valeur))
           ) %>%
           suppressMessages() %>% # group message
@@ -314,7 +305,6 @@ server <- function(input, output, session) {
           geom_line(aes(group = Taille)) +
           geom_point_interactive() +
           scale_color_manual(values = coul_taille[input$taille_temps_multi], labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))) +
-          # scale_color_manual(values = coul_taille, labels = textesUI[textesUI$id %in% levels(taille$Taille), lang] %>% setNames(levels(taille$Taille))) +
           scale_x_continuous(breaks = seq(2008, 2022, by = 2)) +
           labs(
             x = NULL, y = NULL, 
@@ -363,8 +353,7 @@ server <- function(input, output, session) {
       {if(input$taille_all_year) {
         taille %>% 
           filter(
-            Mesure == input$taille_mesure, 
-            # Taille %in% if(input$taille_select == "all") {levels(taille$Taille)} else {input$taille_select}
+            Mesure == input$taille_mesure,
             Taille %in% input$taille_spatial_multi
           ) %>% 
           group_by(X, Y, Taille) %>% 
@@ -375,11 +364,6 @@ server <- function(input, output, session) {
           ggplot() +
           aes(x = X, y = Y, fill = Moyenne, tooltip = paste(Taille_trad, "<br>", round(Moyenne, 1), "(n=", n, ")"), data_id = Taille) +
           geom_tile_interactive(colour = "black") +
-          # scale_fill_gradientn(
-          #   # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"),
-          #   colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
-          #   na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
-          # ) +
           scale_fill_distiller(palette = "YlOrRd", na.value = "transparent", direction = 1) +
           scale_x_discrete(drop = FALSE) +
           scale_y_discrete(drop = FALSE) +
@@ -389,7 +373,6 @@ server <- function(input, output, session) {
         taille %>% 
           filter(
             Mesure == input$taille_mesure, 
-            # Taille %in% if(input$taille_select == "all") {levels(taille$Taille)} else {input$taille_select}
             Taille%in% input$taille_spatial_multi
           ) %>%
           rowwise() %>% 
@@ -397,11 +380,6 @@ server <- function(input, output, session) {
           ggplot() +
           aes(x = X, y = Y, fill = Valeur, tooltip = paste(Taille_trad, round(Valeur, 1), sep = "<br>"), data_id = Taille) +
           geom_tile_interactive(colour = "black") +
-          # scale_fill_gradientn(
-          #   # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"),
-          #   colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
-          #   na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
-          # ) +
           scale_fill_distiller(palette = "YlOrRd", na.value = "transparent", direction = 1) +
           scale_x_discrete(drop = FALSE) +
           scale_y_discrete(drop = FALSE) +
@@ -646,8 +624,7 @@ server <- function(input, output, session) {
       {if(input$variete_all_year) {
         variete %>% 
           filter(
-            Mesure == input$variete_mesure, 
-            # cultivar %in% if(input$variete_select_var == "all") {levels(variete$cultivar)} else {input$variete_select_var}
+            Mesure == input$variete_mesure,
             cultivar %in% input$variete_spatial_var
           ) %>% 
           group_by(X, Y, cultivar) %>% 
@@ -656,11 +633,6 @@ server <- function(input, output, session) {
           ggplot() +
           aes(x = X, y = Y, fill = Moyenne, tooltip = paste(cultivar, "<br>", round(Moyenne, 1), "(n=", n, ")"), data_id = cultivar) +
           geom_tile_interactive(colour = "black") +
-          # scale_fill_gradientn(
-          #   # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"),
-          #   colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
-          #   na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
-          # ) +
           scale_fill_distiller(palette = "YlOrRd", na.value = "transparent", direction = 1) +
           scale_x_discrete(drop = FALSE) +
           scale_y_discrete(drop = FALSE) +
@@ -670,17 +642,11 @@ server <- function(input, output, session) {
         variete %>% 
           filter(
             Mesure == input$variete_mesure, 
-            # cultivar %in% if(input$variete_select_var == "all") {levels(variete$cultivar)} else {input$variete_select_var}
             cultivar %in% input$variete_spatial_var
           ) %>%
           ggplot() +
           aes(x = X, y = Y, fill = Valeur, tooltip = paste(cultivar, round(Valeur, 1), sep = "<br>"), data_id = cultivar) +
           geom_tile_interactive(colour = "black") +
-          # scale_fill_gradientn(
-          #   # colours = c("#a40000",  "#de7500", "#ee9300", "#f78b28", "#fc843d", "#ff7e50", "#ff5d7a", "#e851aa", "#aa5fd3", "#0070e9"),
-          #   colours = c('#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'),
-          #   na.value = "transparent" # https://personal.sron.nl/~pault/#fig:scheme_iridescent
-          # ) +
           scale_fill_distiller(palette = "YlOrRd", na.value = "transparent", direction = 1) +
           scale_x_discrete(drop = FALSE) +
           scale_y_discrete(drop = FALSE) +
