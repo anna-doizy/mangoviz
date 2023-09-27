@@ -20,7 +20,7 @@ MangoViz presents fruit production results.
 
 - **Unpruned** : trees unpruned since planting
 - **Summer pruning** : trees pruned in summer after harvest (end of January - beginning of February)
-- **Winter pruningr** : trees pruned in winter at the beginning of flowering (end of July - August)
+- **Winter pruning** : trees pruned in winter at the beginning of flowering (end of July - August)
 
 The trees were pruned every second year from 2012 (trees not pruned before this date).
 
