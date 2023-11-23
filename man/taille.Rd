@@ -3,7 +3,7 @@
 \docType{data}
 \name{taille}
 \alias{taille}
-\title{Pruning essay, from 2007 to 2021}
+\title{Pruning essay, from 2007 to 2022}
 \format{
 A data frame of 6 063 x 8
 
@@ -20,6 +20,6 @@ A data frame of 6 063 x 8
 taille
 }
 \description{
-Pruning essay, from 2007 to 2021
+Pruning essay, from 2007 to 2022
 }
 \keyword{datasets}

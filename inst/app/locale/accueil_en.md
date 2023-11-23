@@ -22,7 +22,7 @@
 
 
 
-Last update : 2023-09-27
+Last update : 2023-11-23 (Version: 0.1.1)
 
 
 
@@ -38,6 +38,6 @@ Publication manager: Frédéric Normand (CIRAD, UR Hortsys)
 
 Technical support and hosting: Guillaume CORNU (CIRAD, UR Forêts et Sociétés) 
 
-RGPD notice: Your personal data is not collected. Site traffic is monitored by Matomo (no cookies).
+GDPR notice: Your personal data is not collected. Site traffic is monitored by Matomo (no cookies).
 
 

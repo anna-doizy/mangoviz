@@ -22,7 +22,7 @@
 
 
 
-Ultima actualización : 2023-09-27
+Ultima actualización : 2023-11-23 (Versión : 0.1.1)
 
 
 

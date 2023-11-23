@@ -7,7 +7,7 @@ textesUI <- read.csv("data-raw/textesUI.csv", encoding = "UTF-8")
 
 
 usethis::use_data(textesUI, overwrite = TRUE)
-devtools::document()
+devtools::document() # si la documentation a été changée
 
 
 

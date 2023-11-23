@@ -3,7 +3,7 @@
 \docType{data}
 \name{variete}
 \alias{variete}
-\title{Varietal essay, from 2010 to 2021}
+\title{Varietal essay, from 2010 to 2022}
 \format{
 A data frame of 4 824 x 7
 
@@ -19,6 +19,6 @@ A data frame of 4 824 x 7
 variete
 }
 \description{
-Varietal essay, from 2010 to 2021
+Varietal essay, from 2010 to 2022
 }
 \keyword{datasets}
